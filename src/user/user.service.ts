@@ -3,6 +3,7 @@ import { hash } from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
@@ -19,15 +20,28 @@ export class UserService {
     });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findById(id: string): Promise<User> {
+    const user = await this.prisma.user.findUnique({ where: { id } });
+
+    return { ...user, password: undefined };
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async findByEmail(email: string): Promise<User> {
+    const user = await this.prisma.user.findUnique({ where: { email } });
+
+    return { ...user, password: undefined };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+    const user = await this.prisma.user.update({
+      where: { id },
+      data: { ...updateUserDto },
+    });
+
+    return { ...user, password: undefined };
+  }
+
+  async remove(id: string): Promise<void> {
+    await this.prisma.user.delete({ where: { id } });
   }
 }
