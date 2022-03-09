@@ -21,15 +21,11 @@ export class UserService {
   }
 
   async findById(id: string): Promise<User> {
-    const user = await this.prisma.user.findUnique({ where: { id } });
-
-    return { ...user, password: undefined };
+    return this.prisma.user.findUnique({ where: { id } });
   }
 
   async findByEmail(email: string): Promise<User> {
-    const user = await this.prisma.user.findUnique({ where: { email } });
-
-    return { ...user, password: undefined };
+    return this.prisma.user.findUnique({ where: { email } });
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
