@@ -3,13 +3,15 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
   Patch,
   Post,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { Public } from 'src/auth/public.decorator';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from './entities/user.entity';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -22,18 +24,27 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  @Get(':id')
-  findById(@Param('id') id: string) {
-    return this.userService.findById(id);
+  @Get()
+  async findById(@Req() request: Request): Promise<User> {
+    const userId = request.user['userId'];
+
+    return this.userService.findById(userId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(id, updateUserDto);
+  @Patch()
+  update(
+    @Req() request: Request,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<User> {
+    const userId = request.user['userId'];
+
+    return this.userService.update(userId, updateUserDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(id);
+  @Delete()
+  remove(@Req() request: Request): Promise<void> {
+    const userId = request.user['userId'];
+
+    return this.userService.remove(userId);
   }
 }
