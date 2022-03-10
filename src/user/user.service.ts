@@ -21,7 +21,11 @@ export class UserService {
   }
 
   async findById(id: string): Promise<User> {
-    return this.prisma.user.findUnique({ where: { id } });
+    const user = await this.prisma.user.findUnique({ where: { id } });
+
+    delete user.password;
+
+    return user;
   }
 
   async findByEmail(email: string): Promise<User> {
