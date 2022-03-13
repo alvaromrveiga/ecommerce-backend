@@ -1,20 +1,33 @@
+import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserController } from './user.controller';
-import { UserService } from './user.service';
+import { PrismaService } from 'src/prisma/prisma.service';
+import * as request from 'supertest';
+import { UserModule } from './user.module';
 
-describe('UserController', () => {
-  let controller: UserController;
+describe('UserController (e2e)', () => {
+  let app: INestApplication;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [UserController],
-      providers: [UserService],
+  beforeAll(async () => {
+    const moduleFixture: TestingModule = await Test.createTestingModule({
+      imports: [UserModule],
     }).compile();
 
-    controller = module.get<UserController>(UserController);
+    app = moduleFixture.createNestApplication();
+    await app.init();
+
+    const prisma = app.get<PrismaService>(PrismaService);
+    await prisma.user.deleteMany();
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  describe('Post /user', () => {
+    it('should create user', () => {
+      return request(app.getHttpServer())
+        .post('/user')
+        .send({
+          email: 'tester@example.com',
+          password: 'abc123456',
+        })
+        .expect(201);
+    });
   });
 });
