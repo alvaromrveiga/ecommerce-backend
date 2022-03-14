@@ -1,4 +1,4 @@
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as request from 'supertest';
@@ -13,6 +13,15 @@ describe('UserController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+
+    app.useGlobalPipes(
+      new ValidationPipe({
+        transform: true,
+        whitelist: true,
+        forbidNonWhitelisted: true,
+      }),
+    );
+
     await app.init();
 
     const prisma = app.get<PrismaService>(PrismaService);
@@ -28,6 +37,26 @@ describe('UserController (e2e)', () => {
           password: 'abc123456',
         })
         .expect(201);
+    });
+
+    it('should not create user if email is invalid', () => {
+      return request(app.getHttpServer())
+        .post('/user')
+        .send({
+          email: 'tester',
+          password: 'abc123456',
+        })
+        .expect(400);
+    });
+
+    it('should not create user if password is too weak', () => {
+      return request(app.getHttpServer())
+        .post('/user')
+        .send({
+          email: 'tester@example.com',
+          password: 'abc123',
+        })
+        .expect(400);
     });
   });
 });
