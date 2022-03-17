@@ -26,6 +26,13 @@ describe('UserController (e2e)', () => {
 
     const prisma = app.get<PrismaService>(PrismaService);
     await prisma.user.deleteMany();
+
+    await prisma.user.create({
+      data: {
+        email: 'tester0@example.com',
+        password: 'abc123456',
+      },
+    });
   });
 
   describe('Post /user', () => {
@@ -37,6 +44,16 @@ describe('UserController (e2e)', () => {
           password: 'abc123456',
         })
         .expect(201);
+    });
+
+    it('should not create user if email is already in use', () => {
+      return request(app.getHttpServer())
+        .post('/user')
+        .send({
+          email: 'tester0@example.com',
+          password: 'abc123456',
+        })
+        .expect(500);
     });
 
     it('should not create user if email is invalid', () => {
