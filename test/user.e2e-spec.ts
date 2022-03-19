@@ -1,15 +1,17 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { AuthModule } from 'src/auth/auth.module';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UserModule } from 'src/user/user.module';
 import * as request from 'supertest';
 
 describe('UserController (e2e)', () => {
   let app: INestApplication;
+  let token: string;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [UserModule],
+      imports: [UserModule, AuthModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();
@@ -27,12 +29,19 @@ describe('UserController (e2e)', () => {
     const prisma = app.get<PrismaService>(PrismaService);
     await prisma.user.deleteMany();
 
-    await prisma.user.create({
-      data: {
+    await request(app.getHttpServer())
+      .post('/user')
+      .send({
         email: 'tester0@example.com',
         password: 'abc123456',
-      },
-    });
+      })
+      .expect(201);
+
+    const response = await request(app.getHttpServer())
+      .post('/login')
+      .send({ email: 'tester0@example.com', password: 'abc123456' });
+
+    token = response.body.accessToken;
   });
 
   describe('Post /user', () => {
