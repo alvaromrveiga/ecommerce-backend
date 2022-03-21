@@ -5,6 +5,7 @@ import { AppModule } from 'src/app.module';
 import { EmailInUseError } from 'src/errors/email-in-use.error';
 import { PrismaInterceptor } from 'src/interceptors/prisma.interceptor';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { User } from 'src/user/entities/user.entity';
 import * as request from 'supertest';
 
 describe('UserController (e2e)', () => {
@@ -99,7 +100,7 @@ describe('UserController (e2e)', () => {
         .send()
         .expect(200);
 
-      const user = response.body;
+      const user: User = response.body;
 
       expect(user).not.toHaveProperty('password');
 
@@ -113,6 +114,41 @@ describe('UserController (e2e)', () => {
 
     it('should not get user profile if unauthenticated', () => {
       return request(app.getHttpServer()).get('/user').send().expect(401);
+    });
+  });
+
+  describe('Patch /user', () => {
+    it('should update user', async () => {
+      const response = await request(app.getHttpServer())
+        .patch('/user')
+        .set({ Authorization: `Bearer ${token}` })
+        .send({
+          email: 'tester0_new_email@example.com',
+          password: 'tester0new_password',
+          currentPassword: 'abc123456',
+          name: 'Tester 0',
+          address: 'World Street 0 House 0',
+        })
+        .expect(200);
+
+      const user: User = response.body;
+
+      expect(user).not.toHaveProperty('password');
+
+      expect(isUUID(user.id, 4)).toBeTruthy();
+      expect(user.email).toEqual('tester0_new_email@example.com');
+      expect(user.name).toEqual('Tester 0');
+      expect(user.address).toEqual('World Street 0 House 0');
+      expect(isDateString(user.createdAt)).toBeTruthy();
+      expect(isDateString(user.updatedAt)).toBeTruthy();
+
+      await request(app.getHttpServer())
+        .post('/login')
+        .send({
+          email: 'tester0_new_email@example.com',
+          password: 'tester0new_password',
+        })
+        .expect(200);
     });
   });
 });
