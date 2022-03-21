@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Patch,
   Post,
   Req,
@@ -42,6 +44,7 @@ export class UserController {
   }
 
   @Delete()
+  @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Req() request: Request): Promise<void> {
     const userId = request.user['userId'];
 
