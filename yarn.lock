@@ -4282,6 +4282,11 @@ pretty-format@^27.0.0, pretty-format@^27.5.1:
     ansi-styles "^5.0.0"
     react-is "^17.0.1"
 
+prisma-error-enum@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/prisma-error-enum/-/prisma-error-enum-0.1.2.tgz#973f63f3ef1a1fe3d559d4ee876b85edb515801a"
+  integrity sha512-O70RgSy++Vojnlg9RIrmheoja7IRgtmka7fDJWmSOWst8EHRnc3pP07GujFOvnlF6f42gzZ65+Ny8ICjhU3TYg==
+
 prisma@^3.10.0:
   version "3.10.0"
   resolved "https://registry.npmjs.org/prisma/-/prisma-3.10.0.tgz"
