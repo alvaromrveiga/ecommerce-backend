@@ -1,10 +1,10 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthModule } from 'src/auth/auth.module';
+import { isDateString, isUUID } from 'class-validator';
+import { AppModule } from 'src/app.module';
 import { EmailInUseError } from 'src/errors/email-in-use.error';
 import { PrismaInterceptor } from 'src/interceptors/prisma.interceptor';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { UserModule } from 'src/user/user.module';
 import * as request from 'supertest';
 
 describe('UserController (e2e)', () => {
@@ -13,7 +13,7 @@ describe('UserController (e2e)', () => {
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [UserModule, AuthModule],
+      imports: [AppModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();
@@ -88,6 +88,31 @@ describe('UserController (e2e)', () => {
           password: 'abc123',
         })
         .expect(400);
+    });
+  });
+
+  describe('Get /user', () => {
+    it('should get user profile', async () => {
+      const response = await request(app.getHttpServer())
+        .get('/user')
+        .set({ Authorization: `Bearer ${token}` })
+        .send()
+        .expect(200);
+
+      const user = response.body;
+
+      expect(user).not.toHaveProperty('password');
+
+      expect(isUUID(user.id, 4)).toBeTruthy();
+      expect(user.email).toEqual('tester0@example.com');
+      expect(user.address).toBeNull();
+      expect(user.name).toBeNull();
+      expect(isDateString(user.createdAt)).toBeTruthy();
+      expect(isDateString(user.updatedAt)).toBeTruthy();
+    });
+
+    it('should not get user profile if unauthenticated', () => {
+      return request(app.getHttpServer()).get('/user').send().expect(401);
     });
   });
 });
