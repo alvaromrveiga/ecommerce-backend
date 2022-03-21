@@ -14,15 +14,15 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "dotenv -e .env.test jest",
-    "test:watch": "dotenv -e .env.test jest --watch",
-    "test:cov": "dotenv -e .env.test jest --coverage",
-    "test:e2e": "dotenv -e .env.test | jest --config ./test/jest-e2e.json",
-    "test:debug": "dotenv -e .env.test node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test": "dotenv -e .env.test -- jest",
+    "test:watch": "dotenv -e .env.test --- jest --watch",
+    "test:cov": "dotenv -e .env.test -- jest --coverage",
+    "test:e2e": "dotenv -e .env.test -- jest --config ./test/jest-e2e.json ",
+    "test:debug": "dotenv -e .env.test -- node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "migrate:dev": "prisma migrate dev",
-    "migrate:test": "dotenv -e .env.test prisma migrate dev",
+    "migrate:test": "dotenv -e .env.test -- prisma migrate dev",
     "studio:dev": "prisma studio",
-    "studio:test": "dotenv -e .env.test prisma studio"
+    "studio:test": "dotenv -e .env.test -- prisma studio"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
