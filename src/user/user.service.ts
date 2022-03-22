@@ -1,5 +1,5 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { hash, compare } from 'bcrypt';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { compare, hash } from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -50,22 +50,33 @@ export class UserService {
     updateUserDto: UpdateUserDto,
   ): Promise<void> {
     if (updateUserDto.password && updateUserDto.currentPassword) {
-      const user = await this.prisma.user.findUnique({ where: { id } });
-
-      const isCorrectPassword = await compare(
-        updateUserDto.currentPassword,
-        user.password,
-      );
-
-      if (!isCorrectPassword) {
-        throw new UnauthorizedException('Invalid current password');
-      }
+      await this.validateCurrentPassword(id, updateUserDto.currentPassword);
 
       const hashedPassword = await hash(updateUserDto.password, 10);
 
       updateUserDto.password = hashedPassword;
+      delete updateUserDto.currentPassword;
+
+      return;
     }
 
-    delete updateUserDto.currentPassword;
+    if (updateUserDto.password || updateUserDto.currentPassword) {
+      throw new BadRequestException(
+        'Please enter both new password and current password',
+      );
+    }
+  }
+
+  private async validateCurrentPassword(
+    id: string,
+    currentPassword: string,
+  ): Promise<void> {
+    const user = await this.prisma.user.findUnique({ where: { id } });
+
+    const isCorrectPassword = await compare(currentPassword, user.password);
+
+    if (!isCorrectPassword) {
+      throw new BadRequestException('Invalid current password');
+    }
   }
 }
