@@ -1,8 +1,9 @@
-import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../prisma/prisma.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+import { InvalidPasswordUpdateError } from './errors/invalid-password-update.error';
+import { MissingPasswordUpdateError } from './errors/missing-password-update.error';
 import { UserService } from './user.service';
 
 let userArray: User[] = [];
@@ -151,7 +152,7 @@ describe('UserService', () => {
 
       await expect(
         userService.update('tester2@example.com', data),
-      ).rejects.toThrow(new BadRequestException('Invalid current password'));
+      ).rejects.toThrow(new InvalidPasswordUpdateError());
     });
 
     it('should not update if current password is empty', async () => {
@@ -161,11 +162,7 @@ describe('UserService', () => {
 
       await expect(
         userService.update('tester2@example.com', data),
-      ).rejects.toThrow(
-        new BadRequestException(
-          'Please enter both new password and current password',
-        ),
-      );
+      ).rejects.toThrow(new MissingPasswordUpdateError());
     });
 
     it('should not update if password is empty', async () => {
@@ -175,11 +172,7 @@ describe('UserService', () => {
 
       await expect(
         userService.update('tester2@example.com', data),
-      ).rejects.toThrow(
-        new BadRequestException(
-          'Please enter both new password and current password',
-        ),
-      );
+      ).rejects.toThrow(new MissingPasswordUpdateError());
     });
   });
 

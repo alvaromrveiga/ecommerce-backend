@@ -1,9 +1,11 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { compare, hash } from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+import { InvalidPasswordUpdateError } from './errors/invalid-password-update.error';
+import { MissingPasswordUpdateError } from './errors/missing-password-update.error';
 
 @Injectable()
 export class UserService {
@@ -61,9 +63,7 @@ export class UserService {
     }
 
     if (updateUserDto.password || updateUserDto.currentPassword) {
-      throw new BadRequestException(
-        'Please enter both new password and current password',
-      );
+      throw new MissingPasswordUpdateError();
     }
   }
 
@@ -76,7 +76,7 @@ export class UserService {
     const isCorrectPassword = await compare(currentPassword, user.password);
 
     if (!isCorrectPassword) {
-      throw new BadRequestException('Invalid current password');
+      throw new InvalidPasswordUpdateError();
     }
   }
 }
