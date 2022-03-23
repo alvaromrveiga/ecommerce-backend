@@ -11,6 +11,7 @@ import * as request from 'supertest';
 describe('UserController (e2e)', () => {
   let app: INestApplication;
   let token: string;
+  let prisma: PrismaService;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -31,11 +32,19 @@ describe('UserController (e2e)', () => {
 
     await app.init();
 
-    const prisma = app.get<PrismaService>(PrismaService);
+    prisma = app.get<PrismaService>(PrismaService);
+  });
+
+  beforeEach(async () => {
     await prisma.user.deleteMany();
 
     await request(app.getHttpServer()).post('/user').send({
       email: 'tester0@example.com',
+      password: 'abc123456',
+    });
+
+    await request(app.getHttpServer()).post('/user').send({
+      email: 'tester1@example.com',
       password: 'abc123456',
     });
 
@@ -149,6 +158,73 @@ describe('UserController (e2e)', () => {
           password: 'tester0new_password',
         })
         .expect(200);
+    });
+
+    it('should not update if there is an invalid field', () => {
+      return request(app.getHttpServer())
+        .patch('/user')
+        .set({ Authorization: `Bearer ${token}` })
+        .send({
+          id: '123',
+          email: 'tester0_new_email@example.com',
+        })
+        .expect(400);
+    });
+
+    it('should not update password if currentPassword is wrong', () => {
+      return request(app.getHttpServer())
+        .patch('/user')
+        .set({ Authorization: `Bearer ${token}` })
+        .send({
+          password: 'tester0new_password',
+          currentPassword: 'wrongPassword',
+          name: 'Tester 0',
+        })
+        .expect(400);
+    });
+
+    it('should not update password if currentPassword is empty', () => {
+      return request(app.getHttpServer())
+        .patch('/user')
+        .set({ Authorization: `Bearer ${token}` })
+        .send({
+          password: 'tester0new_password',
+          name: 'Tester 0',
+        })
+        .expect(400);
+    });
+
+    it('should not update if there is currentPassword without password', () => {
+      return request(app.getHttpServer())
+        .patch('/user')
+        .set({ Authorization: `Bearer ${token}` })
+        .send({
+          currentPassword: 'abc123456',
+          name: 'Tester 0',
+        })
+        .expect(400);
+    });
+
+    it('should not update password if new one is too weak', () => {
+      return request(app.getHttpServer())
+        .patch('/user')
+        .set({ Authorization: `Bearer ${token}` })
+        .send({
+          password: '123456',
+          currentPassword: 'abc123456',
+          address: 'World Street 0 House 0',
+        })
+        .expect(400);
+    });
+
+    it('should not update if email is already in use', () => {
+      return request(app.getHttpServer())
+        .patch('/user')
+        .set({ Authorization: `Bearer ${token}` })
+        .send({
+          email: 'tester1@example.com',
+        })
+        .expect(400);
     });
   });
 });
