@@ -8,46 +8,45 @@ import { UserService } from './user.service';
 
 let userArray: User[] = [];
 
+const PrismaServiceMock = {
+  provide: PrismaService,
+  useValue: {
+    user: {
+      create: jest.fn().mockImplementation(({ data }) => {
+        userArray.push({ ...data });
+      }),
+      findUnique: jest.fn().mockImplementation(({ where }) => {
+        return userArray.find((user) => {
+          return user.email === where.id || user.email === where.email;
+        });
+      }),
+      update: jest.fn().mockImplementation(({ where, data }) => {
+        const userIndex = userArray.findIndex((user) => {
+          return user.email === where.id || user.email === where.email;
+        });
+
+        userArray[userIndex] = { ...userArray[userIndex], ...data };
+
+        return userArray[userIndex];
+      }),
+      delete: jest.fn().mockImplementation(({ where }) => {
+        const userIndex = userArray.findIndex((user) => {
+          return user.email === where.id || user.email === where.email;
+        });
+
+        userArray.splice(userIndex, 1);
+      }),
+    },
+  },
+};
+
 describe('UserService', () => {
   let userService: UserService;
   let prismaService: PrismaService;
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        UserService,
-        {
-          provide: PrismaService,
-          useValue: {
-            user: {
-              create: jest.fn().mockImplementation(({ data }) => {
-                userArray.push({ ...data });
-              }),
-              findUnique: jest.fn().mockImplementation(({ where }) => {
-                return userArray.find((user) => {
-                  return user.email === where.id || user.email === where.email;
-                });
-              }),
-              update: jest.fn().mockImplementation(({ where, data }) => {
-                const userIndex = userArray.findIndex((user) => {
-                  return user.email === where.id || user.email === where.email;
-                });
-
-                userArray[userIndex] = { ...userArray[userIndex], ...data };
-
-                return userArray[userIndex];
-              }),
-              delete: jest.fn().mockImplementation(({ where }) => {
-                const userIndex = userArray.findIndex((user) => {
-                  return user.email === where.id || user.email === where.email;
-                });
-
-                userArray.splice(userIndex, 1);
-              }),
-            },
-          },
-        },
-      ],
+      providers: [UserService, PrismaServiceMock],
     }).compile();
 
     userService = module.get<UserService>(UserService);
