@@ -160,6 +160,16 @@ describe('UserController (e2e)', () => {
         .expect(200);
     });
 
+    it('should not update if unauthenticated', () => {
+      return request(app.getHttpServer())
+        .patch('/user')
+        .send({
+          email: 'tester0_new_email@example.com',
+          name: 'Tester 0',
+        })
+        .expect(401);
+    });
+
     it('should not update if there is an invalid field', () => {
       return request(app.getHttpServer())
         .patch('/user')
@@ -224,6 +234,44 @@ describe('UserController (e2e)', () => {
         .send({
           email: 'tester1@example.com',
         })
+        .expect(400);
+    });
+  });
+
+  describe('Delete /user', () => {
+    it('should delete user', async () => {
+      await request(app.getHttpServer())
+        .delete('/user')
+        .set({ Authorization: `Bearer ${token}` })
+        .send({ currentPassword: 'abc123456' })
+        .expect(204);
+
+      const user = await prisma.user.findUnique({
+        where: { email: 'tester0@example.com' },
+      });
+
+      expect(user).toBeNull();
+    });
+
+    it('should not delete user if unauthenticated', () => {
+      return request(app.getHttpServer())
+        .delete('/user')
+        .send({ currentPassword: 'abc123456' })
+        .expect(401);
+    });
+
+    it('should not delete user if currentPassword is wrong', () => {
+      return request(app.getHttpServer())
+        .delete('/user')
+        .set({ Authorization: `Bearer ${token}` })
+        .send({ currentPassword: 'wrongPassword' })
+        .expect(400);
+    });
+
+    it('should not delete user if currentPassword is empty', () => {
+      return request(app.getHttpServer())
+        .delete('/user')
+        .set({ Authorization: `Bearer ${token}` })
         .expect(400);
     });
   });
