@@ -178,9 +178,7 @@ describe('UserService', () => {
 
   describe('delete', () => {
     it('should remove user', async () => {
-      console.log(userArray);
-
-      await userService.remove('tester2@example.com');
+      await userService.remove('tester2@example.com', 'abc123456');
 
       expect(prismaService.user.delete).toHaveBeenCalled();
 
@@ -191,7 +189,18 @@ describe('UserService', () => {
       });
 
       expect(user).toEqual(undefined);
-      console.log(userArray);
+    });
+
+    it('should not remove user if password is wrong', async () => {
+      await expect(
+        userService.remove('tester2@example.com', 'wrongPassword'),
+      ).rejects.toThrow(new InvalidPasswordUpdateError());
+    });
+
+    it('should not remove user if password is empty', async () => {
+      await expect(
+        userService.remove('tester2@example.com', ''),
+      ).rejects.toThrow(new InvalidPasswordUpdateError());
     });
   });
 });
