@@ -6,7 +6,7 @@ import { EmailInUseError } from 'src/errors/email-in-use.error';
 import { PrismaInterceptor } from 'src/interceptors/prisma.interceptor';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { User } from 'src/user/entities/user.entity';
-import * as request from 'supertest';
+import request from 'supertest';
 
 describe('UserController (e2e)', () => {
   let app: INestApplication;
