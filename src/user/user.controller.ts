@@ -47,7 +47,8 @@ export class UserController {
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Req() request: Request): Promise<void> {
     const userId = request.user['userId'];
+    const { currentPassword } = request.body;
 
-    return this.userService.remove(userId);
+    return this.userService.remove(userId, currentPassword);
   }
 }

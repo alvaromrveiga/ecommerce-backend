@@ -43,7 +43,9 @@ export class UserService {
     return { ...user, password: undefined };
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(id: string, currentPassword: string): Promise<void> {
+    await this.validateCurrentPassword(id, currentPassword);
+
     await this.prisma.user.delete({ where: { id } });
   }
 
@@ -71,6 +73,10 @@ export class UserService {
     id: string,
     currentPassword: string,
   ): Promise<void> {
+    if (!currentPassword) {
+      throw new InvalidPasswordUpdateError();
+    }
+
     const user = await this.prisma.user.findUnique({ where: { id } });
 
     const isCorrectPassword = await compare(currentPassword, user.password);
