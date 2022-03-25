@@ -19,6 +19,8 @@
     "test:cov": "dotenv -e .env.test -- jest --coverage",
     "test:e2e": "dotenv -e .env.test -- jest --config ./test/jest-e2e.json --runInBand",
     "test:debug": "dotenv -e .env.test -- node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:all": "dotenv -e .env.test -- jest --config jest-all.json --runInBand",
+    "test:all:cov": "yarn test:all --coverage",
     "migrate:dev": "prisma migrate dev",
     "migrate:test": "dotenv -e .env.test -- prisma migrate dev",
     "studio:dev": "prisma studio",
