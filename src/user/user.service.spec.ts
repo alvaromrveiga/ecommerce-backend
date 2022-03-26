@@ -99,7 +99,7 @@ describe('UserService', () => {
       expect(prismaService.user.findUnique).toHaveBeenCalled();
 
       expect(user.email).toEqual('tester2@example.com');
-      expect(user.password).toEqual(undefined);
+      expect(user).not.toHaveProperty('password');
     });
   });
 
@@ -132,7 +132,7 @@ describe('UserService', () => {
       expect(user.name).toEqual('Tester2');
       expect(user.address).toEqual('World Street 0 House 0');
 
-      expect(user.password).toBeUndefined();
+      expect(user).not.toHaveProperty('password');
       expect(user).not.toHaveProperty('currentPassword');
 
       const userWithPassword = await userService.findByEmail(

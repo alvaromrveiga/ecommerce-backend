@@ -3,6 +3,7 @@ import { compare, hash } from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserWithoutPassword } from './entities/user-without-password.entity';
 import { User } from './entities/user.entity';
 import { InvalidPasswordUpdateError } from './errors/invalid-password-update.error';
 import { MissingPasswordUpdateError } from './errors/missing-password-update.error';
@@ -22,17 +23,22 @@ export class UserService {
     });
   }
 
-  async findById(id: string): Promise<User> {
+  async findById(id: string): Promise<UserWithoutPassword> {
     const user = await this.prisma.user.findUnique({ where: { id } });
 
-    return { ...user, password: undefined };
+    delete user.password;
+
+    return { ...user };
   }
 
   async findByEmail(email: string): Promise<User> {
     return this.prisma.user.findUnique({ where: { email } });
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+  async update(
+    id: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<UserWithoutPassword> {
     await this.hashIfUpdatingPassword(id, updateUserDto);
 
     const user = await this.prisma.user.update({
@@ -40,7 +46,9 @@ export class UserService {
       data: { ...updateUserDto },
     });
 
-    return { ...user, password: undefined };
+    delete user.password;
+
+    return { ...user };
   }
 
   async remove(id: string, currentPassword: string): Promise<void> {
