@@ -1,6 +1,6 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { isDateString, isUUID } from 'class-validator';
+import { isDate, isDateString, isUUID } from 'class-validator';
 import { AppModule } from 'src/app.module';
 import { EmailInUseError } from 'src/errors/email-in-use.error';
 import { PrismaInterceptor } from 'src/interceptors/prisma.interceptor';
@@ -56,14 +56,28 @@ describe('UserController (e2e)', () => {
   });
 
   describe('Post /user', () => {
-    it('should create user', () => {
-      return request(app.getHttpServer())
+    it('should create user', async () => {
+      await request(app.getHttpServer())
         .post('/user')
         .send({
           email: 'tester@example.com',
           password: 'abc123456',
         })
         .expect(201);
+
+      const user = await prisma.user.findUnique({
+        where: { email: 'tester@example.com' },
+      });
+
+      expect(user).toBeDefined();
+
+      expect(isUUID(user.id, 4)).toBeTruthy();
+      expect(user.email).toEqual('tester@example.com');
+      expect(user.password).not.toEqual('abc123456');
+      expect(user.address).toBeNull();
+      expect(user.name).toBeNull();
+      expect(isDate(user.createdAt)).toBeTruthy();
+      expect(isDate(user.updatedAt)).toBeTruthy();
     });
 
     it('should not create user if email is already in use', () => {
