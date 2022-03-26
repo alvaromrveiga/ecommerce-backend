@@ -9,13 +9,15 @@ import {
   Post,
   Req,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { Public } from 'src/auth/public.decorator';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
+import { UserWithoutPassword } from './entities/user-without-password.entity';
 import { UserService } from './user.service';
 
+@ApiTags('user')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -27,7 +29,7 @@ export class UserController {
   }
 
   @Get()
-  async findById(@Req() request: Request): Promise<User> {
+  async findById(@Req() request: Request): Promise<UserWithoutPassword> {
     const userId = request.user['userId'];
 
     return this.userService.findById(userId);
@@ -37,7 +39,7 @@ export class UserController {
   update(
     @Req() request: Request,
     @Body() updateUserDto: UpdateUserDto,
-  ): Promise<User> {
+  ): Promise<UserWithoutPassword> {
     const userId = request.user['userId'];
 
     return this.userService.update(userId, updateUserDto);
