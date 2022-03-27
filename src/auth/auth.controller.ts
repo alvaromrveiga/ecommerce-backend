@@ -1,12 +1,8 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
+import { LoginCredentialsDto } from './dto/login-credentials.dto';
 import { Public } from './public.decorator';
-
-interface LoginCredentials {
-  email: string;
-  password: string;
-}
 
 @ApiTags('authentication')
 @Controller()
@@ -17,7 +13,7 @@ export class AuthController {
   @Post('login')
   @HttpCode(HttpStatus.OK)
   async login(
-    @Body() { email, password }: LoginCredentials,
+    @Body() { email, password }: LoginCredentialsDto,
   ): Promise<{ accessToken: string }> {
     return this.authService.login(email, password);
   }
