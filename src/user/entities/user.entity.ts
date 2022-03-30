@@ -1,5 +1,6 @@
 import { Prisma } from '@prisma/client';
 
+/** Describes the properties of an User in the database */
 export class User implements Prisma.UserUncheckedCreateInput {
   /**
    * User ID as UUID

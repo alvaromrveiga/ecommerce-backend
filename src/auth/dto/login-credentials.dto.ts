@@ -1,5 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
+/** Describes the information needed to authenticate an User to the application */
 export class LoginCredentialsDto {
   /**
    * User email

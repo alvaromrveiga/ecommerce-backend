@@ -4,6 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { PrismaInterceptor } from './interceptors/prisma.interceptor';
 
+/** Starts the application */
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
 

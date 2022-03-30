@@ -24,7 +24,8 @@
     "migrate:dev": "prisma migrate dev",
     "migrate:test": "dotenv -e .env.test -- prisma migrate dev",
     "studio:dev": "prisma studio",
-    "studio:test": "dotenv -e .env.test -- prisma studio"
+    "studio:test": "dotenv -e .env.test -- prisma studio",
+    "compodoc": "npx @compodoc/compodoc -p tsconfig.json -s"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
@@ -47,6 +48,7 @@
     "swagger-ui-express": "^4.3.0"
   },
   "devDependencies": {
+    "@compodoc/compodoc": "^1.1.19",
     "@nestjs/cli": "^8.0.0",
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^8.0.0",

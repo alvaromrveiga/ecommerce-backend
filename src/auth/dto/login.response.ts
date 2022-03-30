@@ -1,3 +1,4 @@
+/** Describes the response received when the Login route is successfully called */
 export class LoginResponse {
   /**
    * JWT Authentication token

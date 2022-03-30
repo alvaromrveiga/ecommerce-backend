@@ -7,6 +7,7 @@ import {
 } from 'class-validator';
 import { User } from '../entities/user.entity';
 
+/** Describes the fields needed to create an User */
 export class CreateUserDto implements User {
   /**
    * User email
