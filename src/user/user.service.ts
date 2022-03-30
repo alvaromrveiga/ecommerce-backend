@@ -82,10 +82,6 @@ export class UserService {
     id: string,
     currentPassword: string,
   ): Promise<void> {
-    if (!currentPassword) {
-      throw new InvalidPasswordUpdateError();
-    }
-
     const user = await this.prisma.user.findUnique({ where: { id } });
 
     const isCorrectPassword = await compare(currentPassword, user.password);
