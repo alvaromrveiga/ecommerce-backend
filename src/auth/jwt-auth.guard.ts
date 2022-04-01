@@ -4,12 +4,27 @@ import { AuthGuard } from '@nestjs/passport';
 import { Observable } from 'rxjs';
 import { IS_PUBLIC_KEY } from './public.decorator';
 
+/** Uses the passport library AuthGuard to check
+ * if the route needs authentication
+ *
+ * For more on NestJs Guards: https://docs.nestjs.com/guards
+ */
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
+  /** Uses the passport library AuthGuard to check
+   * if the route needs authentication
+   *
+   * For more on NestJs Guards: https://docs.nestjs.com/guards
+   *
+   * Instantiates the class and the Reflector dependency
+   */
   constructor(private reflector: Reflector) {
     super();
   }
 
+  /** If the route uses the Public decorator it
+   * does not need authentication, else it does
+   */
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
