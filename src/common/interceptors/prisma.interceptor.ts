@@ -7,7 +7,7 @@ import {
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { PrismaError } from 'prisma-error-enum';
 import { catchError, Observable } from 'rxjs';
-import { EmailInUseError } from 'src/errors/email-in-use.error';
+import { EmailInUseError } from '../errors/email-in-use.error';
 
 /** Interceptor for Prisma ORM errors
  *

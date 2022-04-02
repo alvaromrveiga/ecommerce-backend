@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
-import { User } from 'src/user/entities/user.entity';
-import { UserService } from 'src/user/user.service';
+import { User } from 'src/models/user/entities/user.entity';
+import { UserService } from 'src/models/user/user.service';
 import { InvalidEmailOrPasswordError } from './errors/invalid-email-or-password.error.';
 
 /** Responsible for authenticating the user */

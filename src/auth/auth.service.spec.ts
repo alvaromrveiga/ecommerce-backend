@@ -1,6 +1,6 @@
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserService } from 'src/user/user.service';
+import { UserService } from 'src/models/user/user.service';
 import { AuthService } from './auth.service';
 import { InvalidEmailOrPasswordError } from './errors/invalid-email-or-password.error.';
 

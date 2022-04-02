@@ -1,13 +1,13 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
-import { Test, TestingModule } from '@nestjs/testing';
 import { JwtService } from '@nestjs/jwt';
+import { Test, TestingModule } from '@nestjs/testing';
 import { isJWT } from 'class-validator';
+import ms from 'ms';
 import { AppModule } from 'src/app.module';
-import { PrismaInterceptor } from 'src/interceptors/prisma.interceptor';
+import { PrismaInterceptor } from 'src/common/interceptors/prisma.interceptor';
+import { jwtConfig } from 'src/config/jwt.config';
 import { PrismaService } from 'src/prisma/prisma.service';
 import request from 'supertest';
-import ms from 'ms';
-import { jwtConfig } from 'src/config/jwt.config';
 
 describe('AuthController (e2e)', () => {
   let app: INestApplication;

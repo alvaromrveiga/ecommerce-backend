@@ -2,10 +2,10 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { isDate, isDateString, isUUID } from 'class-validator';
 import { AppModule } from 'src/app.module';
-import { EmailInUseError } from 'src/errors/email-in-use.error';
-import { PrismaInterceptor } from 'src/interceptors/prisma.interceptor';
+import { EmailInUseError } from 'src/common/errors/email-in-use.error';
+import { PrismaInterceptor } from 'src/common/interceptors/prisma.interceptor';
+import { User } from 'src/models/user/entities/user.entity';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { User } from 'src/user/entities/user.entity';
 import request from 'supertest';
 
 describe('UserController (e2e)', () => {
