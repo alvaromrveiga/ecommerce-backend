@@ -16,3 +16,13 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 }
+
+model Product {
+  id                 String  @id @default(uuid())
+  name               String  @unique
+  picture            String?
+  basePrice          Decimal
+  discountPercentage Int     @default(0)
+  stock              Int     @default(0)
+  description        String?
+}
