@@ -18,11 +18,13 @@ model User {
 }
 
 model Product {
-  id                 String  @id @default(uuid())
-  name               String  @unique
+  id                 String   @id @default(uuid())
+  name               String   @unique
+  urlName            String   @unique
   picture            String?
   basePrice          Decimal
-  discountPercentage Int     @default(0)
-  stock              Int     @default(0)
+  discountPercentage Int      @default(0)
+  stock              Int      @default(0)
   description        String?
+  createdAt          DateTime @default(now())
 }
