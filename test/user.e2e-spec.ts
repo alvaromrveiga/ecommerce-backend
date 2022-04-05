@@ -165,6 +165,10 @@ describe('UserController (e2e)', () => {
       expect(isDateString(user.createdAt)).toBeTruthy();
       expect(isDateString(user.updatedAt)).toBeTruthy();
 
+      expect(new Date(user.updatedAt).getTime()).toBeGreaterThan(
+        new Date(user.createdAt).getTime(),
+      );
+
       await request(app.getHttpServer())
         .post('/login')
         .send({

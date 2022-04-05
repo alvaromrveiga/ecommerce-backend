@@ -62,7 +62,7 @@ export class UserService {
 
     const user = await this.prisma.user.update({
       where: { id },
-      data: { ...updateUserDto },
+      data: { ...updateUserDto, updatedAt: new Date() },
     });
 
     delete user.password;
