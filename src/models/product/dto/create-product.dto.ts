@@ -60,5 +60,6 @@ export class CreateProductDto extends OmitType(Product, [
    * @example "Black wheelchair for offices"
    */
   @IsString()
+  @IsOptional()
   description?: string;
 }
