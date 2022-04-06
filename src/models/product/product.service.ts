@@ -18,21 +18,29 @@ export class ProductService {
 
   /** Creates a new product */
   async create(createProductDto: CreateProductDto): Promise<Product> {
-    const urlName = createProductDto.name.toLowerCase().replace(' ', '-');
+    const lowerCaseUrlName = createProductDto.name.toLocaleLowerCase();
+    const spaceToHyphenUrlName = lowerCaseUrlName.split(' ').join('-');
 
     const product = await this.prisma.product.create({
-      data: { ...createProductDto, urlName },
+      data: { ...createProductDto, urlName: spaceToHyphenUrlName },
     });
 
     return product;
   }
 
-  findAll() {
-    return `This action returns all product`;
+  /** Returns all products */
+  async findAll(): Promise<Product[]> {
+    return this.prisma.product.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  /** Find product by ID */
+  async findOneById(id: string): Promise<Product> {
+    return this.prisma.product.findUnique({ where: { id } });
+  }
+
+  /** Find product by Url Name */
+  async findOneByUrlName(urlName: string): Promise<Product> {
+    return this.prisma.product.findUnique({ where: { urlName } });
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {
