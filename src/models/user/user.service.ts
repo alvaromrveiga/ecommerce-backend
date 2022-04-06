@@ -25,9 +25,12 @@ export class UserService {
   async create(createUserDto: CreateUserDto): Promise<void> {
     const hashedPassword = await hash(createUserDto.password, 10);
 
+    const lowerCaseEmail = createUserDto.email.toLowerCase();
+
     await this.prisma.user.create({
       data: {
         ...createUserDto,
+        email: lowerCaseEmail,
         password: hashedPassword,
       },
     });
@@ -50,7 +53,9 @@ export class UserService {
    * the hashed one.
    */
   async findByEmail(email: string): Promise<User> {
-    return this.prisma.user.findUnique({ where: { email } });
+    const lowerCaseEmail = email.toLowerCase();
+
+    return this.prisma.user.findUnique({ where: { email: lowerCaseEmail } });
   }
 
   /** Updates user information */

@@ -77,6 +77,16 @@ describe('AuthController (e2e)', () => {
       expect(exp).toEqual(iat + expiresInSeconds);
     });
 
+    it('should login by case insensitive email', () => {
+      return request(app.getHttpServer())
+        .post('/login')
+        .send({
+          email: 'TeSteR0@exAmple.com',
+          password: 'abc123456',
+        })
+        .expect(200);
+    });
+
     it('should not login user if password is wrong', () => {
       return request(app.getHttpServer())
         .post('/login')

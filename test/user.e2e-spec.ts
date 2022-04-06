@@ -94,6 +94,20 @@ describe('UserController (e2e)', () => {
       });
     });
 
+    it('should not create user if email is already in use by case insensitive', () => {
+      return expect(
+        request(app.getHttpServer())
+          .post('/user')
+          .send({
+            email: 'tEsTer0@example.com',
+            password: 'abc123456',
+          })
+          .expect(400),
+      ).resolves.toMatchObject({
+        text: JSON.stringify(new EmailInUseError().getResponse()),
+      });
+    });
+
     it('should not create user if email is invalid', () => {
       return request(app.getHttpServer())
         .post('/user')
