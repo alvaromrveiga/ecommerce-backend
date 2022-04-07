@@ -7,6 +7,7 @@ import {
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { PrismaError } from 'prisma-error-enum';
 import { catchError, Observable } from 'rxjs';
+import { ProductNotFoundError } from 'src/models/product/errors/product-not-found.error';
 import { EmailInUseError } from '../errors/email-in-use.error';
 
 /** Interceptor for Prisma ORM errors
@@ -38,6 +39,13 @@ export class PrismaInterceptor implements NestInterceptor {
               throw error;
           }
         }
+
+        if (this.isPrismaUnknownError(error)) {
+          if (error.message === 'No Product found') {
+            throw new ProductNotFoundError();
+          }
+        }
+
         throw error;
       }),
     );
@@ -46,5 +54,12 @@ export class PrismaInterceptor implements NestInterceptor {
   /** Returns wether the error happened in the email field or not */
   private isEmailConstraintViolation(errorMeta: object): boolean {
     return Object.values(errorMeta)[0][0] === 'email';
+  }
+
+  /** Checks if the error contains clientVersion,
+   * making it an unknown prisma error
+   * */
+  private isPrismaUnknownError(error): boolean {
+    return !!error.clientVersion;
   }
 }
