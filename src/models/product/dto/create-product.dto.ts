@@ -14,6 +14,7 @@ import { Product } from '../entities/product.entity';
 export class CreateProductDto extends OmitType(Product, [
   'id',
   'createdAt',
+  'urlName',
 ] as const) {
   /**
    * Product name
@@ -34,7 +35,7 @@ export class CreateProductDto extends OmitType(Product, [
   /**
    * Product price not considering discounts.
    * Saved as decimal and handled with currency.js
-   * @example 70.00
+   * @example "70.00"
    */
   @IsDecimal()
   @IsNotEmpty()
