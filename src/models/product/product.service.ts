@@ -35,19 +35,33 @@ export class ProductService {
 
   /** Find product by ID */
   async findOneById(id: string): Promise<Product> {
-    return this.prisma.product.findUnique({ where: { id } });
+    return this.prisma.product.findUnique({
+      where: { id },
+      rejectOnNotFound: true,
+    });
   }
 
   /** Find product by Url Name */
   async findOneByUrlName(urlName: string): Promise<Product> {
-    return this.prisma.product.findUnique({ where: { urlName } });
+    return this.prisma.product.findUnique({
+      where: { urlName },
+      rejectOnNotFound: true,
+    });
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  /** Updates product information */
+  async update(
+    id: string,
+    updateProductDto: UpdateProductDto,
+  ): Promise<Product> {
+    return this.prisma.product.update({
+      where: { id },
+      data: { ...updateProductDto },
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  /** Removes product from database */
+  async remove(id: string): Promise<void> {
+    this.prisma.product.delete({ where: { id } });
   }
 }
