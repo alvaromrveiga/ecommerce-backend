@@ -61,7 +61,7 @@ export class PrismaInterceptor implements NestInterceptor {
     return Object.values(errorMeta)[0][0] === 'email';
   }
 
-  /** Returns wether the error happened in the email field or not */
+  /** Returns wether the error happened in the product name field or not */
   private isProductNameConstraintViolation(
     error: PrismaClientKnownRequestError,
   ): boolean {
