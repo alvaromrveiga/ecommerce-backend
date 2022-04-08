@@ -1,7 +1,6 @@
 import { OmitType } from '@nestjs/swagger';
 import { Decimal } from '@prisma/client/runtime';
 import {
-  IsDecimal,
   IsInt,
   IsNotEmpty,
   IsNumber,
@@ -35,9 +34,9 @@ export class CreateProductDto extends OmitType(Product, [
   /**
    * Product price not considering discounts.
    * Saved as decimal and handled with currency.js
-   * @example "70.00"
+   * @example 70.00
    */
-  @IsDecimal()
+  @IsNumber()
   @IsNotEmpty()
   basePrice: string | number | Decimal;
 
