@@ -66,7 +66,8 @@ export class PrismaInterceptor implements NestInterceptor {
     error: PrismaClientKnownRequestError,
   ): boolean {
     return (
-      Object.values(error.meta)[0][0] === 'name' &&
+      (Object.values(error.meta)[0][0] === 'name' ||
+        Object.values(error.meta)[0][0] === 'urlName') &&
       error.message.includes('prisma.product')
     );
   }
