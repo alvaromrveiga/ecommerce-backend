@@ -9,6 +9,7 @@ import { PrismaError } from 'prisma-error-enum';
 import { catchError, Observable } from 'rxjs';
 import { ProductNotFoundError } from 'src/models/product/errors/product-not-found.error';
 import { EmailInUseError } from '../errors/email-in-use.error';
+import { ProductNameInUseException } from '../errors/product-name-in-use.exception';
 
 /** Interceptor for Prisma ORM errors
  *
@@ -34,6 +35,10 @@ export class PrismaInterceptor implements NestInterceptor {
               if (this.isEmailConstraintViolation(error.meta)) {
                 throw new EmailInUseError();
               }
+
+              if (this.isProductNameConstraintViolation(error)) {
+                throw new ProductNameInUseException();
+              }
               break;
             default:
               throw error;
@@ -54,6 +59,16 @@ export class PrismaInterceptor implements NestInterceptor {
   /** Returns wether the error happened in the email field or not */
   private isEmailConstraintViolation(errorMeta: object): boolean {
     return Object.values(errorMeta)[0][0] === 'email';
+  }
+
+  /** Returns wether the error happened in the email field or not */
+  private isProductNameConstraintViolation(
+    error: PrismaClientKnownRequestError,
+  ): boolean {
+    return (
+      Object.values(error.meta)[0][0] === 'name' &&
+      error.message.includes('prisma.product')
+    );
   }
 
   /** Checks if the error contains clientVersion,
