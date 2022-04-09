@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
+import { FindAllProductsDto } from './dto/find-all-products.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
 
@@ -28,9 +29,25 @@ export class ProductService {
     return product;
   }
 
-  /** Returns all products */
-  async findAll(): Promise<Product[]> {
-    return this.prisma.product.findMany();
+  /** Returns all products with pagination
+   * Default is starting on page 1 showing 10 results per page
+   * and ordering by name
+   */
+  async findAll({
+    searchName = '',
+    page = 1,
+    offset = 10,
+  }: FindAllProductsDto): Promise<Product[]> {
+    const productsToSkip = (page - 1) * offset;
+
+    return this.prisma.product.findMany({
+      skip: productsToSkip,
+      take: offset,
+      where: {
+        name: { contains: searchName, mode: 'insensitive' },
+      },
+      orderBy: { name: 'asc' },
+    });
   }
 
   /** Find product by ID */

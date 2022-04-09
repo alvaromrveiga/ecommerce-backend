@@ -8,12 +8,14 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Product } from './entities/product.entity';
+import { FindAllProductsDto } from './dto/find-all-products.dto';
 
 /** Exposes product CRUD endpoints */
 @ApiTags('product')
@@ -33,11 +35,14 @@ export class ProductController {
     return this.productService.create(createProductDto);
   }
 
-  /** Returns all products */
+  /** Returns all products with pagination
+   * Default is starting on page 1 showing 10 results per page,
+   * searching and ordering by name
+   */
   @ApiOperation({ summary: 'Returns all products' })
   @Get()
-  findAll(): Promise<Product[]> {
-    return this.productService.findAll();
+  findAll(@Query() findAllProductsDto: FindAllProductsDto): Promise<Product[]> {
+    return this.productService.findAll(findAllProductsDto);
   }
 
   /** Find product by ID */
