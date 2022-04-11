@@ -17,12 +17,12 @@ const PrismaServiceMock = {
       }),
       findUnique: jest.fn().mockImplementation(({ where }) => {
         return userArray.find((user) => {
-          return user.email === where.id || user.email === where.email;
+          return user.id === where.id || user.email === where.email;
         });
       }),
       update: jest.fn().mockImplementation(({ where, data }) => {
         const userIndex = userArray.findIndex((user) => {
-          return user.email === where.id || user.email === where.email;
+          return user.id === where.id || user.email === where.email;
         });
 
         userArray[userIndex] = { ...userArray[userIndex], ...data };
@@ -31,7 +31,7 @@ const PrismaServiceMock = {
       }),
       delete: jest.fn().mockImplementation(({ where }) => {
         const userIndex = userArray.findIndex((user) => {
-          return user.email === where.id || user.email === where.email;
+          return user.id === where.id || user.email === where.email;
         });
 
         userArray.splice(userIndex, 1);
@@ -60,16 +60,19 @@ describe('UserService', () => {
       email: 'tester@example.com',
       password: 'abc123456',
     });
+    userArray[0].id = '6db1727e-0ccc-412d-8d1f-6f406bc7b373';
 
     await userService.create({
       email: 'tester2@example.com',
       password: 'abc123456',
     });
+    userArray[1].id = '56a12d76-52e0-4ddd-8b7f-ffe88854d94c';
 
     await userService.create({
       email: 'tester3@example.com',
       password: 'abc123456',
     });
+    userArray[2].id = '36d01635-687c-41f7-9ca1-548c55cdf5d9';
   });
 
   it('should be defined', () => {
@@ -94,7 +97,9 @@ describe('UserService', () => {
 
   describe('findById', () => {
     it('should return user without password', async () => {
-      const user = await userService.findById('tester2@example.com');
+      const user = await userService.findById(
+        '56a12d76-52e0-4ddd-8b7f-ffe88854d94c',
+      );
 
       expect(prismaService.user.findUnique).toHaveBeenCalled();
 
@@ -124,7 +129,10 @@ describe('UserService', () => {
         password: 'abc1234567',
       };
 
-      const user = await userService.update('tester2@example.com', data);
+      const user = await userService.update(
+        '56a12d76-52e0-4ddd-8b7f-ffe88854d94c',
+        data,
+      );
 
       expect(prismaService.user.update).toHaveBeenCalled();
 
@@ -150,7 +158,7 @@ describe('UserService', () => {
       };
 
       await expect(
-        userService.update('tester2@example.com', data),
+        userService.update('56a12d76-52e0-4ddd-8b7f-ffe88854d94c', data),
       ).rejects.toThrow(new InvalidPasswordUpdateError());
     });
 
@@ -160,7 +168,7 @@ describe('UserService', () => {
       };
 
       await expect(
-        userService.update('tester2@example.com', data),
+        userService.update('56a12d76-52e0-4ddd-8b7f-ffe88854d94c', data),
       ).rejects.toThrow(new MissingPasswordUpdateError());
     });
 
@@ -170,14 +178,14 @@ describe('UserService', () => {
       };
 
       await expect(
-        userService.update('tester2@example.com', data),
+        userService.update('56a12d76-52e0-4ddd-8b7f-ffe88854d94c', data),
       ).rejects.toThrow(new MissingPasswordUpdateError());
     });
   });
 
   describe('delete', () => {
     it('should remove user', async () => {
-      await userService.remove('tester2@example.com', {
+      await userService.remove('56a12d76-52e0-4ddd-8b7f-ffe88854d94c', {
         currentPassword: 'abc123456',
       });
 
@@ -194,7 +202,7 @@ describe('UserService', () => {
 
     it('should not remove user if password is wrong', async () => {
       await expect(
-        userService.remove('tester2@example.com', {
+        userService.remove('56a12d76-52e0-4ddd-8b7f-ffe88854d94c', {
           currentPassword: 'wrongPassword',
         }),
       ).rejects.toThrow(new InvalidPasswordUpdateError());
@@ -202,7 +210,9 @@ describe('UserService', () => {
 
     it('should not remove user if password is empty', async () => {
       await expect(
-        userService.remove('tester2@example.com', { currentPassword: '' }),
+        userService.remove('56a12d76-52e0-4ddd-8b7f-ffe88854d94c', {
+          currentPassword: '',
+        }),
       ).rejects.toThrow(new InvalidPasswordUpdateError());
     });
   });
