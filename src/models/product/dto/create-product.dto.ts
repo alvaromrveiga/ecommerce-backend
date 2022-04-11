@@ -33,7 +33,8 @@ export class CreateProductDto extends OmitType(Product, [
 
   /**
    * Product price not considering discounts.
-   * Saved as decimal and handled with currency.js
+   * Saved as decimal, calculations should be handled
+   * with currency.js
    * @example 70.00
    */
   @IsNumber()
