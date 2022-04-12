@@ -132,5 +132,21 @@ describe('ProductService', () => {
         );
       });
     });
+
+    describe('findOne Product by Url Name', () => {
+      it('should find one product by urlName', async () => {
+        const product = await productService.findOneByUrlName(
+          'brand1-black-wheelchair',
+        );
+
+        expect(product).toEqual(productArray[0]);
+
+        expect(prismaService.product.findUnique).toHaveBeenCalledWith(
+          expect.objectContaining({
+            where: { urlName: 'brand1-black-wheelchair' },
+          }),
+        );
+      });
+    });
   });
 });
