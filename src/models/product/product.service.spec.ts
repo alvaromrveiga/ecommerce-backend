@@ -22,7 +22,7 @@ const PrismaServiceMock = {
       }),
       update: jest.fn().mockImplementation(({ where, data }) => {
         const productIndex = productArray.findIndex((product) => {
-          product.urlName === where.urlName || product.id === where.id;
+          return product.urlName === where.urlName || product.id === where.id;
         });
 
         productArray[productIndex] = { ...productArray[productIndex], ...data };
@@ -31,7 +31,7 @@ const PrismaServiceMock = {
       }),
       delete: jest.fn().mockImplementation(({ where }) => {
         const productIndex = productArray.findIndex((product) => {
-          product.urlName === where.urlName || product.id === where.id;
+          return product.urlName === where.urlName || product.id === where.id;
         });
 
         productArray.splice(productIndex, 1);
@@ -65,6 +65,25 @@ describe('ProductService', () => {
       description: 'Black wheelchair for offices',
     });
     productArray[0].id = 'c89b0c84-281e-4995-bd2a-09e0e970d8e2';
+
+    await productService.create({
+      name: 'Brand2 black wheelchair',
+      picture: 'image.jpg',
+      basePrice: '90.00',
+      stock: 1,
+      description: 'Black wheelchair for offices',
+    });
+    productArray[1].id = 'a2f891a5-4f1f-43e9-92d4-7d8e9de2bf7c';
+
+    await productService.create({
+      name: 'Brand1 table',
+      picture: 'image.jpg',
+      basePrice: '50.00',
+      discountPercentage: 15,
+      stock: 6,
+      description: 'Table for offices',
+    });
+    productArray[2].id = '380379b4-a10f-49f0-9d0d-46a05794f0af';
   });
 
   it('should be defined', () => {
@@ -72,10 +91,10 @@ describe('ProductService', () => {
     expect(prismaService).toBeDefined();
   });
 
-  describe('createProduct', () => {
+  describe('create', () => {
     it('should create product', async () => {
       await productService.create({
-        name: 'Brand2 black wheelchair',
+        name: 'Brand3 black wheelchair',
         picture: 'image.jpg',
         basePrice: '70.00',
         discountPercentage: 5,
@@ -83,13 +102,13 @@ describe('ProductService', () => {
         description: 'Black wheelchair for offices',
       });
 
-      expect(productArray.length).toEqual(2);
-      expect(productArray[1].urlName).toEqual('brand2-black-wheelchair');
+      expect(productArray.length).toEqual(4);
+      expect(productArray[3].urlName).toEqual('brand3-black-wheelchair');
 
       expect(prismaService.product.create).toHaveBeenCalledWith({
         data: {
-          name: 'Brand2 black wheelchair',
-          urlName: 'brand2-black-wheelchair',
+          name: 'Brand3 black wheelchair',
+          urlName: 'brand3-black-wheelchair',
           picture: 'image.jpg',
           basePrice: '70.00',
           discountPercentage: 5,
@@ -100,7 +119,7 @@ describe('ProductService', () => {
     });
   });
 
-  describe('findAll Products', () => {
+  describe('findAll', () => {
     it('should find all products', async () => {
       const products = await productService.findAll({});
 
@@ -116,37 +135,91 @@ describe('ProductService', () => {
         expect.objectContaining({ skip: 20, take: 10 }),
       );
     });
+  });
 
-    describe('findOne Product by Id', () => {
-      it('should find one product by id', async () => {
-        const product = await productService.findOneById(
-          'c89b0c84-281e-4995-bd2a-09e0e970d8e2',
-        );
+  describe('findOneById', () => {
+    it('should find one product by id', async () => {
+      const product = await productService.findOneById(
+        'a2f891a5-4f1f-43e9-92d4-7d8e9de2bf7c',
+      );
 
-        expect(product).toEqual(productArray[0]);
+      expect(product).toEqual(productArray[1]);
 
-        expect(prismaService.product.findUnique).toHaveBeenCalledWith(
-          expect.objectContaining({
-            where: { id: 'c89b0c84-281e-4995-bd2a-09e0e970d8e2' },
-          }),
-        );
-      });
+      expect(prismaService.product.findUnique).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: { id: 'a2f891a5-4f1f-43e9-92d4-7d8e9de2bf7c' },
+        }),
+      );
     });
+  });
 
-    describe('findOne Product by Url Name', () => {
-      it('should find one product by urlName', async () => {
-        const product = await productService.findOneByUrlName(
-          'brand1-black-wheelchair',
-        );
+  describe('findOneByUrlName', () => {
+    it('should find one product by urlName', async () => {
+      const product = await productService.findOneByUrlName(
+        'brand1-black-wheelchair',
+      );
 
-        expect(product).toEqual(productArray[0]);
+      expect(product).toEqual(productArray[0]);
 
-        expect(prismaService.product.findUnique).toHaveBeenCalledWith(
-          expect.objectContaining({
-            where: { urlName: 'brand1-black-wheelchair' },
-          }),
-        );
+      expect(prismaService.product.findUnique).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: { urlName: 'brand1-black-wheelchair' },
+        }),
+      );
+    });
+  });
+
+  describe('update', () => {
+    it('should update product', async () => {
+      const product = await productService.update(
+        'a2f891a5-4f1f-43e9-92d4-7d8e9de2bf7c',
+        {
+          name: 'Brand2 black and orange wheelchair',
+          picture: 'otherImage.jpg',
+          basePrice: '180.00',
+          discountPercentage: 50,
+          description: 'Black and orange wheelchair on promotion!',
+          stock: 10,
+        },
+      );
+
+      expect(prismaService.product.update).toHaveBeenCalledWith({
+        where: { id: 'a2f891a5-4f1f-43e9-92d4-7d8e9de2bf7c' },
+        data: {
+          name: 'Brand2 black and orange wheelchair',
+          picture: 'otherImage.jpg',
+          basePrice: '180.00',
+          discountPercentage: 50,
+          description: 'Black and orange wheelchair on promotion!',
+          stock: 10,
+        },
       });
+
+      expect(product.id).toEqual('a2f891a5-4f1f-43e9-92d4-7d8e9de2bf7c');
+      expect(product.name).toEqual('Brand2 black and orange wheelchair');
+      expect(product.picture).toEqual('otherImage.jpg');
+      expect(product.basePrice).toEqual('180.00');
+      expect(product.discountPercentage).toEqual(50);
+      expect(product.description).toEqual(
+        'Black and orange wheelchair on promotion!',
+      );
+      expect(product.stock).toEqual(10);
+    });
+  });
+
+  describe('remove', () => {
+    it('should remove product', async () => {
+      await productService.remove('a2f891a5-4f1f-43e9-92d4-7d8e9de2bf7c');
+
+      expect(prismaService.product.delete).toHaveBeenCalledWith({
+        where: { id: 'a2f891a5-4f1f-43e9-92d4-7d8e9de2bf7c' },
+      });
+
+      const product = await productService.findOneById(
+        'a2f891a5-4f1f-43e9-92d4-7d8e9de2bf7c',
+      );
+
+      expect(product).toBeUndefined();
     });
   });
 });
