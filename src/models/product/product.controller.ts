@@ -1,21 +1,22 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
   HttpCode,
   HttpStatus,
+  Param,
+  Patch,
+  Post,
   Query,
 } from '@nestjs/common';
-import { ProductService } from './product.service';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Product } from './entities/product.entity';
+import { IsAdmin } from 'src/common/decorators/is-admin.decorator';
+import { CreateProductDto } from './dto/create-product.dto';
 import { FindAllProductsDto } from './dto/find-all-products.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
+import { Product } from './entities/product.entity';
+import { ProductService } from './product.service';
 
 /** Exposes product CRUD endpoints */
 @ApiTags('product')
@@ -28,8 +29,9 @@ export class ProductController {
    */
   constructor(private readonly productService: ProductService) {}
 
-  /** Creates a new product */
-  @ApiOperation({ summary: 'Creates a new product' })
+  /** Creates a new product, only for admins */
+  @ApiOperation({ summary: 'Admin creates a new product' })
+  @IsAdmin()
   @Post()
   create(@Body() createProductDto: CreateProductDto): Promise<Product> {
     return this.productService.create(createProductDto);
@@ -45,8 +47,9 @@ export class ProductController {
     return this.productService.findAll(findAllProductsDto);
   }
 
-  /** Find product by ID */
-  @ApiOperation({ summary: 'Gets product by ID' })
+  /** Find product by ID, only for admins */
+  @ApiOperation({ summary: 'Admin gets product by ID' })
+  @IsAdmin()
   @Get('/id/:id')
   findOneById(@Param('id') id: string): Promise<Product> {
     return this.productService.findOneById(id);
@@ -59,8 +62,9 @@ export class ProductController {
     return this.productService.findOneByUrlName(urlName);
   }
 
-  /** Updates product information */
-  @ApiOperation({ summary: 'Updates product' })
+  /** Updates product information, only for admins */
+  @ApiOperation({ summary: 'Admin updates product' })
+  @IsAdmin()
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -69,8 +73,9 @@ export class ProductController {
     return this.productService.update(id, updateProductDto);
   }
 
-  /** Deletes product from database */
-  @ApiOperation({ summary: 'Deletes product' })
+  /** Deletes product from database, only for admins */
+  @ApiOperation({ summary: 'Admin deletes product' })
+  @IsAdmin()
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: string): Promise<void> {
