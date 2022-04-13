@@ -29,7 +29,7 @@ export class AuthService {
   ): Promise<{ accessToken: string }> {
     const user = await this.validateUser(email, password);
 
-    const payload = { sub: user.id };
+    const payload = { sub: user.id, role: user.role };
 
     return {
       accessToken: this.jwtService.sign(payload),

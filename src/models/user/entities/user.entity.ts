@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { Prisma, Role } from '@prisma/client';
 
 /** Describes the properties of an User in the database */
 export class User implements Prisma.UserUncheckedCreateInput {
@@ -7,6 +7,16 @@ export class User implements Prisma.UserUncheckedCreateInput {
    * @example "d31fc56c-7aed-441e-9f7f-151be8d85634"
    */
   id?: string;
+
+  /**
+   * User's Role.
+   * Can be "USER" or "ADMIN".
+   * Admin users can handle products
+   *
+   * Defaults to "USER"
+   * @example "USER"
+   */
+  role?: Role;
 
   /**
    * User email

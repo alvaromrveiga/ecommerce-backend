@@ -49,6 +49,16 @@ describe('AuthController (e2e)', () => {
       email: 'tester1@example.com',
       password: 'abc123456',
     });
+
+    await request(app.getHttpServer()).post('/user').send({
+      email: 'admin@example.com',
+      password: 'abc123456',
+    });
+
+    await prisma.user.update({
+      where: { email: 'admin@example.com' },
+      data: { role: 'ADMIN' },
+    });
   });
 
   describe('Post /login', () => {
@@ -68,13 +78,30 @@ describe('AuthController (e2e)', () => {
         where: { email: 'tester0@example.com' },
       });
 
-      const { sub, iat, exp } = jwtService.verify(response.body.accessToken);
+      const { sub, role, iat, exp } = jwtService.verify(
+        response.body.accessToken,
+      );
 
       expect(sub).toEqual(user.id);
+      expect(role).toEqual('USER');
 
       const expiresInSeconds = ms(jwtConfig.signOptions.expiresIn) / 1000;
 
       expect(exp).toEqual(iat + expiresInSeconds);
+    });
+
+    it('should login admin user', async () => {
+      const response = await request(app.getHttpServer())
+        .post('/login')
+        .send({
+          email: 'admin@example.com',
+          password: 'abc123456',
+        })
+        .expect(200);
+
+      const { role } = jwtService.verify(response.body.accessToken);
+
+      expect(role).toEqual('ADMIN');
     });
 
     it('should login by case insensitive email', () => {

@@ -9,6 +9,11 @@ interface Payload {
    * @example "d6c24523-12df-4f33-9fd6-44dd5c499084"
    */
   sub: string;
+
+  /** User role
+   * @example "user"
+   */
+  role: string;
 }
 
 /** What is returned to the application after JsonWebToken is validated */
@@ -17,6 +22,11 @@ interface ValidateReturn {
    * @example "d6c24523-12df-4f33-9fd6-44dd5c499084"
    */
   userId: string;
+
+  /** User role
+   * @example "user"
+   */
+  userRole: string;
 }
 
 /** Passport library JsonWebToken configuration */
@@ -35,6 +45,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate(payload: Payload): Promise<ValidateReturn> {
     return {
       userId: payload.sub,
+      userRole: payload.role,
     };
   }
 }
