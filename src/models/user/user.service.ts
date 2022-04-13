@@ -3,6 +3,7 @@ import { compare, hash } from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { DeleteUserDto } from './dto/delete-user.dto';
+import { UpdateUserRoleDto } from './dto/update-user-role.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserWithoutPassword } from './entities/user-without-password.entity';
 import { User } from './entities/user.entity';
@@ -73,6 +74,20 @@ export class UserService {
     delete user.password;
 
     return { ...user };
+  }
+
+  /** Updates user role */
+  async updateUserRole(
+    updateUserRoleDto: UpdateUserRoleDto,
+  ): Promise<UserWithoutPassword> {
+    const user = await this.prisma.user.update({
+      where: { email: updateUserRoleDto.email },
+      data: { role: updateUserRoleDto.role },
+    });
+
+    delete user.password;
+
+    return user;
   }
 
   /** Removes user from database */

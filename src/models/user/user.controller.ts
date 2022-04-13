@@ -12,8 +12,10 @@ import {
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { Public } from 'src/auth/public.decorator';
+import { IsAdmin } from 'src/common/decorators/is-admin.decorator';
 import { CreateUserDto } from './dto/create-user.dto';
 import { DeleteUserDto } from './dto/delete-user.dto';
+import { UpdateUserRoleDto } from './dto/update-user-role.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserWithoutPassword } from './entities/user-without-password.entity';
 import { UserService } from './user.service';
@@ -57,6 +59,17 @@ export class UserController {
     const userId = request.user['userId'];
 
     return this.userService.update(userId, updateUserDto);
+  }
+
+  /** Updates user role, only for admins */
+  @ApiOperation({ summary: "Admin set user's role" })
+  @ApiBearerAuth()
+  @IsAdmin()
+  @Patch('role')
+  updateUserRole(
+    @Body() updateUserRoleDto: UpdateUserRoleDto,
+  ): Promise<UserWithoutPassword> {
+    return this.userService.updateUserRole(updateUserRoleDto);
   }
 
   /** Deletes user and all user related information from the system */
