@@ -183,6 +183,27 @@ describe('UserService', () => {
     });
   });
 
+  describe('update user role', () => {
+    it('should update user role', async () => {
+      let user = await userService.updateUserRole({
+        email: 'tester2@example.com',
+        role: 'ADMIN',
+      });
+
+      expect(user.role).toEqual('ADMIN');
+
+      user = await userService.updateUserRole({
+        email: 'tester2@example.com',
+        role: 'USER',
+      });
+
+      expect(user.role).toEqual('USER');
+      expect(user.email).toEqual('tester2@example.com');
+      expect(user.id).toEqual('56a12d76-52e0-4ddd-8b7f-ffe88854d94c');
+      expect(user).not.toHaveProperty('password');
+    });
+  });
+
   describe('delete', () => {
     it('should remove user', async () => {
       await userService.remove('56a12d76-52e0-4ddd-8b7f-ffe88854d94c', {

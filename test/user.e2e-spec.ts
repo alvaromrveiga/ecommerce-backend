@@ -11,6 +11,7 @@ import request from 'supertest';
 describe('UserController (e2e)', () => {
   let app: INestApplication;
   let token: string;
+  let adminToken: string;
   let prisma: PrismaService;
 
   beforeAll(async () => {
@@ -48,11 +49,27 @@ describe('UserController (e2e)', () => {
       password: 'abc123456',
     });
 
-    const response = await request(app.getHttpServer())
+    await request(app.getHttpServer()).post('/user').send({
+      email: 'admin@example.com',
+      password: 'abc123456',
+    });
+
+    await prisma.user.update({
+      where: { email: 'admin@example.com' },
+      data: { role: 'ADMIN' },
+    });
+
+    let response = await request(app.getHttpServer())
       .post('/login')
       .send({ email: 'tester0@example.com', password: 'abc123456' });
 
     token = response.body.accessToken;
+
+    response = await request(app.getHttpServer())
+      .post('/login')
+      .send({ email: 'admin@example.com', password: 'abc123456' });
+
+    adminToken = response.body.accessToken;
   });
 
   describe('Post /user', () => {
@@ -267,6 +284,56 @@ describe('UserController (e2e)', () => {
           email: 'tester1@example.com',
         })
         .expect(400);
+    });
+  });
+
+  describe('Patch /user/role', () => {
+    it('should update user role', async () => {
+      const user = await prisma.user.findUnique({
+        where: { email: 'tester1@example.com' },
+      });
+
+      expect(user.role).toEqual('USER');
+
+      const { body: userResponse } = await request(app.getHttpServer())
+        .patch('/user/role')
+        .set({ Authorization: `Bearer ${adminToken}` })
+        .send({ email: 'tester1@example.com', role: 'ADMIN' })
+        .expect(200);
+
+      expect(userResponse.role).toEqual('ADMIN');
+      expect(userResponse).not.toHaveProperty('password');
+    });
+
+    it('should not update user role if logged user is not admin', async () => {
+      await request(app.getHttpServer())
+        .patch('/user/role')
+        .set({ Authorization: `Bearer ${token}` })
+        .send({ email: 'tester1@example.com', role: 'ADMIN' })
+        .expect(403);
+    });
+
+    it('should not update user role if unauthenticated', async () => {
+      await request(app.getHttpServer())
+        .patch('/user/role')
+        .send({ email: 'tester1@example.com', role: 'ADMIN' })
+        .expect(401);
+    });
+
+    it('should not update user role if role is invalid', async () => {
+      await request(app.getHttpServer())
+        .patch('/user/role')
+        .set({ Authorization: `Bearer ${adminToken}` })
+        .send({ email: 'tester1@example.com', role: 'INVALID_ROLE' })
+        .expect(400);
+    });
+
+    it('should not update user role if user is invalid', async () => {
+      await request(app.getHttpServer())
+        .patch('/user/role')
+        .set({ Authorization: `Bearer ${adminToken}` })
+        .send({ email: 'MisspelledUser@example.co', role: 'ADMIN' })
+        .expect(404);
     });
   });
 
