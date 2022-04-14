@@ -10,6 +10,7 @@ import { catchError, Observable } from 'rxjs';
 import { ProductNotFoundError } from 'src/models/product/errors/product-not-found.error';
 import { EmailInUseError } from '../errors/email-in-use.error';
 import { ProductNameInUseException } from '../errors/product-name-in-use.exception';
+import { UserNotFoundException } from '../errors/user-not-found.exception';
 
 /** Interceptor for Prisma ORM errors
  *
@@ -40,6 +41,13 @@ export class PrismaInterceptor implements NestInterceptor {
                 throw new ProductNameInUseException();
               }
               break;
+            case PrismaError.RecordsNotFound: {
+              if (this.isUserError(error)) {
+                throw new UserNotFoundException();
+              }
+
+              break;
+            }
             default:
               throw error;
           }
@@ -77,5 +85,10 @@ export class PrismaInterceptor implements NestInterceptor {
    * */
   private isPrismaUnknownError(error): boolean {
     return !!error.clientVersion;
+  }
+
+  /** Returns wether the error happened on an user prisma query or not */
+  private isUserError(error: PrismaClientKnownRequestError): boolean {
+    return error.message.includes('prisma.user');
   }
 }
