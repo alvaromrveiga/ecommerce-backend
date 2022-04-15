@@ -11,6 +11,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Public } from 'src/auth/public.decorator';
 import { IsAdmin } from 'src/common/decorators/is-admin.decorator';
 import { CreateProductDto } from './dto/create-product.dto';
 import { FindAllProductsDto } from './dto/find-all-products.dto';
@@ -20,7 +21,6 @@ import { ProductService } from './product.service';
 
 /** Exposes product CRUD endpoints */
 @ApiTags('product')
-@ApiBearerAuth()
 @Controller('product')
 export class ProductController {
   /** Exposes product CRUD endpoints
@@ -31,6 +31,7 @@ export class ProductController {
 
   /** Creates a new product, only for admins */
   @ApiOperation({ summary: 'Admin creates a new product' })
+  @ApiBearerAuth()
   @IsAdmin()
   @Post()
   create(@Body() createProductDto: CreateProductDto): Promise<Product> {
@@ -42,6 +43,7 @@ export class ProductController {
    * searching and ordering by name
    */
   @ApiOperation({ summary: 'Returns all products' })
+  @Public()
   @Get()
   findAll(@Query() findAllProductsDto: FindAllProductsDto): Promise<Product[]> {
     return this.productService.findAll(findAllProductsDto);
@@ -49,6 +51,7 @@ export class ProductController {
 
   /** Find product by ID, only for admins */
   @ApiOperation({ summary: 'Admin gets product by ID' })
+  @ApiBearerAuth()
   @IsAdmin()
   @Get('/id/:id')
   findOneById(@Param('id') id: string): Promise<Product> {
@@ -57,6 +60,7 @@ export class ProductController {
 
   /** Find product by Url Name */
   @ApiOperation({ summary: 'Gets product by urlName' })
+  @Public()
   @Get(':urlName')
   findOneByUrlName(@Param('urlName') urlName: string): Promise<Product> {
     return this.productService.findOneByUrlName(urlName);
@@ -64,6 +68,7 @@ export class ProductController {
 
   /** Updates product information, only for admins */
   @ApiOperation({ summary: 'Admin updates product' })
+  @ApiBearerAuth()
   @IsAdmin()
   @Patch(':id')
   update(
@@ -75,6 +80,7 @@ export class ProductController {
 
   /** Deletes product from database, only for admins */
   @ApiOperation({ summary: 'Admin deletes product' })
+  @ApiBearerAuth()
   @IsAdmin()
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
