@@ -19,11 +19,10 @@ export class ProductService {
 
   /** Creates a new product */
   async create(createProductDto: CreateProductDto): Promise<Product> {
-    const lowerCaseUrlName = createProductDto.name.toLocaleLowerCase();
-    const spaceToHyphenUrlName = lowerCaseUrlName.split(' ').join('-');
+    const urlName = this.formatUrlName(createProductDto.name);
 
     const product = await this.prisma.product.create({
-      data: { ...createProductDto, urlName: spaceToHyphenUrlName },
+      data: { ...createProductDto, urlName },
     });
 
     return product;
@@ -80,5 +79,22 @@ export class ProductService {
   /** Removes product from database */
   async remove(id: string): Promise<void> {
     this.prisma.product.delete({ where: { id } });
+  }
+
+  /** Formats the name to generate an urlName.
+   *
+   * Makes the name lower case, remove leading and trailing white spaces,
+   * turn to single the multiple spaces between words and make
+   * single spaces hyphens
+   *
+   * @example " BraNd1    chAir   " becomes "brand1-chair"
+   */
+  private formatUrlName(name: string): string {
+    const lowerCaseUrlName = name.toLocaleLowerCase();
+    const trimmedUrlName = lowerCaseUrlName.trim();
+    const singleSpaceUrlName = trimmedUrlName.replace(/\s\s+/g, ' ');
+    const spaceToHyphenUrlName = singleSpaceUrlName.split(' ').join('-');
+
+    return spaceToHyphenUrlName;
   }
 }
