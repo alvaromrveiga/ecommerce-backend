@@ -187,6 +187,7 @@ describe('ProductService', () => {
         where: { id: 'a2f891a5-4f1f-43e9-92d4-7d8e9de2bf7c' },
         data: {
           name: 'Brand2 black and orange wheelchair',
+          urlName: 'brand2-black-and-orange-wheelchair',
           picture: 'otherImage.jpg',
           basePrice: '180.00',
           discountPercentage: 50,
@@ -197,6 +198,7 @@ describe('ProductService', () => {
 
       expect(product.id).toEqual('a2f891a5-4f1f-43e9-92d4-7d8e9de2bf7c');
       expect(product.name).toEqual('Brand2 black and orange wheelchair');
+      expect(product.urlName).toEqual('brand2-black-and-orange-wheelchair');
       expect(product.picture).toEqual('otherImage.jpg');
       expect(product.basePrice).toEqual('180.00');
       expect(product.discountPercentage).toEqual(50);
