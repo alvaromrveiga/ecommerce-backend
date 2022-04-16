@@ -70,6 +70,10 @@ export class ProductService {
     id: string,
     updateProductDto: UpdateProductDto,
   ): Promise<Product> {
+    if (updateProductDto.name) {
+      return this.updateProductAndUrlName(id, updateProductDto);
+    }
+
     return this.prisma.product.update({
       where: { id },
       data: { ...updateProductDto },
@@ -96,5 +100,17 @@ export class ProductService {
     const spaceToHyphenUrlName = singleSpaceUrlName.split(' ').join('-');
 
     return spaceToHyphenUrlName;
+  }
+
+  private updateProductAndUrlName(
+    id: string,
+    updateProductDto: UpdateProductDto,
+  ): Promise<Product> {
+    const urlName = this.formatUrlName(updateProductDto.name);
+
+    return this.prisma.product.update({
+      where: { id },
+      data: { ...updateProductDto, urlName },
+    });
   }
 }
