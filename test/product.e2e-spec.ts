@@ -4,6 +4,7 @@ import { isDate, isUUID } from 'class-validator';
 import { AppModule } from 'src/app.module';
 import { PrismaInterceptor } from 'src/common/interceptors/prisma.interceptor';
 import { CreateProductDto } from 'src/models/product/dto/create-product.dto';
+import { UpdateProductDto } from 'src/models/product/dto/update-product.dto';
 import { Product } from 'src/models/product/entities/product.entity';
 import { PrismaService } from 'src/prisma/prisma.service';
 import request from 'supertest';
@@ -12,6 +13,7 @@ describe('UserController (e2e)', () => {
   let app: INestApplication;
   let token: string;
   let adminToken: string;
+  let product2Id: string;
   let prisma: PrismaService;
 
   beforeAll(async () => {
@@ -86,6 +88,12 @@ describe('UserController (e2e)', () => {
         stock: 20,
         description: 'Brand2 wood table for offices',
       } as CreateProductDto);
+
+    const { id } = await prisma.product.findUnique({
+      where: { name: 'Brand2 wood table' },
+    });
+
+    product2Id = id;
 
     await request(app.getHttpServer())
       .post('/product')
@@ -225,12 +233,8 @@ describe('UserController (e2e)', () => {
 
   describe('Get /product/id/:id', () => {
     it('should get product by id', async () => {
-      const databaseProduct = await prisma.product.findUnique({
-        where: { name: 'Brand2 wood table' },
-      });
-
       const response = await request(app.getHttpServer())
-        .get(`/product/id/${databaseProduct.id}`)
+        .get(`/product/id/${product2Id}`)
         .set({ Authorization: `Bearer ${adminToken}` })
         .send()
         .expect(200);
@@ -239,6 +243,29 @@ describe('UserController (e2e)', () => {
 
       expect(product.name).toEqual('Brand2 wood table');
       expect(product.stock).toEqual(20);
+    });
+
+    it('should not get product by invalid Id', async () => {
+      await request(app.getHttpServer())
+        .get(`/product/id/InvalidId`)
+        .set({ Authorization: `Bearer ${adminToken}` })
+        .send()
+        .expect(404);
+    });
+
+    it('should not get product if user is not an admin', async () => {
+      await request(app.getHttpServer())
+        .get(`/product/id/${product2Id}`)
+        .set({ Authorization: `Bearer ${token}` })
+        .send()
+        .expect(403);
+    });
+
+    it('should not get product if user is unauthenticated', async () => {
+      await request(app.getHttpServer())
+        .get(`/product/id/${product2Id}`)
+        .send()
+        .expect(401);
     });
   });
 
@@ -264,6 +291,76 @@ describe('UserController (e2e)', () => {
         .get('/product/inexistent-url-name')
         .send()
         .expect(404);
+    });
+  });
+
+  describe('Patch /product/:id ', () => {
+    it('should update product', async () => {
+      const response = await request(app.getHttpServer())
+        .patch(`/product/${product2Id}`)
+        .set({ Authorization: `Bearer ${adminToken}` })
+        .send({
+          name: 'Brand2 wood and glass table',
+          picture: 'newTablePicture.jpg',
+          basePrice: 219.99,
+          discountPercentage: 15,
+          stock: 56,
+          description: 'Brand2 wood and glass table for offices',
+        } as UpdateProductDto)
+        .expect(200);
+
+      const product = response.body as Product;
+
+      expect(isUUID(product.id, 4)).toBeTruthy();
+      expect(product.name).toEqual('Brand2 wood and glass table');
+      expect(product.urlName).toEqual('brand2-wood-and-glass-table');
+      expect(product.picture).toEqual('newTablePicture.jpg');
+      expect(product.basePrice).toEqual('219.99');
+      expect(product.discountPercentage).toEqual(15);
+      expect(product.stock).toEqual(56);
+      expect(product.description).toEqual(
+        'Brand2 wood and glass table for offices',
+      );
+      expect(isDate(new Date(product.createdAt))).toBeTruthy();
+    });
+
+    it('should not update product if name is already in use', async () => {
+      await request(app.getHttpServer())
+        .patch(`/product/${product2Id}`)
+        .set({ Authorization: `Bearer ${adminToken}` })
+        .send({
+          name: 'Brand1 wood table',
+        } as UpdateProductDto)
+        .expect(400);
+    });
+
+    it('should not update product if id is invalid', async () => {
+      await request(app.getHttpServer())
+        .patch(`/product/invalidId`)
+        .set({ Authorization: `Bearer ${adminToken}` })
+        .send({
+          name: 'Brand2 wood and glass table',
+        } as UpdateProductDto)
+        .expect(404);
+    });
+
+    it('should not update product if user is not and admin', async () => {
+      await request(app.getHttpServer())
+        .patch(`/product/${product2Id}`)
+        .set({ Authorization: `Bearer ${token}` })
+        .send({
+          name: 'Brand2 wood and glass table',
+        } as UpdateProductDto)
+        .expect(403);
+    });
+
+    it('should not update product if user is unauthenticated', async () => {
+      await request(app.getHttpServer())
+        .patch(`/product/${product2Id}`)
+        .send({
+          name: 'Brand2 wood and glass table',
+        } as UpdateProductDto)
+        .expect(401);
     });
   });
 });
