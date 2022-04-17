@@ -2,7 +2,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { isDate, isDateString, isUUID } from 'class-validator';
 import { AppModule } from 'src/app.module';
-import { EmailInUseError } from 'src/common/errors/email-in-use.error';
+import { EmailInUseException } from 'src/common/exceptions/email-in-use.exception';
 import { PrismaInterceptor } from 'src/common/interceptors/prisma.interceptor';
 import { User } from 'src/models/user/entities/user.entity';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -107,7 +107,7 @@ describe('UserController (e2e)', () => {
           })
           .expect(400),
       ).resolves.toMatchObject({
-        text: JSON.stringify(new EmailInUseError().getResponse()),
+        text: JSON.stringify(new EmailInUseException().getResponse()),
       });
     });
 
@@ -121,7 +121,7 @@ describe('UserController (e2e)', () => {
           })
           .expect(400),
       ).resolves.toMatchObject({
-        text: JSON.stringify(new EmailInUseError().getResponse()),
+        text: JSON.stringify(new EmailInUseException().getResponse()),
       });
     });
 

@@ -7,7 +7,7 @@ import {
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { PrismaError } from 'prisma-error-enum';
 import { catchError, Observable } from 'rxjs';
-import { EmailInUseError } from '../exceptions/email-in-use.error';
+import { EmailInUseException } from '../exceptions/email-in-use.exception';
 import { ProductNameInUseException } from '../exceptions/product-name-in-use.exception';
 import { ProductNotFoundException } from '../exceptions/product-not-found.exception';
 import { UserNotFoundException } from '../exceptions/user-not-found.exception';
@@ -34,7 +34,7 @@ export class PrismaInterceptor implements NestInterceptor {
           switch (error.code) {
             case PrismaError.UniqueConstraintViolation:
               if (this.isEmailConstraintViolation(error.meta)) {
-                throw new EmailInUseError();
+                throw new EmailInUseException();
               }
 
               if (this.isProductNameConstraintViolation(error)) {
