@@ -82,7 +82,7 @@ export class ProductService {
 
   /** Removes product from database */
   async remove(id: string): Promise<void> {
-    this.prisma.product.delete({ where: { id } });
+    await this.prisma.product.delete({ where: { id } });
   }
 
   /** Formats the name to generate an urlName.
