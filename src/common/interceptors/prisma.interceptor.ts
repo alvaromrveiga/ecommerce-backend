@@ -7,10 +7,10 @@ import {
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { PrismaError } from 'prisma-error-enum';
 import { catchError, Observable } from 'rxjs';
-import { ProductNotFoundError } from 'src/models/product/errors/product-not-found.error';
-import { EmailInUseError } from '../errors/email-in-use.error';
-import { ProductNameInUseException } from '../errors/product-name-in-use.exception';
-import { UserNotFoundException } from '../errors/user-not-found.exception';
+import { EmailInUseError } from '../exceptions/email-in-use.error';
+import { ProductNameInUseException } from '../exceptions/product-name-in-use.exception';
+import { ProductNotFoundException } from '../exceptions/product-not-found.exception';
+import { UserNotFoundException } from '../exceptions/user-not-found.exception';
 
 /** Interceptor for Prisma ORM errors
  *
@@ -46,6 +46,10 @@ export class PrismaInterceptor implements NestInterceptor {
                 throw new UserNotFoundException();
               }
 
+              if (this.isProductError(error)) {
+                throw new ProductNotFoundException();
+              }
+
               break;
             }
             default:
@@ -55,7 +59,7 @@ export class PrismaInterceptor implements NestInterceptor {
 
         if (this.isPrismaUnknownError(error)) {
           if (error.message === 'No Product found') {
-            throw new ProductNotFoundError();
+            throw new ProductNotFoundException();
           }
         }
 
@@ -90,5 +94,10 @@ export class PrismaInterceptor implements NestInterceptor {
   /** Returns wether the error happened on an user prisma query or not */
   private isUserError(error: PrismaClientKnownRequestError): boolean {
     return error.message.includes('prisma.user');
+  }
+
+  /** Returns wether the error happened on an product prisma query or not */
+  private isProductError(error: PrismaClientKnownRequestError): boolean {
+    return error.message.includes('prisma.product');
   }
 }
