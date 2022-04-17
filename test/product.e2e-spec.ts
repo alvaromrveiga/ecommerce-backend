@@ -2,6 +2,8 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { isDate, isUUID } from 'class-validator';
 import { AppModule } from 'src/app.module';
+import { ProductNameInUseException } from 'src/common/exceptions/product-name-in-use.exception';
+import { ProductNotFoundException } from 'src/common/exceptions/product-not-found.exception';
 import { PrismaInterceptor } from 'src/common/interceptors/prisma.interceptor';
 import { CreateProductDto } from 'src/models/product/dto/create-product.dto';
 import { UpdateProductDto } from 'src/models/product/dto/update-product.dto';
@@ -146,29 +148,37 @@ describe('UserController (e2e)', () => {
     });
 
     it('should not create product if name already in use', async () => {
-      await request(app.getHttpServer())
-        .post('/product')
-        .set({ Authorization: `Bearer ${adminToken}` })
-        .send({
-          name: 'Brand1 wood table',
-          picture: 'picture.jpg',
-          basePrice: 139.99,
-          discountPercentage: 15,
-          stock: 38,
-          description: 'Brand 1 wood table for offices',
-        } as CreateProductDto)
-        .expect(400);
+      await expect(
+        request(app.getHttpServer())
+          .post('/product')
+          .set({ Authorization: `Bearer ${adminToken}` })
+          .send({
+            name: 'Brand1 wood table',
+            picture: 'picture.jpg',
+            basePrice: 139.99,
+            discountPercentage: 15,
+            stock: 38,
+            description: 'Brand 1 wood table for offices',
+          } as CreateProductDto)
+          .expect(400),
+      ).resolves.toMatchObject({
+        text: JSON.stringify(new ProductNameInUseException().getResponse()),
+      });
     });
 
     it('should not create product if name already in use by case insensitive and multiple spaces', async () => {
-      await request(app.getHttpServer())
-        .post('/product')
-        .set({ Authorization: `Bearer ${adminToken}` })
-        .send({
-          name: '   BraND1    wOod  TabLe      ',
-          basePrice: 139.99,
-        } as CreateProductDto)
-        .expect(400);
+      await expect(
+        request(app.getHttpServer())
+          .post('/product')
+          .set({ Authorization: `Bearer ${adminToken}` })
+          .send({
+            name: '   BraND1    wOod  TabLe      ',
+            basePrice: 139.99,
+          } as CreateProductDto)
+          .expect(400),
+      ).resolves.toMatchObject({
+        text: JSON.stringify(new ProductNameInUseException().getResponse()),
+      });
     });
 
     it('should not create product if not admin', async () => {
@@ -246,11 +256,15 @@ describe('UserController (e2e)', () => {
     });
 
     it('should not get product by invalid Id', async () => {
-      await request(app.getHttpServer())
-        .get(`/product/id/InvalidId`)
-        .set({ Authorization: `Bearer ${adminToken}` })
-        .send()
-        .expect(404);
+      await expect(
+        request(app.getHttpServer())
+          .get(`/product/id/InvalidId`)
+          .set({ Authorization: `Bearer ${adminToken}` })
+          .send()
+          .expect(404),
+      ).resolves.toMatchObject({
+        text: JSON.stringify(new ProductNotFoundException().getResponse()),
+      });
     });
 
     it('should not get product if user is not an admin', async () => {
@@ -287,10 +301,14 @@ describe('UserController (e2e)', () => {
     });
 
     it('should not get product by urlName if urlName is inexistent', async () => {
-      await request(app.getHttpServer())
-        .get('/product/inexistent-url-name')
-        .send()
-        .expect(404);
+      await expect(
+        request(app.getHttpServer())
+          .get('/product/inexistent-url-name')
+          .send()
+          .expect(404),
+      ).resolves.toMatchObject({
+        text: JSON.stringify(new ProductNotFoundException().getResponse()),
+      });
     });
   });
 
@@ -325,23 +343,33 @@ describe('UserController (e2e)', () => {
     });
 
     it('should not update product if name is already in use', async () => {
-      await request(app.getHttpServer())
-        .patch(`/product/${product2Id}`)
-        .set({ Authorization: `Bearer ${adminToken}` })
-        .send({
-          name: 'Brand1 wood table',
-        } as UpdateProductDto)
-        .expect(400);
+      await expect(
+        request(app.getHttpServer())
+          .patch(`/product/${product2Id}`)
+          .set({ Authorization: `Bearer ${adminToken}` })
+          .send({
+            name: 'Brand1 wood table',
+            basePrice: 91.34,
+          } as UpdateProductDto)
+          .expect(400),
+      ).resolves.toMatchObject({
+        text: JSON.stringify(new ProductNameInUseException().getResponse()),
+      });
     });
 
     it('should not update product if id is invalid', async () => {
-      await request(app.getHttpServer())
-        .patch(`/product/invalidId`)
-        .set({ Authorization: `Bearer ${adminToken}` })
-        .send({
-          name: 'Brand2 wood and glass table',
-        } as UpdateProductDto)
-        .expect(404);
+      await expect(
+        request(app.getHttpServer())
+          .patch(`/product/invalidId`)
+          .set({ Authorization: `Bearer ${adminToken}` })
+          .send({
+            name: 'Brand2 wood and glass table',
+            basePrice: 218.98,
+          } as UpdateProductDto)
+          .expect(404),
+      ).resolves.toMatchObject({
+        text: JSON.stringify(new ProductNotFoundException().getResponse()),
+      });
     });
 
     it('should not update product if user is not and admin', async () => {

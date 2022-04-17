@@ -3,6 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { isDate, isDateString, isUUID } from 'class-validator';
 import { AppModule } from 'src/app.module';
 import { EmailInUseException } from 'src/common/exceptions/email-in-use.exception';
+import { UserNotFoundException } from 'src/common/exceptions/user-not-found.exception';
 import { PrismaInterceptor } from 'src/common/interceptors/prisma.interceptor';
 import { User } from 'src/models/user/entities/user.entity';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -329,11 +330,15 @@ describe('UserController (e2e)', () => {
     });
 
     it('should not update user role if user is invalid', async () => {
-      await request(app.getHttpServer())
-        .patch('/user/role')
-        .set({ Authorization: `Bearer ${adminToken}` })
-        .send({ email: 'MisspelledUser@example.co', role: 'ADMIN' })
-        .expect(404);
+      await expect(
+        request(app.getHttpServer())
+          .patch('/user/role')
+          .set({ Authorization: `Bearer ${adminToken}` })
+          .send({ email: 'MisspelledUser@example.co', role: 'ADMIN' })
+          .expect(404),
+      ).resolves.toMatchObject({
+        text: JSON.stringify(new UserNotFoundException().getResponse()),
+      });
     });
   });
 
