@@ -391,4 +391,41 @@ describe('UserController (e2e)', () => {
         .expect(401);
     });
   });
+
+  describe('Delete /product/:id', () => {
+    it('should delete product', async () => {
+      await request(app.getHttpServer())
+        .delete(`/product/${product2Id}`)
+        .set({ Authorization: `Bearer ${adminToken}` })
+        .send()
+        .expect(204);
+    });
+
+    it('should not delete product if id is invalid', async () => {
+      await expect(
+        request(app.getHttpServer())
+          .delete(`/product/InvalidId`)
+          .set({ Authorization: `Bearer ${adminToken}` })
+          .send()
+          .expect(404),
+      ).resolves.toMatchObject({
+        text: JSON.stringify(new ProductNotFoundException().getResponse()),
+      });
+    });
+
+    it('should not delete product if user is not admin', async () => {
+      await request(app.getHttpServer())
+        .delete(`/product/${product2Id}`)
+        .set({ Authorization: `Bearer ${token}` })
+        .send()
+        .expect(403);
+    });
+
+    it('should not delete product if unauthenticated', async () => {
+      await request(app.getHttpServer())
+        .delete(`/product/${product2Id}`)
+        .send()
+        .expect(401);
+    });
+  });
 });
