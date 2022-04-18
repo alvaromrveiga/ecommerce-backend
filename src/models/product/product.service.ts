@@ -102,6 +102,10 @@ export class ProductService {
     return spaceToHyphenUrlName;
   }
 
+  /** Formats UrlName and updates the product with the new one.
+   *
+   * Used when the user updates the product name.
+   */
   private updateProductAndUrlName(
     id: string,
     updateProductDto: UpdateProductDto,
