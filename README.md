@@ -1,5 +1,6 @@
 <h1 align="center">E-Commerce Backend</h1>
 <p align="center">API com endpoints para criação de usuários, produtos, compras e avaliações com autenticação e autorização</p>
+<p align="center"><a href="https://alvaromrveiga.github.io/ecommerce-backend/" target="_blank"><b>🔗 Documentação com Compodoc e GitHub Pages</b></a></p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"/>
