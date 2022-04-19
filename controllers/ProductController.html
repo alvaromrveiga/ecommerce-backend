@@ -28,19 +28,16 @@
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
-               <div class="content injectable">
+               <div class="content controller">
                    <div class="content-data">
 
 
 
 
 
-
-
-
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >PrismaInterceptor</li>
+  <li>Controllers</li>
+  <li >ProductController</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -58,18 +55,25 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/common/interceptors/prisma.interceptor.ts</code>
+            <code>src/models/product/product.controller.ts</code>
         </p>
+
+            <p class="comment">
+                <h3>Prefix</h3>
+            </p>
+            <p class="comment">
+                <code>product</code>
+            </p>
 
 
             <p class="comment">
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Interceptor for Prisma ORM errors</p>
-<p>For more about NestJs interceptors: <a href="https://docs.nestjs.com/interceptors">https://docs.nestjs.com/interceptors</a></p>
+                <p>Exposes product CRUD endpoints</p>
 
             </p>
+
 
 
 
@@ -87,27 +91,22 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#intercept" >intercept</a>
+                                <a href="#create" >create</a>
                             </li>
                             <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#isEmailConstraintViolation" >isEmailConstraintViolation</a>
+                                <a href="#findAll" >findAll</a>
                             </li>
                             <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#isPrismaUnknownError" >isPrismaUnknownError</a>
+                                <a href="#findOneById" >findOneById</a>
                             </li>
                             <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#isProductError" >isProductError</a>
+                                <a href="#findOneByUrlName" >findOneByUrlName</a>
                             </li>
                             <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#isProductNameConstraintViolation" >isProductNameConstraintViolation</a>
+                                <a href="#remove" >remove</a>
                             </li>
                             <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#isUserError" >isUserError</a>
+                                <a href="#update" >update</a>
                             </li>
                         </ul>
                     </td>
@@ -121,7 +120,6 @@
     </table>
 </section>
 
-
             <section>
     
     <h3 id="methods">
@@ -131,34 +129,38 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="intercept"></a>
+                    <a name="create"></a>
                     <span class="name">
-                        <span ><b>intercept</b></span>
-                        <a href="#intercept"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>create</b></span>
+                        <a href="#create"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>intercept(context: ExecutionContext, next: CallHandler<>)</code>
+<code>create(createProductDto: <a href="../classes/CreateProductDto.html" target="_self">CreateProductDto</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@ApiOperation({summary: &#x27;Admin creates a new product&#x27;})<br />@ApiBearerAuth()<br />@IsAdmin()<br />@Post()<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="37"
+                            class="link-to-prism">src/models/product/product.controller.ts:37</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="27"
-                            class="link-to-prism">src/common/interceptors/prisma.interceptor.ts:27</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Catches Prisma ORM errors and throws the
-respective app HTTP error</p>
-<p>Uses default NestJs boilerplate, for more
-information: <a href="https://docs.nestjs.com/interceptors">https://docs.nestjs.com/interceptors</a></p>
+                    <div class="io-description"><p>Creates a new product, only for admins</p>
 </div>
 
                     <div class="io-description">
@@ -174,21 +176,9 @@ information: <a href="https://docs.nestjs.com/interceptors">https://docs.nestjs.
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>context</td>
+                                    <td>createProductDto</td>
                                     <td>
-                                            <code>ExecutionContext</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>next</td>
-                                    <td>
-                                            <code>CallHandler&lt;&gt;</code>
+                                                <code><a href="../classes/CreateProductDto.html" target="_self" >CreateProductDto</a></code>
                                     </td>
 
                                     <td>
@@ -203,7 +193,7 @@ information: <a href="https://docs.nestjs.com/interceptors">https://docs.nestjs.
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Observable | Promise</code>
+                        <b>Returns : </b>        <code><a href="../classes/Product.html" target="_self" >Promise&lt;Product&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -217,33 +207,40 @@ information: <a href="https://docs.nestjs.com/interceptors">https://docs.nestjs.
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="isEmailConstraintViolation"></a>
+                    <a name="findAll"></a>
                     <span class="name">
-                        <span class="modifier">Private</span>
-                        <span ><b>isEmailConstraintViolation</b></span>
-                        <a href="#isEmailConstraintViolation"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>findAll</b></span>
+                        <a href="#findAll"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>isEmailConstraintViolation(errorMeta: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank">object</a>)</code>
+<code>findAll(findAllProductsDto: <a href="../classes/FindAllProductsDto.html" target="_self">FindAllProductsDto</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@ApiOperation({summary: &#x27;Returns all products&#x27;})<br />@Public()<br />@Get()<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="48"
+                            class="link-to-prism">src/models/product/product.controller.ts:48</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="72"
-                            class="link-to-prism">src/common/interceptors/prisma.interceptor.ts:72</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Returns wether the error happened in the email field or not</p>
+                    <div class="io-description"><p>Returns all products with pagination
+Default is starting on page 1 showing 10 results per page,
+searching and ordering by name</p>
 </div>
 
                     <div class="io-description">
@@ -259,9 +256,9 @@ information: <a href="https://docs.nestjs.com/interceptors">https://docs.nestjs.
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>errorMeta</td>
+                                    <td>findAllProductsDto</td>
                                     <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+                                                <code><a href="../classes/FindAllProductsDto.html" target="_self" >FindAllProductsDto</a></code>
                                     </td>
 
                                     <td>
@@ -276,7 +273,7 @@ information: <a href="https://docs.nestjs.com/interceptors">https://docs.nestjs.
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                        <b>Returns : </b>        <code><a href="../classes/Product.html" target="_self" >Promise&lt;Product[]&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -290,103 +287,38 @@ information: <a href="https://docs.nestjs.com/interceptors">https://docs.nestjs.
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="isPrismaUnknownError"></a>
+                    <a name="findOneById"></a>
                     <span class="name">
-                        <span class="modifier">Private</span>
-                        <span ><b>isPrismaUnknownError</b></span>
-                        <a href="#isPrismaUnknownError"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>findOneById</b></span>
+                        <a href="#findOneById"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>isPrismaUnknownError(error)</code>
+<code>findOneById(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@ApiOperation({summary: &#x27;Admin gets product by ID&#x27;})<br />@ApiBearerAuth()<br />@IsAdmin()<br />@Get(&#x27;/id/:id&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="57"
+                            class="link-to-prism">src/models/product/product.controller.ts:57</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="90"
-                            class="link-to-prism">src/common/interceptors/prisma.interceptor.ts:90</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Checks if the error contains clientVersion,
-making it an unknown prisma error</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>error</td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="isProductError"></a>
-                    <span class="name">
-                        <span class="modifier">Private</span>
-                        <span ><b>isProductError</b></span>
-                        <a href="#isProductError"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>isProductError(error: PrismaClientKnownRequestError)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="100"
-                            class="link-to-prism">src/common/interceptors/prisma.interceptor.ts:100</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Returns wether the error happened on an product prisma query or not</p>
+                    <div class="io-description"><p>Find product by ID, only for admins</p>
 </div>
 
                     <div class="io-description">
@@ -402,9 +334,9 @@ making it an unknown prisma error</p>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>error</td>
+                                    <td>id</td>
                                     <td>
-                                            <code>PrismaClientKnownRequestError</code>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
 
                                     <td>
@@ -419,7 +351,7 @@ making it an unknown prisma error</p>
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                        <b>Returns : </b>        <code><a href="../classes/Product.html" target="_self" >Promise&lt;Product&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -433,33 +365,38 @@ making it an unknown prisma error</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="isProductNameConstraintViolation"></a>
+                    <a name="findOneByUrlName"></a>
                     <span class="name">
-                        <span class="modifier">Private</span>
-                        <span ><b>isProductNameConstraintViolation</b></span>
-                        <a href="#isProductNameConstraintViolation"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>findOneByUrlName</b></span>
+                        <a href="#findOneByUrlName"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>isProductNameConstraintViolation(error: PrismaClientKnownRequestError)</code>
+<code>findOneByUrlName(urlName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@ApiOperation({summary: &#x27;Gets product by urlName&#x27;})<br />@Public()<br />@Get(&#x27;:urlName&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="65"
+                            class="link-to-prism">src/models/product/product.controller.ts:65</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="77"
-                            class="link-to-prism">src/common/interceptors/prisma.interceptor.ts:77</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Returns wether the error happened in the product name field or not</p>
+                    <div class="io-description"><p>Find product by Url Name</p>
 </div>
 
                     <div class="io-description">
@@ -475,9 +412,9 @@ making it an unknown prisma error</p>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>error</td>
+                                    <td>urlName</td>
                                     <td>
-                                            <code>PrismaClientKnownRequestError</code>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
 
                                     <td>
@@ -492,7 +429,7 @@ making it an unknown prisma error</p>
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                        <b>Returns : </b>        <code><a href="../classes/Product.html" target="_self" >Promise&lt;Product&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -506,33 +443,38 @@ making it an unknown prisma error</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="isUserError"></a>
+                    <a name="remove"></a>
                     <span class="name">
-                        <span class="modifier">Private</span>
-                        <span ><b>isUserError</b></span>
-                        <a href="#isUserError"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>remove</b></span>
+                        <a href="#remove"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>isUserError(error: PrismaClientKnownRequestError)</code>
+<code>remove(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@ApiOperation({summary: &#x27;Admin deletes product&#x27;})<br />@ApiBearerAuth()<br />@IsAdmin()<br />@Delete(&#x27;:id&#x27;)<br />@HttpCode(HttpStatus.NO_CONTENT)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="87"
+                            class="link-to-prism">src/models/product/product.controller.ts:87</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="95"
-                            class="link-to-prism">src/common/interceptors/prisma.interceptor.ts:95</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Returns wether the error happened on an user prisma query or not</p>
+                    <div class="io-description"><p>Deletes product from database, only for admins</p>
 </div>
 
                     <div class="io-description">
@@ -548,9 +490,9 @@ making it an unknown prisma error</p>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>error</td>
+                                    <td>id</td>
                                     <td>
-                                            <code>PrismaClientKnownRequestError</code>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
 
                                     <td>
@@ -565,7 +507,7 @@ making it an unknown prisma error</p>
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
 
                     </div>
                     <div class="io-description">
@@ -575,119 +517,196 @@ making it an unknown prisma error</p>
             </tr>
         </tbody>
     </table>
-</section>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="update"></a>
+                    <span class="name">
+                        <span ><b>update</b></span>
+                        <a href="#update"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>update(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, updateProductDto: <a href="../classes/UpdateProductDto.html" target="_self">UpdateProductDto</a>)</code>
+                </td>
+            </tr>
 
-    </div>
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@ApiOperation({summary: &#x27;Admin updates product&#x27;})<br />@ApiBearerAuth()<br />@IsAdmin()<br />@Patch(&#x27;:id&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="74"
+                            class="link-to-prism">src/models/product/product.controller.ts:74</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Updates product information, only for admins</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>updateProductDto</td>
+                                    <td>
+                                                <code><a href="../classes/UpdateProductDto.html" target="_self" >UpdateProductDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Product.html" target="_self" >Promise&lt;Product&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  CallHandler,
-  ExecutionContext,
-  Injectable,
-  NestInterceptor,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+  Query,
 } from &#x27;@nestjs/common&#x27;;
-import { PrismaClientKnownRequestError } from &#x27;@prisma/client/runtime&#x27;;
-import { PrismaError } from &#x27;prisma-error-enum&#x27;;
-import { catchError, Observable } from &#x27;rxjs&#x27;;
-import { EmailInUseException } from &#x27;../exceptions/email-in-use.exception&#x27;;
-import { ProductNameInUseException } from &#x27;../exceptions/product-name-in-use.exception&#x27;;
-import { ProductNotFoundException } from &#x27;../exceptions/product-not-found.exception&#x27;;
-import { UserNotFoundException } from &#x27;../exceptions/user-not-found.exception&#x27;;
+import { ApiBearerAuth, ApiOperation, ApiTags } from &#x27;@nestjs/swagger&#x27;;
+import { Public } from &#x27;src/auth/public.decorator&#x27;;
+import { IsAdmin } from &#x27;src/common/decorators/is-admin.decorator&#x27;;
+import { CreateProductDto } from &#x27;./dto/create-product.dto&#x27;;
+import { FindAllProductsDto } from &#x27;./dto/find-all-products.dto&#x27;;
+import { UpdateProductDto } from &#x27;./dto/update-product.dto&#x27;;
+import { Product } from &#x27;./entities/product.entity&#x27;;
+import { ProductService } from &#x27;./product.service&#x27;;
 
-/** Interceptor for Prisma ORM errors
- *
- * For more about NestJs interceptors: https://docs.nestjs.com/interceptors
- */
-@Injectable()
-export class PrismaInterceptor implements NestInterceptor {
-  /** Catches Prisma ORM errors and throws the
-   * respective app HTTP error
+/** Exposes product CRUD endpoints */
+@ApiTags(&#x27;product&#x27;)
+@Controller(&#x27;product&#x27;)
+export class ProductController {
+  /** Exposes product CRUD endpoints
    *
-   * Uses default NestJs boilerplate, for more
-   * information: https://docs.nestjs.com/interceptors
+   * Instantiate class and ProductService dependency
    */
-  intercept(
-    context: ExecutionContext,
-    next: CallHandler&lt;unknown&gt;,
-  ): Observable&lt;unknown&gt; | Promise&lt;Observable&lt;unknown&gt;&gt; {
-    return next.handle().pipe(
-      catchError((error) &#x3D;&gt; {
-        if (error instanceof PrismaClientKnownRequestError) {
-          switch (error.code) {
-            case PrismaError.UniqueConstraintViolation:
-              if (this.isEmailConstraintViolation(error.meta)) {
-                throw new EmailInUseException();
-              }
+  constructor(private readonly productService: ProductService) {}
 
-              if (this.isProductNameConstraintViolation(error)) {
-                throw new ProductNameInUseException();
-              }
-              break;
-            case PrismaError.RecordsNotFound: {
-              if (this.isUserError(error)) {
-                throw new UserNotFoundException();
-              }
-
-              if (this.isProductError(error)) {
-                throw new ProductNotFoundException();
-              }
-
-              break;
-            }
-            default:
-              throw error;
-          }
-        }
-
-        if (this.isPrismaUnknownError(error)) {
-          if (error.message &#x3D;&#x3D;&#x3D; &#x27;No Product found&#x27;) {
-            throw new ProductNotFoundException();
-          }
-        }
-
-        throw error;
-      }),
-    );
+  /** Creates a new product, only for admins */
+  @ApiOperation({ summary: &#x27;Admin creates a new product&#x27; })
+  @ApiBearerAuth()
+  @IsAdmin()
+  @Post()
+  create(@Body() createProductDto: CreateProductDto): Promise&lt;Product&gt; {
+    return this.productService.create(createProductDto);
   }
 
-  /** Returns wether the error happened in the email field or not */
-  private isEmailConstraintViolation(errorMeta: object): boolean {
-    return Object.values(errorMeta)[0][0] &#x3D;&#x3D;&#x3D; &#x27;email&#x27;;
+  /** Returns all products with pagination
+   * Default is starting on page 1 showing 10 results per page,
+   * searching and ordering by name
+   */
+  @ApiOperation({ summary: &#x27;Returns all products&#x27; })
+  @Public()
+  @Get()
+  findAll(@Query() findAllProductsDto: FindAllProductsDto): Promise&lt;Product[]&gt; {
+    return this.productService.findAll(findAllProductsDto);
   }
 
-  /** Returns wether the error happened in the product name field or not */
-  private isProductNameConstraintViolation(
-    error: PrismaClientKnownRequestError,
-  ): boolean {
-    return (
-      (Object.values(error.meta)[0][0] &#x3D;&#x3D;&#x3D; &#x27;name&#x27; ||
-        Object.values(error.meta)[0][0] &#x3D;&#x3D;&#x3D; &#x27;urlName&#x27;) &amp;&amp;
-      error.message.includes(&#x27;prisma.product&#x27;)
-    );
+  /** Find product by ID, only for admins */
+  @ApiOperation({ summary: &#x27;Admin gets product by ID&#x27; })
+  @ApiBearerAuth()
+  @IsAdmin()
+  @Get(&#x27;/id/:id&#x27;)
+  findOneById(@Param(&#x27;id&#x27;) id: string): Promise&lt;Product&gt; {
+    return this.productService.findOneById(id);
   }
 
-  /** Checks if the error contains clientVersion,
-   * making it an unknown prisma error
-   * */
-  private isPrismaUnknownError(error): boolean {
-    return !!error.clientVersion;
+  /** Find product by Url Name */
+  @ApiOperation({ summary: &#x27;Gets product by urlName&#x27; })
+  @Public()
+  @Get(&#x27;:urlName&#x27;)
+  findOneByUrlName(@Param(&#x27;urlName&#x27;) urlName: string): Promise&lt;Product&gt; {
+    return this.productService.findOneByUrlName(urlName);
   }
 
-  /** Returns wether the error happened on an user prisma query or not */
-  private isUserError(error: PrismaClientKnownRequestError): boolean {
-    return error.message.includes(&#x27;prisma.user&#x27;);
+  /** Updates product information, only for admins */
+  @ApiOperation({ summary: &#x27;Admin updates product&#x27; })
+  @ApiBearerAuth()
+  @IsAdmin()
+  @Patch(&#x27;:id&#x27;)
+  update(
+    @Param(&#x27;id&#x27;) id: string,
+    @Body() updateProductDto: UpdateProductDto,
+  ): Promise&lt;Product&gt; {
+    return this.productService.update(id, updateProductDto);
   }
 
-  /** Returns wether the error happened on an product prisma query or not */
-  private isProductError(error: PrismaClientKnownRequestError): boolean {
-    return error.message.includes(&#x27;prisma.product&#x27;);
+  /** Deletes product from database, only for admins */
+  @ApiOperation({ summary: &#x27;Admin deletes product&#x27; })
+  @ApiBearerAuth()
+  @IsAdmin()
+  @Delete(&#x27;:id&#x27;)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  remove(@Param(&#x27;id&#x27;) id: string): Promise&lt;void&gt; {
+    return this.productService.remove(id);
   }
 }
 </code></pre>
     </div>
-
 </div>
+
+
+
 
 
 
@@ -726,8 +745,8 @@ export class PrismaInterceptor implements NestInterceptor {
 
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
-            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
-            var COMPODOC_CURRENT_PAGE_URL = 'PrismaInterceptor.html';
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'controller';
+            var COMPODOC_CURRENT_PAGE_URL = 'ProductController.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

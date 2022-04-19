@@ -44,7 +44,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li >InvalidPasswordUpdateError</li>
+  <li >UserNotFoundException</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -62,7 +62,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/models/user/errors/invalid-password-update.error.ts</code>
+            <code>src/common/exceptions/user-not-found.exception.ts</code>
         </p>
 
 
@@ -70,8 +70,8 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Throws HTTP status 400. Used when the user inputs the wrong
-current password when trying to create a new password</p>
+                <p>Throws HTTP status 404. Used when the user inputs
+an user email or id that is not registered in the system</p>
 
             </p>
 
@@ -79,7 +79,7 @@ current password when trying to create a new password</p>
                 <h3>Extends</h3>
             </p>
             <p class="comment">
-                    <code>BadRequestException</code>
+                    <code>NotFoundException</code>
             </p>
 
 
@@ -96,15 +96,15 @@ current password when trying to create a new password</p>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/models/user/errors/invalid-password-update.error.ts:6</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/common/exceptions/user-not-found.exception.ts:6</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
-                            <div class="io-description"><p>Throws HTTP status 400 with message &#39;Invalid current password&#39;.
-Used when the user inputs the wrong current password when
-trying to create a new password</p>
+                            <div class="io-description"><p>Throws HTTP status 404 with message
+&#39;User not found&#39;. Used when the user inputs an user
+email or id that is not registered in the system</p>
 </div>
                     </td>
                 </tr>
@@ -123,18 +123,18 @@ trying to create a new password</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { BadRequestException } from &#x27;@nestjs/common&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { NotFoundException } from &#x27;@nestjs/common&#x27;;
 
-/** Throws HTTP status 400. Used when the user inputs the wrong
- * current password when trying to create a new password
+/** Throws HTTP status 404. Used when the user inputs
+ * an user email or id that is not registered in the system
  */
-export class InvalidPasswordUpdateError extends BadRequestException {
-  /** Throws HTTP status 400 with message &#x27;Invalid current password&#x27;.
-   * Used when the user inputs the wrong current password when
-   * trying to create a new password
+export class UserNotFoundException extends NotFoundException {
+  /** Throws HTTP status 404 with message
+   * &#x27;User not found&#x27;. Used when the user inputs an user
+   * email or id that is not registered in the system
    */
   constructor() {
-    super(&#x27;Invalid current password&#x27;);
+    super(&#x27;User not found&#x27;);
   }
 }
 </code></pre>
@@ -175,7 +175,7 @@ export class InvalidPasswordUpdateError extends BadRequestException {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
-            var COMPODOC_CURRENT_PAGE_URL = 'InvalidPasswordUpdateError.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'UserNotFoundException.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

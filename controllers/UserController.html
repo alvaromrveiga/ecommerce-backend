@@ -55,7 +55,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/user/user.controller.ts</code>
+            <code>src/models/user/user.controller.ts</code>
         </p>
 
             <p class="comment">
@@ -103,6 +103,9 @@
                             <li>
                                 <a href="#update" >update</a>
                             </li>
+                            <li>
+                                <a href="#updateUserRole" >updateUserRole</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -147,8 +150,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="35"
-                            class="link-to-prism">src/user/user.controller.ts:35</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="37"
+                            class="link-to-prism">src/models/user/user.controller.ts:37</a></div>
                 </td>
             </tr>
 
@@ -227,8 +230,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="43"
-                            class="link-to-prism">src/user/user.controller.ts:43</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="45"
+                            class="link-to-prism">src/models/user/user.controller.ts:45</a></div>
                 </td>
             </tr>
 
@@ -305,8 +308,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="67"
-                            class="link-to-prism">src/user/user.controller.ts:67</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="80"
+                            class="link-to-prism">src/models/user/user.controller.ts:80</a></div>
                 </td>
             </tr>
 
@@ -395,8 +398,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="53"
-                            class="link-to-prism">src/user/user.controller.ts:53</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="55"
+                            class="link-to-prism">src/models/user/user.controller.ts:55</a></div>
                 </td>
             </tr>
 
@@ -458,6 +461,84 @@
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateUserRole"></a>
+                    <span class="name">
+                        <span ><b>updateUserRole</b></span>
+                        <a href="#updateUserRole"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateUserRole(updateUserRoleDto: <a href="../classes/UpdateUserRoleDto.html" target="_self">UpdateUserRoleDto</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@ApiOperation({summary: &#x27;Admin set user&#x27;s role&#x27;})<br />@ApiBearerAuth()<br />@IsAdmin()<br />@Patch(&#x27;role&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="69"
+                            class="link-to-prism">src/models/user/user.controller.ts:69</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Updates user role, only for admins</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>updateUserRoleDto</td>
+                                    <td>
+                                                <code><a href="../classes/UpdateUserRoleDto.html" target="_self" >UpdateUserRoleDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;UserWithoutPassword&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>    </div>
 
 
@@ -476,8 +557,10 @@
 import { ApiBearerAuth, ApiOperation, ApiTags } from &#x27;@nestjs/swagger&#x27;;
 import { Request } from &#x27;express&#x27;;
 import { Public } from &#x27;src/auth/public.decorator&#x27;;
+import { IsAdmin } from &#x27;src/common/decorators/is-admin.decorator&#x27;;
 import { CreateUserDto } from &#x27;./dto/create-user.dto&#x27;;
 import { DeleteUserDto } from &#x27;./dto/delete-user.dto&#x27;;
+import { UpdateUserRoleDto } from &#x27;./dto/update-user-role.dto&#x27;;
 import { UpdateUserDto } from &#x27;./dto/update-user.dto&#x27;;
 import { UserWithoutPassword } from &#x27;./entities/user-without-password.entity&#x27;;
 import { UserService } from &#x27;./user.service&#x27;;
@@ -521,6 +604,17 @@ export class UserController {
     const userId &#x3D; request.user[&#x27;userId&#x27;];
 
     return this.userService.update(userId, updateUserDto);
+  }
+
+  /** Updates user role, only for admins */
+  @ApiOperation({ summary: &quot;Admin set user&#x27;s role&quot; })
+  @ApiBearerAuth()
+  @IsAdmin()
+  @Patch(&#x27;role&#x27;)
+  updateUserRole(
+    @Body() updateUserRoleDto: UpdateUserRoleDto,
+  ): Promise&lt;UserWithoutPassword&gt; {
+    return this.userService.updateUserRole(updateUserRoleDto);
   }
 
   /** Deletes user and all user related information from the system */

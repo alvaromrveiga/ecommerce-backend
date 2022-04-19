@@ -360,8 +360,8 @@ compares if the hashed password matches the inputted one.</p>
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;;
 import { JwtService } from &#x27;@nestjs/jwt&#x27;;
 import { compare } from &#x27;bcrypt&#x27;;
-import { User } from &#x27;src/user/entities/user.entity&#x27;;
-import { UserService } from &#x27;src/user/user.service&#x27;;
+import { User } from &#x27;src/models/user/entities/user.entity&#x27;;
+import { UserService } from &#x27;src/models/user/user.service&#x27;;
 import { InvalidEmailOrPasswordError } from &#x27;./errors/invalid-email-or-password.error.&#x27;;
 
 /** Responsible for authenticating the user */
@@ -388,7 +388,7 @@ export class AuthService {
   ): Promise&lt;{ accessToken: string }&gt; {
     const user &#x3D; await this.validateUser(email, password);
 
-    const payload &#x3D; { sub: user.id };
+    const payload &#x3D; { sub: user.id, role: user.role };
 
     return {
       accessToken: this.jwtService.sign(payload),

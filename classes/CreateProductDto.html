@@ -44,7 +44,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li >CreateUserDto</li>
+  <li >CreateProductDto</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -62,7 +62,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/models/user/dto/create-user.dto.ts</code>
+            <code>src/models/product/dto/create-product.dto.ts</code>
         </p>
 
 
@@ -70,17 +70,11 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Describes the fields needed to create an User</p>
+                <p>Describes the fields needed to create a Product</p>
 
             </p>
 
 
-            <p class="comment">
-                <h3>Implements</h3>
-            </p>
-            <p class="comment">
-                            <code><a href="../classes/User.html" target="_self" >User</a></code>
-            </p>
 
 
             <section>
@@ -96,18 +90,26 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Optional</span>
-                                <a href="#address" >address</a>
-                            </li>
-                            <li>
-                                <a href="#email" >email</a>
+                                <a href="#basePrice" >basePrice</a>
                             </li>
                             <li>
                                     <span class="modifier">Optional</span>
+                                <a href="#description" >description</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Optional</span>
+                                <a href="#discountPercentage" >discountPercentage</a>
+                            </li>
+                            <li>
                                 <a href="#name" >name</a>
                             </li>
                             <li>
-                                <a href="#password" >password</a>
+                                    <span class="modifier">Optional</span>
+                                <a href="#picture" >picture</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Optional</span>
+                                <a href="#stock" >stock</a>
                             </li>
                         </ul>
                     </td>
@@ -132,11 +134,54 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="address"></a>
+                    <a name="basePrice"></a>
+                    <span class="name">
+                        <span ><b>basePrice</b></span>
+                        <a href="#basePrice"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string | number | Decimal</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @IsNumber()<br />@IsNotEmpty()<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/models/product/dto/create-product.dto.ts:42</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Product price not considering discounts.
+Saved as decimal, calculations should be handled
+with currency.js</p>
+<div><pre class="line-numbers"><code class="language-html"></code></pre></div></div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="description"></a>
                     <span class="name">
                             <span class="modifier">Optional</span>
-                        <span ><b>address</b></span>
-                        <a href="#address"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>description</b></span>
+                        <a href="#description"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -157,13 +202,13 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/models/user/dto/create-user.dto.ts:44</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/models/product/dto/create-product.dto.ts:65</a></div>
                         </td>
                     </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>User address</p>
+                    <div class="io-description"><p>Product description</p>
 <div><pre class="line-numbers"><code class="language-html"></code></pre></div></div>
                 </td>
             </tr>
@@ -174,16 +219,17 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="email"></a>
+                    <a name="discountPercentage"></a>
                     <span class="name">
-                        <span ><b>email</b></span>
-                        <a href="#email"><span class="icon ion-ios-link"></span></a>
+                            <span class="modifier">Optional</span>
+                        <span ><b>discountPercentage</b></span>
+                        <a href="#discountPercentage"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
 
                     </td>
                 </tr>
@@ -192,19 +238,19 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @IsEmail({message: &#x27;Must be an e-mail&#x27;})<br />
+                            @IsNumber()<br />@IsOptional()<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/models/user/dto/create-user.dto.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/models/product/dto/create-product.dto.ts:50</a></div>
                         </td>
                     </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>User email</p>
+                    <div class="io-description"><p>Product discount in percentage. Defaults to 0</p>
 <div><pre class="line-numbers"><code class="language-html"></code></pre></div></div>
                 </td>
             </tr>
@@ -217,7 +263,6 @@
                 <td class="col-md-4">
                     <a name="name"></a>
                     <span class="name">
-                            <span class="modifier">Optional</span>
                         <span ><b>name</b></span>
                         <a href="#name"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -234,19 +279,19 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @IsString()<br />@IsOptional()<br />
+                            @IsString()<br />@IsNotEmpty()<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/models/user/dto/create-user.dto.ts:36</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/models/product/dto/create-product.dto.ts:24</a></div>
                         </td>
                     </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>User name</p>
+                    <div class="io-description"><p>Product name</p>
 <div><pre class="line-numbers"><code class="language-html"></code></pre></div></div>
                 </td>
             </tr>
@@ -257,10 +302,11 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="password"></a>
+                    <a name="picture"></a>
                     <span class="name">
-                        <span ><b>password</b></span>
-                        <a href="#password"><span class="icon ion-ios-link"></span></a>
+                            <span class="modifier">Optional</span>
+                        <span ><b>picture</b></span>
+                        <a href="#picture"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -275,19 +321,61 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @IsString()<br />@MinLength(8, {message: &#x27;Password must have length of at least 8&#x27;})<br />@Matches(/((?&#x3D;.*\d)|(?&#x3D;.*\W+))(?![.\n])(?&#x3D;.*[a-z]).*$/, {message: &#x27;Password must contain at least 1 number and 1 letter&#x27;})<br />
+                            @IsString()<br />@IsOptional()<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/models/user/dto/create-user.dto.ts:28</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/models/product/dto/create-product.dto.ts:32</a></div>
                         </td>
                     </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>User password must contain at least 1 number and 1 letter</p>
+                    <div class="io-description"><p>Product picture</p>
+<div><pre class="line-numbers"><code class="language-html"></code></pre></div></div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="stock"></a>
+                    <span class="name">
+                            <span class="modifier">Optional</span>
+                        <span ><b>stock</b></span>
+                        <a href="#stock"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @IsInt()<br />@IsOptional()<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/models/product/dto/create-product.dto.ts:57</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Product stock amount. Defaults to 0</p>
 <div><pre class="line-numbers"><code class="language-html"></code></pre></div></div>
                 </td>
             </tr>
@@ -306,50 +394,71 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  IsEmail,
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { OmitType } from &#x27;@nestjs/swagger&#x27;;
+import { Decimal } from &#x27;@prisma/client/runtime&#x27;;
+import {
+  IsInt,
+  IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
-  Matches,
-  MinLength,
 } from &#x27;class-validator&#x27;;
-import { User } from &#x27;../entities/user.entity&#x27;;
+import { Product } from &#x27;../entities/product.entity&#x27;;
 
-/** Describes the fields needed to create an User */
-export class CreateUserDto implements User {
+/** Describes the fields needed to create a Product */
+export class CreateProductDto extends OmitType(Product, [
+  &#x27;id&#x27;,
+  &#x27;createdAt&#x27;,
+  &#x27;urlName&#x27;,
+] as const) {
   /**
-   * User email
-   * @example &quot;user@example.com&quot;
-   */
-  @IsEmail({ message: &#x27;Must be an e-mail&#x27; })
-  email: string;
-
-  /**
-   * User password must contain at least 1 number and 1 letter
-   * @example &quot;abc123456&quot;
+   * Product name
+   * @example &quot;Brand black wheelchair&quot;
    */
   @IsString()
-  @MinLength(8, { message: &#x27;Password must have length of at least 8&#x27; })
-  @Matches(/((?&#x3D;.*\d)|(?&#x3D;.*\W+))(?![.\n])(?&#x3D;.*[a-z]).*$/, {
-    message: &#x27;Password must contain at least 1 number and 1 letter&#x27;,
-  })
-  password: string;
+  @IsNotEmpty()
+  name: string;
 
   /**
-   * User name
-   * @example &quot;John Doe&quot;
+   * Product picture
+   * @example &quot;image.jpg&quot;
    */
   @IsString()
   @IsOptional()
-  name?: string;
+  picture?: string;
 
   /**
-   * User address
-   * @example &quot;World Street 0&quot;
+   * Product price not considering discounts.
+   * Saved as decimal, calculations should be handled
+   * with currency.js
+   * @example 70.00
+   */
+  @IsNumber()
+  @IsNotEmpty()
+  basePrice: string | number | Decimal;
+
+  /**
+   * Product discount in percentage. Defaults to 0
+   * @example 10
+   */
+  @IsNumber()
+  @IsOptional()
+  discountPercentage?: number;
+
+  /** Product stock amount. Defaults to 0
+   * @example 42
+   */
+  @IsInt()
+  @IsOptional()
+  stock?: number;
+
+  /**
+   * Product description
+   * @example &quot;Black wheelchair for offices&quot;
    */
   @IsString()
   @IsOptional()
-  address?: string;
+  description?: string;
 }
 </code></pre>
     </div>
@@ -389,7 +498,7 @@ export class CreateUserDto implements User {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
-            var COMPODOC_CURRENT_PAGE_URL = 'CreateUserDto.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'CreateProductDto.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

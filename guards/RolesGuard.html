@@ -28,7 +28,7 @@
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
-               <div class="content injectable">
+               <div class="content guard">
                    <div class="content-data">
 
 
@@ -38,9 +38,11 @@
 
 
 
+
+
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >JwtStrategy</li>
+    <li>Guards</li>
+    <li >RolesGuard</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -53,26 +55,28 @@
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane fade active in" id="c-info">
-        <p class="comment">
+        <div class="tab-pane fade active in" id="c-info">
+            <p class="comment">
             <h3>File</h3>
-        </p>
-        <p class="comment">
-            <code>src/auth/jwt.strategy.ts</code>
-        </p>
-
-
+            </p>
             <p class="comment">
+                <code>src/common/guards/roles.guard.ts</code>
+            </p>
+
+
+                <p class="comment">
                 <h3>Description</h3>
-            </p>
-            <p class="comment">
-                <p>Passport library JsonWebToken configuration</p>
+                </p>
+                <p class="comment">
+                    <p>Checks if the user accessing the route is an admin</p>
+<p>For more on NestJs Guards: <a href="https://docs.nestjs.com/guards">https://docs.nestjs.com/guards</a></p>
 
-            </p>
+                </p>
 
 
 
-            <section>
+
+                <section>
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -86,8 +90,7 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Async</span>
-                                <a href="#validate" >validate</a>
+                                <a href="#canActivate" >canActivate</a>
                             </li>
                         </ul>
                     </td>
@@ -101,32 +104,60 @@
     </table>
 </section>
 
-            <section>
+                <section>
     <h3 id="constructor">Constructor</h3>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor()</code>
+<code>constructor(reflector: Reflector)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/auth/jwt.strategy.ts:34</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/common/guards/roles.guard.ts:12</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
-                            <div class="io-description"><p>Passport library JsonWebToken configuration</p>
+                            <div class="io-description"><p>Checks if the user accessing the route is an admin</p>
+<p>For more on NestJs Guards: <a href="https://docs.nestjs.com/guards">https://docs.nestjs.com/guards</a></p>
+<p>Instantiates the class and the Reflector dependency</p>
 </div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>reflector</td>
+                                                  
+                                                        <td>
+                                                                    <code>Reflector</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
                     </td>
                 </tr>
             </tbody>
         </table>
 </section>
 
-            <section>
+                <section>
     
     <h3 id="methods">
         Methods
@@ -135,33 +166,31 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="validate"></a>
+                    <a name="canActivate"></a>
                     <span class="name">
-                        <span class="modifier">Async</span>
-                        <span ><b>validate</b></span>
-                        <a href="#validate"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>canActivate</b></span>
+                        <a href="#canActivate"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>validate(payload: <a href="../interfaces/Payload.html" target="_self">Payload</a>)</code>
+<code>canActivate(context: ExecutionContext)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="45"
-                            class="link-to-prism">src/auth/jwt.strategy.ts:45</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="22"
+                            class="link-to-prism">src/common/guards/roles.guard.ts:22</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Validates and returns data after JsonWebToken is decrypted</p>
+                    <div class="io-description"><p>If the user is an Admin, access is allowed</p>
 </div>
 
                     <div class="io-description">
@@ -177,9 +206,9 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>payload</td>
+                                    <td>context</td>
                                     <td>
-                                                <code><a href="../interfaces/Payload.html" target="_self" >Payload</a></code>
+                                            <code>ExecutionContext</code>
                                     </td>
 
                                     <td>
@@ -194,7 +223,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../interfaces/ValidateReturn.html" target="_self" >Promise&lt;ValidateReturn&gt;</a></code>
+                        <b>Returns : </b>    <code>boolean | Promise | Observable</code>
 
                     </div>
                     <div class="io-description">
@@ -205,68 +234,52 @@
         </tbody>
     </table>
 </section>
+        </div>
 
-    </div>
 
+        <div class="tab-pane fade  tab-source-code" id="c-source">
+            <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { CanActivate, ExecutionContext, Injectable } from &#x27;@nestjs/common&#x27;;
+import { Reflector } from &#x27;@nestjs/core&#x27;;
+import { Role } from &#x27;@prisma/client&#x27;;
+import { Observable } from &#x27;rxjs&#x27;;
+import { IS_ADMIN_KEY } from &#x27;../decorators/is-admin.decorator&#x27;;
 
-    <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;;
-import { PassportStrategy } from &#x27;@nestjs/passport&#x27;;
-import { ExtractJwt, Strategy } from &#x27;passport-jwt&#x27;;
-import { jwtConfig } from &#x27;src/config/jwt.config&#x27;;
-
-/** Decrypted JsonWebToken content */
-interface Payload {
-  /** Token subject, user ID used
-   * @example &quot;d6c24523-12df-4f33-9fd6-44dd5c499084&quot;
-   */
-  sub: string;
-
-  /** User role
-   * @example &quot;user&quot;
-   */
-  role: string;
-}
-
-/** What is returned to the application after JsonWebToken is validated */
-interface ValidateReturn {
-  /** User ID
-   * @example &quot;d6c24523-12df-4f33-9fd6-44dd5c499084&quot;
-   */
-  userId: string;
-
-  /** User role
-   * @example &quot;user&quot;
-   */
-  userRole: string;
-}
-
-/** Passport library JsonWebToken configuration */
+/** Checks if the user accessing the route is an admin
+ *
+ * For more on NestJs Guards: https://docs.nestjs.com/guards
+ */
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
-  /** Passport library JsonWebToken configuration */
-  constructor() {
-    super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      ignoreExpiration: false,
-      secretOrKey: jwtConfig.secret,
-    });
-  }
+export class RolesGuard implements CanActivate {
+  /** Checks if the user accessing the route is an admin
+   *
+   * For more on NestJs Guards: https://docs.nestjs.com/guards
+   *
+   * Instantiates the class and the Reflector dependency
+   */
+  constructor(private reflector: Reflector) {}
 
-  /** Validates and returns data after JsonWebToken is decrypted */
-  async validate(payload: Payload): Promise&lt;ValidateReturn&gt; {
-    return {
-      userId: payload.sub,
-      userRole: payload.role,
-    };
+  /** If the user is an Admin, access is allowed */
+  canActivate(
+    context: ExecutionContext,
+  ): boolean | Promise&lt;boolean&gt; | Observable&lt;boolean&gt; {
+    const isAdmin &#x3D; this.reflector.getAllAndOverride&lt;boolean&gt;(IS_ADMIN_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+
+    const request &#x3D; context.switchToHttp().getRequest();
+    const { userRole } &#x3D; request.user;
+
+    if (isAdmin &amp;&amp; userRole &#x3D;&#x3D;&#x3D; Role.ADMIN) {
+      return true;
+    }
+
+    return false;
   }
 }
 </code></pre>
-    </div>
-
+        </div>
 </div>
-
-
 
 
 
@@ -303,8 +316,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
-            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
-            var COMPODOC_CURRENT_PAGE_URL = 'JwtStrategy.html';
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'guard';
+            var COMPODOC_CURRENT_PAGE_URL = 'RolesGuard.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

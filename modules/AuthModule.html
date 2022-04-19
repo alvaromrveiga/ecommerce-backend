@@ -184,13 +184,13 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Module } from &#x27;@nestjs/common&#x27;;
-import { PassportModule } from &#x27;@nestjs/passport&#x27;;
-import { UserModule } from &#x27;src/user/user.module&#x27;;
-import { AuthService } from &#x27;./auth.service&#x27;;
-import { AuthController } from &#x27;./auth.controller&#x27;;
 import { JwtModule } from &#x27;@nestjs/jwt&#x27;;
-import { JwtStrategy } from &#x27;./jwt.strategy&#x27;;
+import { PassportModule } from &#x27;@nestjs/passport&#x27;;
 import { jwtConfig } from &#x27;src/config/jwt.config&#x27;;
+import { UserModule } from &#x27;src/models/user/user.module&#x27;;
+import { AuthController } from &#x27;./auth.controller&#x27;;
+import { AuthService } from &#x27;./auth.service&#x27;;
+import { JwtStrategy } from &#x27;./jwt.strategy&#x27;;
 
 @Module({
   imports: [UserModule, PassportModule, JwtModule.register(jwtConfig)],

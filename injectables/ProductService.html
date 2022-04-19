@@ -40,7 +40,7 @@
 
 <ol class="breadcrumb">
   <li>Injectables</li>
-  <li >UserService</li>
+  <li >ProductService</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -58,7 +58,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/models/user/user.service.ts</code>
+            <code>src/models/product/product.service.ts</code>
         </p>
 
 
@@ -66,8 +66,8 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Responsible for managing users in the database.
-CRUD endpoints are available for users.</p>
+                <p>Responsible for managing products in the database.
+CRUD endpoints are available for products.</p>
 
             </p>
 
@@ -92,16 +92,19 @@ CRUD endpoints are available for users.</p>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
-                                <a href="#findByEmail" >findByEmail</a>
+                                <a href="#findAll" >findAll</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
-                                <a href="#findById" >findById</a>
+                                <a href="#findOneById" >findOneById</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findOneByUrlName" >findOneByUrlName</a>
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
-                                    <span class="modifier">Async</span>
-                                <a href="#hashIfUpdatingPassword" >hashIfUpdatingPassword</a>
+                                <a href="#formatUrlName" >formatUrlName</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -112,13 +115,8 @@ CRUD endpoints are available for users.</p>
                                 <a href="#update" >update</a>
                             </li>
                             <li>
-                                    <span class="modifier">Async</span>
-                                <a href="#updateUserRole" >updateUserRole</a>
-                            </li>
-                            <li>
                                     <span class="modifier">Private</span>
-                                    <span class="modifier">Async</span>
-                                <a href="#validateCurrentPassword" >validateCurrentPassword</a>
+                                <a href="#updateProductAndUrlName" >updateProductAndUrlName</a>
                             </li>
                         </ul>
                     </td>
@@ -143,7 +141,7 @@ CRUD endpoints are available for users.</p>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/models/user/user.service.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/models/product/product.service.ts:12</a></div>
                             </td>
                         </tr>
 
@@ -151,7 +149,7 @@ CRUD endpoints are available for users.</p>
                     <td class="col-md-4">
                             <div class="io-description"><p>Responsible for managing users in the database.
 CRUD endpoints are available for users.</p>
-<p>Instantiate the class and the PrismaService dependency</p>
+<p>Instantiates the class and the PrismaService dependency</p>
 </div>
                             <div>
                                     <b>Parameters :</b>
@@ -205,22 +203,22 @@ CRUD endpoints are available for users.</p>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>create(createUserDto: <a href="../classes/CreateUserDto.html" target="_self">CreateUserDto</a>)</code>
+                    <code>create(createProductDto: <a href="../classes/CreateProductDto.html" target="_self">CreateProductDto</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="26"
-                            class="link-to-prism">src/models/user/user.service.ts:26</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="21"
+                            class="link-to-prism">src/models/product/product.service.ts:21</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Creates a new user</p>
+                    <div class="io-description"><p>Creates a new product</p>
 </div>
 
                     <div class="io-description">
@@ -236,9 +234,9 @@ CRUD endpoints are available for users.</p>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>createUserDto</td>
+                                    <td>createProductDto</td>
                                     <td>
-                                                <code><a href="../classes/CreateUserDto.html" target="_self" >CreateUserDto</a></code>
+                                                <code><a href="../classes/CreateProductDto.html" target="_self" >CreateProductDto</a></code>
                                     </td>
 
                                     <td>
@@ -253,7 +251,7 @@ CRUD endpoints are available for users.</p>
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+                        <b>Returns : </b>        <code><a href="../classes/Product.html" target="_self" >Promise&lt;Product&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -267,35 +265,35 @@ CRUD endpoints are available for users.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="findByEmail"></a>
+                    <a name="findAll"></a>
                     <span class="name">
                         <span class="modifier">Async</span>
-                        <span ><b>findByEmail</b></span>
-                        <a href="#findByEmail"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>findAll</b></span>
+                        <a href="#findAll"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>findByEmail(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>findAll(undefined: <a href="../classes/FindAllProductsDto.html" target="_self">FindAllProductsDto</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="56"
-                            class="link-to-prism">src/models/user/user.service.ts:56</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="35"
+                            class="link-to-prism">src/models/product/product.service.ts:35</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Finds user by email and returns the user with password.
-Used mainly in login to compare if the inputted password matches
-the hashed one.</p>
+                    <div class="io-description"><p>Returns all products with pagination
+Default is starting on page 1 showing 10 results per page
+and ordering by name</p>
 </div>
 
                     <div class="io-description">
@@ -311,9 +309,8 @@ the hashed one.</p>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>email</td>
                                     <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                <code><a href="../classes/FindAllProductsDto.html" target="_self" >FindAllProductsDto</a></code>
                                     </td>
 
                                     <td>
@@ -328,7 +325,7 @@ the hashed one.</p>
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Promise&lt;User&gt;</a></code>
+                        <b>Returns : </b>        <code><a href="../classes/Product.html" target="_self" >Promise&lt;Product[]&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -342,35 +339,33 @@ the hashed one.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="findById"></a>
+                    <a name="findOneById"></a>
                     <span class="name">
                         <span class="modifier">Async</span>
-                        <span ><b>findById</b></span>
-                        <a href="#findById"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>findOneById</b></span>
+                        <a href="#findOneById"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>findById(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>findOneById(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="44"
-                            class="link-to-prism">src/models/user/user.service.ts:44</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="53"
+                            class="link-to-prism">src/models/product/product.service.ts:53</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Finds user by id and returns the user without password.
-Used for default in app requests where the hashed password
-won&#39;t be compared</p>
+                    <div class="io-description"><p>Find product by ID</p>
 </div>
 
                     <div class="io-description">
@@ -403,7 +398,7 @@ won&#39;t be compared</p>
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;UserWithoutPassword&gt;</code>
+                        <b>Returns : </b>        <code><a href="../classes/Product.html" target="_self" >Promise&lt;Product&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -417,39 +412,110 @@ won&#39;t be compared</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="hashIfUpdatingPassword"></a>
+                    <a name="findOneByUrlName"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>findOneByUrlName</b></span>
+                        <a href="#findOneByUrlName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findOneByUrlName(urlName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="61"
+                            class="link-to-prism">src/models/product/product.service.ts:61</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Find product by Url Name</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>urlName</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Product.html" target="_self" >Promise&lt;Product&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatUrlName"></a>
                     <span class="name">
                         <span class="modifier">Private</span>
-                        <span class="modifier">Async</span>
-                        <span ><b>hashIfUpdatingPassword</b></span>
-                        <a href="#hashIfUpdatingPassword"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>formatUrlName</b></span>
+                        <a href="#formatUrlName"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>hashIfUpdatingPassword(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, updateUserDto: <a href="../classes/UpdateUserDto.html" target="_self">UpdateUserDto</a>)</code>
+                    <code>formatUrlName(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="107"
-                            class="link-to-prism">src/models/user/user.service.ts:107</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="96"
+                            class="link-to-prism">src/models/product/product.service.ts:96</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>If the user inputted both new password and current password
-the new password is hashed to be saved in the database replacing
-the current one.</p>
-<p>If only the new password or current password were inputted the user
-probably forgot about the other one and an error is thrown</p>
-</div>
+                    <div class="io-description"><p>Formats the name to generate an urlName.</p>
+<p>Makes the name lower case, remove leading and trailing white spaces,
+turn to single the multiple spaces between words and make
+single spaces hyphens</p>
+<div><pre class="line-numbers"><code class="language-html"></code></pre></div></div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -464,21 +530,9 @@ probably forgot about the other one and an error is thrown</p>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>id</td>
+                                    <td>name</td>
                                     <td>
                                                 <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>updateUserDto</td>
-                                    <td>
-                                                <code><a href="../classes/UpdateUserDto.html" target="_self" >UpdateUserDto</a></code>
                                     </td>
 
                                     <td>
@@ -491,9 +545,13 @@ probably forgot about the other one and an error is thrown</p>
                         </table>
                     </div>
                     <div>
+                        <b>Example :</b>
+                        <div>
+                            <pre class="line-numbers"><code class="language-html">&amp;quot; BraNd1    chAir   &amp;quot; becomes &amp;quot;brand1-chair&amp;quot;</code></pre>
+                        </div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                     </div>
                     <div class="io-description">
@@ -518,22 +576,22 @@ probably forgot about the other one and an error is thrown</p>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>remove(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, deleteUserDto: <a href="../classes/DeleteUserDto.html" target="_self">DeleteUserDto</a>)</code>
+                    <code>remove(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="94"
-                            class="link-to-prism">src/models/user/user.service.ts:94</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="84"
+                            class="link-to-prism">src/models/product/product.service.ts:84</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Removes user from database</p>
+                    <div class="io-description"><p>Removes product from database</p>
 </div>
 
                     <div class="io-description">
@@ -552,18 +610,6 @@ probably forgot about the other one and an error is thrown</p>
                                     <td>id</td>
                                     <td>
                                                 <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>deleteUserDto</td>
-                                    <td>
-                                                <code><a href="../classes/DeleteUserDto.html" target="_self" >DeleteUserDto</a></code>
                                     </td>
 
                                     <td>
@@ -603,22 +649,22 @@ probably forgot about the other one and an error is thrown</p>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>update(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, updateUserDto: <a href="../classes/UpdateUserDto.html" target="_self">UpdateUserDto</a>)</code>
+                    <code>update(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, updateProductDto: <a href="../classes/UpdateProductDto.html" target="_self">UpdateProductDto</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="63"
-                            class="link-to-prism">src/models/user/user.service.ts:63</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="69"
+                            class="link-to-prism">src/models/product/product.service.ts:69</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Updates user information</p>
+                    <div class="io-description"><p>Updates product information</p>
 </div>
 
                     <div class="io-description">
@@ -646,9 +692,9 @@ probably forgot about the other one and an error is thrown</p>
 
                                 </tr>
                                 <tr>
-                                    <td>updateUserDto</td>
+                                    <td>updateProductDto</td>
                                     <td>
-                                                <code><a href="../classes/UpdateUserDto.html" target="_self" >UpdateUserDto</a></code>
+                                                <code><a href="../classes/UpdateProductDto.html" target="_self" >UpdateProductDto</a></code>
                                     </td>
 
                                     <td>
@@ -663,7 +709,7 @@ probably forgot about the other one and an error is thrown</p>
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;UserWithoutPassword&gt;</code>
+                        <b>Returns : </b>        <code><a href="../classes/Product.html" target="_self" >Promise&lt;Product&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -677,109 +723,34 @@ probably forgot about the other one and an error is thrown</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="updateUserRole"></a>
-                    <span class="name">
-                        <span class="modifier">Async</span>
-                        <span ><b>updateUserRole</b></span>
-                        <a href="#updateUserRole"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateUserRole(updateUserRoleDto: <a href="../classes/UpdateUserRoleDto.html" target="_self">UpdateUserRoleDto</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="80"
-                            class="link-to-prism">src/models/user/user.service.ts:80</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Updates user role</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>updateUserRoleDto</td>
-                                    <td>
-                                                <code><a href="../classes/UpdateUserRoleDto.html" target="_self" >UpdateUserRoleDto</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;UserWithoutPassword&gt;</code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="validateCurrentPassword"></a>
+                    <a name="updateProductAndUrlName"></a>
                     <span class="name">
                         <span class="modifier">Private</span>
-                        <span class="modifier">Async</span>
-                        <span ><b>validateCurrentPassword</b></span>
-                        <a href="#validateCurrentPassword"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>updateProductAndUrlName</b></span>
+                        <a href="#updateProductAndUrlName"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>validateCurrentPassword(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, currentPassword: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>updateProductAndUrlName(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, updateProductDto: <a href="../classes/UpdateProductDto.html" target="_self">UpdateProductDto</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="132"
-                            class="link-to-prism">src/models/user/user.service.ts:132</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="109"
+                            class="link-to-prism">src/models/product/product.service.ts:109</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Compares if the inputted current password matches the
-user hashed password saved in the database</p>
-<p>If it doesn&#39;t, an error is thrown</p>
+                    <div class="io-description"><p>Formats UrlName and updates the product with the new one.</p>
+<p>Used when the user updates the product name.</p>
 </div>
 
                     <div class="io-description">
@@ -807,9 +778,9 @@ user hashed password saved in the database</p>
 
                                 </tr>
                                 <tr>
-                                    <td>currentPassword</td>
+                                    <td>updateProductDto</td>
                                     <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                <code><a href="../classes/UpdateProductDto.html" target="_self" >UpdateProductDto</a></code>
                                     </td>
 
                                     <td>
@@ -824,7 +795,7 @@ user hashed password saved in the database</p>
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+                        <b>Returns : </b>        <code><a href="../classes/Product.html" target="_self" >Promise&lt;Product&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -841,147 +812,123 @@ user hashed password saved in the database</p>
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;;
-import { compare, hash } from &#x27;bcrypt&#x27;;
 import { PrismaService } from &#x27;src/prisma/prisma.service&#x27;;
-import { CreateUserDto } from &#x27;./dto/create-user.dto&#x27;;
-import { DeleteUserDto } from &#x27;./dto/delete-user.dto&#x27;;
-import { UpdateUserRoleDto } from &#x27;./dto/update-user-role.dto&#x27;;
-import { UpdateUserDto } from &#x27;./dto/update-user.dto&#x27;;
-import { UserWithoutPassword } from &#x27;./entities/user-without-password.entity&#x27;;
-import { User } from &#x27;./entities/user.entity&#x27;;
-import { InvalidPasswordUpdateError } from &#x27;./errors/invalid-password-update.error&#x27;;
-import { MissingPasswordUpdateError } from &#x27;./errors/missing-password-update.error&#x27;;
+import { CreateProductDto } from &#x27;./dto/create-product.dto&#x27;;
+import { FindAllProductsDto } from &#x27;./dto/find-all-products.dto&#x27;;
+import { UpdateProductDto } from &#x27;./dto/update-product.dto&#x27;;
+import { Product } from &#x27;./entities/product.entity&#x27;;
 
-/** Responsible for managing users in the database.
- * CRUD endpoints are available for users.
+/** Responsible for managing products in the database.
+ * CRUD endpoints are available for products.
  */
 @Injectable()
-export class UserService {
+export class ProductService {
   /** Responsible for managing users in the database.
    * CRUD endpoints are available for users.
    *
-   * Instantiate the class and the PrismaService dependency
+   * Instantiates the class and the PrismaService dependency
    */
   constructor(private readonly prisma: PrismaService) {}
 
-  /** Creates a new user */
-  async create(createUserDto: CreateUserDto): Promise&lt;void&gt; {
-    const hashedPassword &#x3D; await hash(createUserDto.password, 10);
+  /** Creates a new product */
+  async create(createProductDto: CreateProductDto): Promise&lt;Product&gt; {
+    const urlName &#x3D; this.formatUrlName(createProductDto.name);
 
-    const lowerCaseEmail &#x3D; createUserDto.email.toLowerCase();
+    const product &#x3D; await this.prisma.product.create({
+      data: { ...createProductDto, urlName },
+    });
 
-    await this.prisma.user.create({
-      data: {
-        ...createUserDto,
-        email: lowerCaseEmail,
-        password: hashedPassword,
+    return product;
+  }
+
+  /** Returns all products with pagination
+   * Default is starting on page 1 showing 10 results per page
+   * and ordering by name
+   */
+  async findAll({
+    searchName &#x3D; &#x27;&#x27;,
+    page &#x3D; 1,
+    offset &#x3D; 10,
+  }: FindAllProductsDto): Promise&lt;Product[]&gt; {
+    const productsToSkip &#x3D; (page - 1) * offset;
+
+    return this.prisma.product.findMany({
+      skip: productsToSkip,
+      take: offset,
+      where: {
+        name: { contains: searchName, mode: &#x27;insensitive&#x27; },
       },
+      orderBy: { name: &#x27;asc&#x27; },
     });
   }
 
-  /** Finds user by id and returns the user without password.
-   * Used for default in app requests where the hashed password
-   * won&#x27;t be compared
-   */
-  async findById(id: string): Promise&lt;UserWithoutPassword&gt; {
-    const user &#x3D; await this.prisma.user.findUnique({ where: { id } });
-
-    delete user.password;
-
-    return { ...user };
+  /** Find product by ID */
+  async findOneById(id: string): Promise&lt;Product&gt; {
+    return this.prisma.product.findUnique({
+      where: { id },
+      rejectOnNotFound: true,
+    });
   }
 
-  /** Finds user by email and returns the user with password.
-   * Used mainly in login to compare if the inputted password matches
-   * the hashed one.
-   */
-  async findByEmail(email: string): Promise&lt;User&gt; {
-    const lowerCaseEmail &#x3D; email.toLowerCase();
-
-    return this.prisma.user.findUnique({ where: { email: lowerCaseEmail } });
+  /** Find product by Url Name */
+  async findOneByUrlName(urlName: string): Promise&lt;Product&gt; {
+    return this.prisma.product.findUnique({
+      where: { urlName },
+      rejectOnNotFound: true,
+    });
   }
 
-  /** Updates user information */
+  /** Updates product information */
   async update(
     id: string,
-    updateUserDto: UpdateUserDto,
-  ): Promise&lt;UserWithoutPassword&gt; {
-    await this.hashIfUpdatingPassword(id, updateUserDto);
+    updateProductDto: UpdateProductDto,
+  ): Promise&lt;Product&gt; {
+    if (updateProductDto.name) {
+      return this.updateProductAndUrlName(id, updateProductDto);
+    }
 
-    const user &#x3D; await this.prisma.user.update({
+    return this.prisma.product.update({
       where: { id },
-      data: { ...updateUserDto, updatedAt: new Date() },
+      data: { ...updateProductDto },
     });
-
-    delete user.password;
-
-    return { ...user };
   }
 
-  /** Updates user role */
-  async updateUserRole(
-    updateUserRoleDto: UpdateUserRoleDto,
-  ): Promise&lt;UserWithoutPassword&gt; {
-    const user &#x3D; await this.prisma.user.update({
-      where: { email: updateUserRoleDto.email },
-      data: { role: updateUserRoleDto.role },
+  /** Removes product from database */
+  async remove(id: string): Promise&lt;void&gt; {
+    await this.prisma.product.delete({ where: { id } });
+  }
+
+  /** Formats the name to generate an urlName.
+   *
+   * Makes the name lower case, remove leading and trailing white spaces,
+   * turn to single the multiple spaces between words and make
+   * single spaces hyphens
+   *
+   * @example &quot; BraNd1    chAir   &quot; becomes &quot;brand1-chair&quot;
+   */
+  private formatUrlName(name: string): string {
+    const lowerCaseUrlName &#x3D; name.toLocaleLowerCase();
+    const trimmedUrlName &#x3D; lowerCaseUrlName.trim();
+    const singleSpaceUrlName &#x3D; trimmedUrlName.replace(/\s\s+/g, &#x27; &#x27;);
+    const spaceToHyphenUrlName &#x3D; singleSpaceUrlName.split(&#x27; &#x27;).join(&#x27;-&#x27;);
+
+    return spaceToHyphenUrlName;
+  }
+
+  /** Formats UrlName and updates the product with the new one.
+   *
+   * Used when the user updates the product name.
+   */
+  private updateProductAndUrlName(
+    id: string,
+    updateProductDto: UpdateProductDto,
+  ): Promise&lt;Product&gt; {
+    const urlName &#x3D; this.formatUrlName(updateProductDto.name);
+
+    return this.prisma.product.update({
+      where: { id },
+      data: { ...updateProductDto, urlName },
     });
-
-    delete user.password;
-
-    return user;
-  }
-
-  /** Removes user from database */
-  async remove(id: string, deleteUserDto: DeleteUserDto): Promise&lt;void&gt; {
-    await this.validateCurrentPassword(id, deleteUserDto.currentPassword);
-
-    await this.prisma.user.delete({ where: { id } });
-  }
-
-  /** If the user inputted both new password and current password
-   * the new password is hashed to be saved in the database replacing
-   * the current one.
-   *
-   * If only the new password or current password were inputted the user
-   * probably forgot about the other one and an error is thrown
-   */
-  private async hashIfUpdatingPassword(
-    id: string,
-    updateUserDto: UpdateUserDto,
-  ): Promise&lt;void&gt; {
-    if (updateUserDto.password &amp;&amp; updateUserDto.currentPassword) {
-      await this.validateCurrentPassword(id, updateUserDto.currentPassword);
-
-      const hashedPassword &#x3D; await hash(updateUserDto.password, 10);
-
-      updateUserDto.password &#x3D; hashedPassword;
-      delete updateUserDto.currentPassword;
-
-      return;
-    }
-
-    if (updateUserDto.password || updateUserDto.currentPassword) {
-      throw new MissingPasswordUpdateError();
-    }
-  }
-
-  /** Compares if the inputted current password matches the
-   * user hashed password saved in the database
-   *
-   * If it doesn&#x27;t, an error is thrown
-   */
-  private async validateCurrentPassword(
-    id: string,
-    currentPassword: string,
-  ): Promise&lt;void&gt; {
-    const user &#x3D; await this.prisma.user.findUnique({ where: { id } });
-
-    const isCorrectPassword &#x3D; await compare(currentPassword, user.password);
-
-    if (!isCorrectPassword) {
-      throw new InvalidPasswordUpdateError();
-    }
   }
 }
 </code></pre>
@@ -1027,7 +974,7 @@ export class UserService {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
-            var COMPODOC_CURRENT_PAGE_URL = 'UserService.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'ProductService.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

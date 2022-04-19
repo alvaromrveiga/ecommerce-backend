@@ -44,7 +44,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li >InvalidPasswordUpdateError</li>
+  <li >UpdateUserRoleDto</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -62,7 +62,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/models/user/errors/invalid-password-update.error.ts</code>
+            <code>src/models/user/dto/update-user-role.dto.ts</code>
         </p>
 
 
@@ -70,48 +70,133 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Throws HTTP status 400. Used when the user inputs the wrong
-current password when trying to create a new password</p>
+                <p>Describes the information needed to update an User role</p>
 
-            </p>
-
-            <p class="comment">
-                <h3>Extends</h3>
-            </p>
-            <p class="comment">
-                    <code>BadRequestException</code>
             </p>
 
 
 
 
             <section>
-    <h3 id="constructor">Constructor</h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor()</code>
+                        <h6><b>Properties</b></h6>
                     </td>
                 </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/models/user/errors/invalid-password-update.error.ts:6</a></div>
-                            </td>
-                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#email" >email</a>
+                            </li>
+                            <li>
+                                <a href="#role" >role</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
-                <tr>
-                    <td class="col-md-4">
-                            <div class="io-description"><p>Throws HTTP status 400 with message &#39;Invalid current password&#39;.
-Used when the user inputs the wrong current password when
-trying to create a new password</p>
-</div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+
+
+
+
+
+        </tbody>
+    </table>
 </section>
 
+
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="email"></a>
+                    <span class="name">
+                        <span ><b>email</b></span>
+                        <a href="#email"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @IsEmail()<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/models/user/dto/update-user-role.dto.ts:11</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>User email</p>
+<div><pre class="line-numbers"><code class="language-html"></code></pre></div></div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="role"></a>
+                    <span class="name">
+                        <span ><b>role</b></span>
+                        <a href="#role"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Role</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @IsEnum(Role)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/models/user/dto/update-user-role.dto.ts:18</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>User new role</p>
+<div><pre class="line-numbers"><code class="language-html"></code></pre></div></div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
 
 
 
@@ -123,19 +208,24 @@ trying to create a new password</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { BadRequestException } from &#x27;@nestjs/common&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Role } from &#x27;@prisma/client&#x27;;
+import { IsEmail, IsEnum } from &#x27;class-validator&#x27;;
 
-/** Throws HTTP status 400. Used when the user inputs the wrong
- * current password when trying to create a new password
- */
-export class InvalidPasswordUpdateError extends BadRequestException {
-  /** Throws HTTP status 400 with message &#x27;Invalid current password&#x27;.
-   * Used when the user inputs the wrong current password when
-   * trying to create a new password
+/** Describes the information needed to update an User role */
+export class UpdateUserRoleDto {
+  /**
+   * User email
+   * @example &quot;user@example.com&quot;
    */
-  constructor() {
-    super(&#x27;Invalid current password&#x27;);
-  }
+  @IsEmail()
+  email: string;
+
+  /**
+   * User new role
+   * @example &quot;ADMIN&quot;
+   */
+  @IsEnum(Role)
+  role: Role;
 }
 </code></pre>
     </div>
@@ -175,7 +265,7 @@ export class InvalidPasswordUpdateError extends BadRequestException {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
-            var COMPODOC_CURRENT_PAGE_URL = 'InvalidPasswordUpdateError.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'UpdateUserRoleDto.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
