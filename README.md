@@ -51,7 +51,8 @@
     # Inicia o servidor em modo de desenvolvimento
     yarn start:dev
 
-    # O servidor abrirá na porta 3000. Você pode acessar a documentação com Swagger em http://localhost:3000/api/
+    # O servidor abrirá na porta 3000. 
+    # Você pode acessar a documentação com Swagger em http://localhost:3000/api/
 
     # Para visualizar o banco de dados
     yarn prisma studio
