@@ -9,5 +9,12 @@
   "moduleNameMapper": {
     "^test/(.*)$": "<rootDir>/test/$1",
     "^src/(.*)$": "<rootDir>/src/$1"
+  },
+  "globals": {
+    "ts-jest": {
+      "astTransformers": {
+        "before": ["<rootDir>/test/nest-cli-plugins.ts"]
+      }
+    }
   }
 }
