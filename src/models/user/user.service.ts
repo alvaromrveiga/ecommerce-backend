@@ -7,8 +7,8 @@ import { UpdateUserRoleDto } from './dto/update-user-role.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserWithoutPassword } from './entities/user-without-password.entity';
 import { User } from './entities/user.entity';
-import { InvalidPasswordUpdateError } from './errors/invalid-password-update.error';
-import { MissingPasswordUpdateError } from './errors/missing-password-update.error';
+import { InvalidPasswordUpdateException } from './errors/invalid-password-update.exception';
+import { MissingPasswordUpdateException } from './errors/missing-password-update.exception';
 
 /** Responsible for managing users in the database.
  * CRUD endpoints are available for users.
@@ -120,7 +120,7 @@ export class UserService {
     }
 
     if (updateUserDto.password || updateUserDto.currentPassword) {
-      throw new MissingPasswordUpdateError();
+      throw new MissingPasswordUpdateException();
     }
   }
 
@@ -138,7 +138,7 @@ export class UserService {
     const isCorrectPassword = await compare(currentPassword, user.password);
 
     if (!isCorrectPassword) {
-      throw new InvalidPasswordUpdateError();
+      throw new InvalidPasswordUpdateException();
     }
   }
 }

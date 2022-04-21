@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
-import { InvalidPasswordUpdateError } from './errors/invalid-password-update.error';
-import { MissingPasswordUpdateError } from './errors/missing-password-update.error';
+import { InvalidPasswordUpdateException } from './errors/invalid-password-update.exception';
+import { MissingPasswordUpdateException } from './errors/missing-password-update.exception';
 import { UserService } from './user.service';
 
 let userArray: User[] = [];
@@ -159,7 +159,7 @@ describe('UserService', () => {
 
       await expect(
         userService.update('56a12d76-52e0-4ddd-8b7f-ffe88854d94c', data),
-      ).rejects.toThrow(new InvalidPasswordUpdateError());
+      ).rejects.toThrow(new InvalidPasswordUpdateException());
     });
 
     it('should not update if current password is empty', async () => {
@@ -169,7 +169,7 @@ describe('UserService', () => {
 
       await expect(
         userService.update('56a12d76-52e0-4ddd-8b7f-ffe88854d94c', data),
-      ).rejects.toThrow(new MissingPasswordUpdateError());
+      ).rejects.toThrow(new MissingPasswordUpdateException());
     });
 
     it('should not update if password is empty', async () => {
@@ -179,7 +179,7 @@ describe('UserService', () => {
 
       await expect(
         userService.update('56a12d76-52e0-4ddd-8b7f-ffe88854d94c', data),
-      ).rejects.toThrow(new MissingPasswordUpdateError());
+      ).rejects.toThrow(new MissingPasswordUpdateException());
     });
   });
 
@@ -226,7 +226,7 @@ describe('UserService', () => {
         userService.remove('56a12d76-52e0-4ddd-8b7f-ffe88854d94c', {
           currentPassword: 'wrongPassword',
         }),
-      ).rejects.toThrow(new InvalidPasswordUpdateError());
+      ).rejects.toThrow(new InvalidPasswordUpdateException());
     });
 
     it('should not remove user if password is empty', async () => {
@@ -234,7 +234,7 @@ describe('UserService', () => {
         userService.remove('56a12d76-52e0-4ddd-8b7f-ffe88854d94c', {
           currentPassword: '',
         }),
-      ).rejects.toThrow(new InvalidPasswordUpdateError());
+      ).rejects.toThrow(new InvalidPasswordUpdateException());
     });
   });
 });
