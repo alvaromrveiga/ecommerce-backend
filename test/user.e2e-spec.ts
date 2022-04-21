@@ -1,13 +1,20 @@
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import {
+  BadRequestException,
+  INestApplication,
+  ValidationPipe,
+} from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { isDate, isDateString, isUUID } from 'class-validator';
 import { AppModule } from 'src/app.module';
 import { EmailInUseException } from 'src/common/exceptions/email-in-use.exception';
 import { UserNotFoundException } from 'src/common/exceptions/user-not-found.exception';
 import { PrismaInterceptor } from 'src/common/interceptors/prisma.interceptor';
+import { UpdateUserDto } from 'src/models/user/dto/update-user.dto';
 import { User } from 'src/models/user/entities/user.entity';
+import { MissingPasswordUpdateException } from 'src/models/user/errors/missing-password-update.exception';
 import { PrismaService } from 'src/prisma/prisma.service';
 import request from 'supertest';
+import { InvalidPasswordUpdateException } from '../src/models/user/errors/invalid-password-update.exception';
 
 describe('UserController (e2e)', () => {
   let app: INestApplication;
@@ -231,38 +238,63 @@ describe('UserController (e2e)', () => {
         .expect(400);
     });
 
-    it('should not update password if currentPassword is wrong', () => {
-      return request(app.getHttpServer())
-        .patch('/user')
-        .set({ Authorization: `Bearer ${token}` })
-        .send({
-          password: 'tester0new_password',
-          currentPassword: 'wrongPassword',
-          name: 'Tester 0',
-        })
-        .expect(400);
+    it('should not update password if currentPassword is wrong', async () => {
+      await expect(
+        request(app.getHttpServer())
+          .patch('/user')
+          .set({ Authorization: `Bearer ${token}` })
+          .send({
+            password: 'tester0new_password',
+            currentPassword: 'wrongPassword',
+            name: 'Tester 0',
+            email: 'tester0_newEmail@example.com',
+          } as UpdateUserDto)
+          .expect(400),
+      ).resolves.toMatchObject({
+        text: JSON.stringify(
+          new BadRequestException(
+            new InvalidPasswordUpdateException().message,
+          ).getResponse(),
+        ),
+      });
     });
 
-    it('should not update password if currentPassword is empty', () => {
-      return request(app.getHttpServer())
-        .patch('/user')
-        .set({ Authorization: `Bearer ${token}` })
-        .send({
-          password: 'tester0new_password',
-          name: 'Tester 0',
-        })
-        .expect(400);
+    it('should not update there is password without currentPassword', async () => {
+      await expect(
+        request(app.getHttpServer())
+          .patch('/user')
+          .set({ Authorization: `Bearer ${token}` })
+          .send({
+            password: 'tester0new_password',
+            name: 'Tester 0',
+          })
+          .expect(400),
+      ).resolves.toMatchObject({
+        text: JSON.stringify(
+          new BadRequestException(
+            new MissingPasswordUpdateException().message,
+          ).getResponse(),
+        ),
+      });
     });
 
-    it('should not update if there is currentPassword without password', () => {
-      return request(app.getHttpServer())
-        .patch('/user')
-        .set({ Authorization: `Bearer ${token}` })
-        .send({
-          currentPassword: 'abc123456',
-          name: 'Tester 0',
-        })
-        .expect(400);
+    it('should not update if there is currentPassword without password', async () => {
+      await expect(
+        request(app.getHttpServer())
+          .patch('/user')
+          .set({ Authorization: `Bearer ${token}` })
+          .send({
+            currentPassword: 'abc123456',
+            name: 'Tester 0',
+          } as UpdateUserDto)
+          .expect(400),
+      ).resolves.toMatchObject({
+        text: JSON.stringify(
+          new BadRequestException(
+            new MissingPasswordUpdateException().message,
+          ).getResponse(),
+        ),
+      });
     });
 
     it('should not update password if new one is too weak', () => {
@@ -273,18 +305,25 @@ describe('UserController (e2e)', () => {
           password: '123456',
           currentPassword: 'abc123456',
           address: 'World Street 0 House 0',
+          email: 'tester0_newEmail@example.com',
         })
         .expect(400);
     });
 
-    it('should not update if email is already in use', () => {
-      return request(app.getHttpServer())
-        .patch('/user')
-        .set({ Authorization: `Bearer ${token}` })
-        .send({
-          email: 'tester1@example.com',
-        })
-        .expect(400);
+    it('should not update if email is already in use', async () => {
+      await expect(
+        request(app.getHttpServer())
+          .patch('/user')
+          .set({ Authorization: `Bearer ${token}` })
+          .send({
+            email: 'tester1@example.com',
+            password: 'abcd1234567',
+            currentPassword: 'abc123456',
+          } as UpdateUserDto)
+          .expect(400),
+      ).resolves.toMatchObject({
+        text: JSON.stringify(new EmailInUseException().getResponse()),
+      });
     });
   });
 
