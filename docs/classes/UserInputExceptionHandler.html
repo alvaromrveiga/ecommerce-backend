@@ -44,7 +44,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li >ProductNotFoundException</li>
+  <li >UserInputExceptionHandler</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -62,7 +62,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/common/exceptions/product/product-not-found.exception.ts</code>
+            <code>src/common/interceptors/handlers/user-input-exception.handler.ts</code>
         </p>
 
 
@@ -70,50 +70,128 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Throws HTTP status 404. Used when the user inputs
-a product that is not registered in the system</p>
+                <p>Catches user input errors and throws the
+respective HTTP error</p>
 
             </p>
+
 
             <p class="comment">
-                <h3>Extends</h3>
+                <h3>Implements</h3>
             </p>
             <p class="comment">
-                    <code>NotFoundException</code>
+                            <code><a href="../interfaces/ExceptionHandler.html" target="_self" >ExceptionHandler</a></code>
             </p>
-
-
 
 
             <section>
-    <h3 id="constructor">Constructor</h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-<code>constructor()</code>
-                    </td>
-                </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/common/exceptions/product/product-not-found.exception.ts:6</a></div>
-                            </td>
-                        </tr>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
 
                 <tr>
                     <td class="col-md-4">
-                            <div class="io-description"><p>Throws HTTP status 404 with message
-&#39;Product not found&#39;. Used when the user inputs
-a product that is not registered in the system</p>
-</div>
+                        <h6><b>Methods</b></h6>
                     </td>
                 </tr>
-            </tbody>
-        </table>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#handle" >handle</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
 </section>
 
 
 
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handle"></a>
+                    <span class="name">
+                        <span ><b>handle</b></span>
+                        <a href="#handle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>handle(error: Error)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="12"
+                            class="link-to-prism">src/common/interceptors/handlers/user-input-exception.handler.ts:12</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Catches user input errors and throws the
+respective HTTP error</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>error</td>
+                                    <td>
+                                            <code>Error</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
 
 
 
@@ -123,18 +201,21 @@ a product that is not registered in the system</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { NotFoundException } from &#x27;@nestjs/common&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { BadRequestException } from &#x27;@nestjs/common&#x27;;
+import { UserServiceInputException } from &#x27;src/models/user/errors/user-service-input.exception&#x27;;
+import { ExceptionHandler } from &#x27;./exception.handler&#x27;;
 
-/** Throws HTTP status 404. Used when the user inputs
- * a product that is not registered in the system
+/** Catches user input errors and throws the
+ * respective HTTP error
  */
-export class ProductNotFoundException extends NotFoundException {
-  /** Throws HTTP status 404 with message
-   * &#x27;Product not found&#x27;. Used when the user inputs
-   * a product that is not registered in the system
+export class UserInputExceptionHandler implements ExceptionHandler {
+  /** Catches user input errors and throws the
+   * respective HTTP error
    */
-  constructor() {
-    super(&#x27;Product not found&#x27;);
+  handle(error: Error): void {
+    if (error instanceof UserServiceInputException) {
+      throw new BadRequestException(error.message);
+    }
   }
 }
 </code></pre>
@@ -175,7 +256,7 @@ export class ProductNotFoundException extends NotFoundException {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
-            var COMPODOC_CURRENT_PAGE_URL = 'ProductNotFoundException.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'UserInputExceptionHandler.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

@@ -44,7 +44,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li >InvalidPasswordUpdateError</li>
+  <li >UserServiceInputException</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -62,7 +62,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/models/user/errors/invalid-password-update.error.ts</code>
+            <code>src/models/user/errors/user-service-input.exception.ts</code>
         </p>
 
 
@@ -70,8 +70,8 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Throws HTTP status 400. Used when the user inputs the wrong
-current password when trying to create a new password</p>
+                <p>Used to extend another exception to make it
+instanceof UserServiceInputException</p>
 
             </p>
 
@@ -79,7 +79,7 @@ current password when trying to create a new password</p>
                 <h3>Extends</h3>
             </p>
             <p class="comment">
-                    <code>BadRequestException</code>
+                    <code>Error</code>
             </p>
 
 
@@ -91,21 +91,46 @@ current password when trying to create a new password</p>
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor()</code>
+<code>constructor(message: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/models/user/errors/invalid-password-update.error.ts:6</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="5" class="link-to-prism">src/models/user/errors/user-service-input.exception.ts:5</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
-                            <div class="io-description"><p>Throws HTTP status 400 with message &#39;Invalid current password&#39;.
-Used when the user inputs the wrong current password when
-trying to create a new password</p>
+                            <div class="io-description"><p>Used to extend another exception to make it
+instanceof UserServiceInputException</p>
 </div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>message</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
                     </td>
                 </tr>
             </tbody>
@@ -123,18 +148,13 @@ trying to create a new password</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { BadRequestException } from &#x27;@nestjs/common&#x27;;
-
-/** Throws HTTP status 400. Used when the user inputs the wrong
- * current password when trying to create a new password
- */
-export class InvalidPasswordUpdateError extends BadRequestException {
-  /** Throws HTTP status 400 with message &#x27;Invalid current password&#x27;.
-   * Used when the user inputs the wrong current password when
-   * trying to create a new password
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export class UserServiceInputException extends Error {
+  /**
+   * Used to extend another exception to make it
+   * instanceof UserServiceInputException
    */
-  constructor() {
-    super(&#x27;Invalid current password&#x27;);
+  constructor(message: string) {
+    super(message);
   }
 }
 </code></pre>
@@ -175,7 +195,7 @@ export class InvalidPasswordUpdateError extends BadRequestException {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
-            var COMPODOC_CURRENT_PAGE_URL = 'InvalidPasswordUpdateError.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'UserServiceInputException.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

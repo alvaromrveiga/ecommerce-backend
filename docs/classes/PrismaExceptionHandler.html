@@ -28,7 +28,7 @@
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
-               <div class="content injectable">
+               <div class="content class">
                    <div class="content-data">
 
 
@@ -38,9 +38,13 @@
 
 
 
+
+
+
+
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li >PrismaInterceptor</li>
+  <li>Classes</li>
+  <li >PrismaExceptionHandler</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -58,7 +62,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/common/interceptors/prisma.interceptor.ts</code>
+            <code>src/common/interceptors/handlers/prisma-exception.handler.ts</code>
         </p>
 
 
@@ -66,11 +70,18 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Interceptor for Prisma ORM errors</p>
-<p>For more about NestJs interceptors: <a href="https://docs.nestjs.com/interceptors">https://docs.nestjs.com/interceptors</a></p>
+                <p>Catches Prisma ORM errors and throws the
+respective HTTP error</p>
 
             </p>
 
+
+            <p class="comment">
+                <h3>Implements</h3>
+            </p>
+            <p class="comment">
+                            <code><a href="../interfaces/ExceptionHandler.html" target="_self" >ExceptionHandler</a></code>
+            </p>
 
 
             <section>
@@ -87,7 +98,7 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#intercept" >intercept</a>
+                                <a href="#handle" >handle</a>
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
@@ -122,6 +133,7 @@
 </section>
 
 
+
             <section>
     
     <h3 id="methods">
@@ -131,24 +143,24 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="intercept"></a>
+                    <a name="handle"></a>
                     <span class="name">
-                        <span ><b>intercept</b></span>
-                        <a href="#intercept"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>handle</b></span>
+                        <a href="#handle"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>intercept(context: ExecutionContext, next: CallHandler<>)</code>
+<code>handle(error: Error)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="27"
-                            class="link-to-prism">src/common/interceptors/prisma.interceptor.ts:27</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="16"
+                            class="link-to-prism">src/common/interceptors/handlers/prisma-exception.handler.ts:16</a></div>
                 </td>
             </tr>
 
@@ -156,9 +168,7 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-description"><p>Catches Prisma ORM errors and throws the
-respective app HTTP error</p>
-<p>Uses default NestJs boilerplate, for more
-information: <a href="https://docs.nestjs.com/interceptors">https://docs.nestjs.com/interceptors</a></p>
+respective HTTP error</p>
 </div>
 
                     <div class="io-description">
@@ -174,21 +184,9 @@ information: <a href="https://docs.nestjs.com/interceptors">https://docs.nestjs.
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>context</td>
+                                    <td>error</td>
                                     <td>
-                                            <code>ExecutionContext</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>next</td>
-                                    <td>
-                                            <code>CallHandler&lt;&gt;</code>
+                                            <code>Error</code>
                                     </td>
 
                                     <td>
@@ -203,7 +201,7 @@ information: <a href="https://docs.nestjs.com/interceptors">https://docs.nestjs.
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Observable | Promise</code>
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                     </div>
                     <div class="io-description">
@@ -235,8 +233,8 @@ information: <a href="https://docs.nestjs.com/interceptors">https://docs.nestjs.
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="72"
-                            class="link-to-prism">src/common/interceptors/prisma.interceptor.ts:72</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="61"
+                            class="link-to-prism">src/common/interceptors/handlers/prisma-exception.handler.ts:61</a></div>
                 </td>
             </tr>
 
@@ -308,8 +306,8 @@ information: <a href="https://docs.nestjs.com/interceptors">https://docs.nestjs.
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="90"
-                            class="link-to-prism">src/common/interceptors/prisma.interceptor.ts:90</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="56"
+                            class="link-to-prism">src/common/interceptors/handlers/prisma-exception.handler.ts:56</a></div>
                 </td>
             </tr>
 
@@ -378,8 +376,8 @@ making it an unknown prisma error</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="100"
-                            class="link-to-prism">src/common/interceptors/prisma.interceptor.ts:100</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="82"
+                            class="link-to-prism">src/common/interceptors/handlers/prisma-exception.handler.ts:82</a></div>
                 </td>
             </tr>
 
@@ -451,8 +449,8 @@ making it an unknown prisma error</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="77"
-                            class="link-to-prism">src/common/interceptors/prisma.interceptor.ts:77</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="66"
+                            class="link-to-prism">src/common/interceptors/handlers/prisma-exception.handler.ts:66</a></div>
                 </td>
             </tr>
 
@@ -524,8 +522,8 @@ making it an unknown prisma error</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="95"
-                            class="link-to-prism">src/common/interceptors/prisma.interceptor.ts:95</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="77"
+                            class="link-to-prism">src/common/interceptors/handlers/prisma-exception.handler.ts:77</a></div>
                 </td>
             </tr>
 
@@ -577,78 +575,71 @@ making it an unknown prisma error</p>
     </table>
 </section>
 
+
+
+
+
     </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  CallHandler,
-  ExecutionContext,
-  Injectable,
-  NestInterceptor,
-} from &#x27;@nestjs/common&#x27;;
-import { PrismaClientKnownRequestError } from &#x27;@prisma/client/runtime&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { PrismaClientKnownRequestError } from &#x27;@prisma/client/runtime&#x27;;
 import { PrismaError } from &#x27;prisma-error-enum&#x27;;
-import { catchError, Observable } from &#x27;rxjs&#x27;;
-import { EmailInUseException } from &#x27;../exceptions/email-in-use.exception&#x27;;
-import { ProductNameInUseException } from &#x27;../exceptions/product-name-in-use.exception&#x27;;
-import { ProductNotFoundException } from &#x27;../exceptions/product-not-found.exception&#x27;;
-import { UserNotFoundException } from &#x27;../exceptions/user-not-found.exception&#x27;;
+import { ProductNameInUseException } from &#x27;src/common/exceptions/product/product-name-in-use.exception&#x27;;
+import { ProductNotFoundException } from &#x27;src/common/exceptions/product/product-not-found.exception&#x27;;
+import { EmailInUseException } from &#x27;src/common/exceptions/user/email-in-use.exception&#x27;;
+import { UserNotFoundException } from &#x27;src/common/exceptions/user/user-not-found.exception&#x27;;
+import { ExceptionHandler } from &#x27;./exception.handler&#x27;;
 
-/** Interceptor for Prisma ORM errors
- *
- * For more about NestJs interceptors: https://docs.nestjs.com/interceptors
+/** Catches Prisma ORM errors and throws the
+ * respective HTTP error
  */
-@Injectable()
-export class PrismaInterceptor implements NestInterceptor {
+export class PrismaExceptionHandler implements ExceptionHandler {
   /** Catches Prisma ORM errors and throws the
-   * respective app HTTP error
-   *
-   * Uses default NestJs boilerplate, for more
-   * information: https://docs.nestjs.com/interceptors
+   * respective HTTP error
    */
-  intercept(
-    context: ExecutionContext,
-    next: CallHandler&lt;unknown&gt;,
-  ): Observable&lt;unknown&gt; | Promise&lt;Observable&lt;unknown&gt;&gt; {
-    return next.handle().pipe(
-      catchError((error) &#x3D;&gt; {
-        if (error instanceof PrismaClientKnownRequestError) {
-          switch (error.code) {
-            case PrismaError.UniqueConstraintViolation:
-              if (this.isEmailConstraintViolation(error.meta)) {
-                throw new EmailInUseException();
-              }
-
-              if (this.isProductNameConstraintViolation(error)) {
-                throw new ProductNameInUseException();
-              }
-              break;
-            case PrismaError.RecordsNotFound: {
-              if (this.isUserError(error)) {
-                throw new UserNotFoundException();
-              }
-
-              if (this.isProductError(error)) {
-                throw new ProductNotFoundException();
-              }
-
-              break;
-            }
-            default:
-              throw error;
+  handle(error: Error): void {
+    if (error instanceof PrismaClientKnownRequestError) {
+      switch (error.code) {
+        case PrismaError.UniqueConstraintViolation:
+          if (this.isEmailConstraintViolation(error.meta)) {
+            throw new EmailInUseException();
           }
-        }
 
-        if (this.isPrismaUnknownError(error)) {
-          if (error.message &#x3D;&#x3D;&#x3D; &#x27;No Product found&#x27;) {
+          if (this.isProductNameConstraintViolation(error)) {
+            throw new ProductNameInUseException();
+          }
+          break;
+        case PrismaError.RecordsNotFound: {
+          if (this.isUserError(error)) {
+            throw new UserNotFoundException();
+          }
+
+          if (this.isProductError(error)) {
             throw new ProductNotFoundException();
           }
-        }
 
-        throw error;
-      }),
-    );
+          break;
+        }
+        default:
+          throw error;
+      }
+    }
+
+    if (this.isPrismaUnknownError(error)) {
+      if (error.message &#x3D;&#x3D;&#x3D; &#x27;No Product found&#x27;) {
+        throw new ProductNotFoundException();
+      }
+    }
+
+    throw error;
+  }
+
+  /** Checks if the error contains clientVersion,
+   * making it an unknown prisma error
+   * */
+  private isPrismaUnknownError(error): boolean {
+    return !!error.clientVersion;
   }
 
   /** Returns wether the error happened in the email field or not */
@@ -667,13 +658,6 @@ export class PrismaInterceptor implements NestInterceptor {
     );
   }
 
-  /** Checks if the error contains clientVersion,
-   * making it an unknown prisma error
-   * */
-  private isPrismaUnknownError(error): boolean {
-    return !!error.clientVersion;
-  }
-
   /** Returns wether the error happened on an user prisma query or not */
   private isUserError(error: PrismaClientKnownRequestError): boolean {
     return error.message.includes(&#x27;prisma.user&#x27;);
@@ -686,12 +670,7 @@ export class PrismaInterceptor implements NestInterceptor {
 }
 </code></pre>
     </div>
-
 </div>
-
-
-
-
 
 
 
@@ -726,8 +705,8 @@ export class PrismaInterceptor implements NestInterceptor {
 
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
-            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
-            var COMPODOC_CURRENT_PAGE_URL = 'PrismaInterceptor.html';
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'PrismaExceptionHandler.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

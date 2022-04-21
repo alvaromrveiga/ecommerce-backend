@@ -205,7 +205,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/InvalidEmailOrPasswordError.html" data-type="entity-link" >InvalidEmailOrPasswordError</a>
                             </li>
                             <li class="link">
-                                <a href="classes/InvalidPasswordUpdateError.html" data-type="entity-link" >InvalidPasswordUpdateError</a>
+                                <a href="classes/InvalidPasswordUpdateException.html" data-type="entity-link" >InvalidPasswordUpdateException</a>
                             </li>
                             <li class="link">
                                 <a href="classes/LoginCredentialsDto.html" data-type="entity-link" >LoginCredentialsDto</a>
@@ -214,7 +214,10 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/LoginResponse.html" data-type="entity-link" >LoginResponse</a>
                             </li>
                             <li class="link">
-                                <a href="classes/MissingPasswordUpdateError.html" data-type="entity-link" >MissingPasswordUpdateError</a>
+                                <a href="classes/MissingPasswordUpdateException.html" data-type="entity-link" >MissingPasswordUpdateException</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/PrismaExceptionHandler.html" data-type="entity-link" >PrismaExceptionHandler</a>
                             </li>
                             <li class="link">
                                 <a href="classes/Product.html" data-type="entity-link" >Product</a>
@@ -238,7 +241,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/User.html" data-type="entity-link" >User</a>
                             </li>
                             <li class="link">
+                                <a href="classes/UserInputExceptionHandler.html" data-type="entity-link" >UserInputExceptionHandler</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/UserNotFoundException.html" data-type="entity-link" >UserNotFoundException</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/UserServiceInputException.html" data-type="entity-link" >UserServiceInputException</a>
                             </li>
                             <li class="link">
                                 <a href="classes/UserWithoutPassword.html" data-type="entity-link" >UserWithoutPassword</a>
@@ -254,10 +263,10 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </div>
                             <ul class="links collapse " ${ isNormalMode ? 'id="injectables-links"' : 'id="xs-injectables-links"' }>
                                 <li class="link">
-                                    <a href="injectables/JwtAuthGuard.html" data-type="entity-link" >JwtAuthGuard</a>
+                                    <a href="injectables/ExceptionInterceptor.html" data-type="entity-link" >ExceptionInterceptor</a>
                                 </li>
                                 <li class="link">
-                                    <a href="injectables/PrismaInterceptor.html" data-type="entity-link" >PrismaInterceptor</a>
+                                    <a href="injectables/JwtAuthGuard.html" data-type="entity-link" >JwtAuthGuard</a>
                                 </li>
                             </ul>
                         </li>
@@ -282,6 +291,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             <span class="icon ion-ios-arrow-down"></span>
                         </div>
                         <ul class="links collapse " ${ isNormalMode ? ' id="interfaces-links"' : 'id="xs-interfaces-links"' }>
+                            <li class="link">
+                                <a href="interfaces/ExceptionHandler.html" data-type="entity-link" >ExceptionHandler</a>
+                            </li>
                             <li class="link">
                                 <a href="interfaces/Payload.html" data-type="entity-link" >Payload</a>
                             </li>
