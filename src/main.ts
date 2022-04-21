@@ -2,7 +2,6 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { PrismaInterceptor } from './common/interceptors/prisma.interceptor';
 
 /** Starts the application */
@@ -16,8 +15,6 @@ async function bootstrap(): Promise<void> {
       forbidNonWhitelisted: true,
     }),
   );
-
-  app.useGlobalFilters(new HttpExceptionFilter());
 
   app.useGlobalInterceptors(new PrismaInterceptor());
 
