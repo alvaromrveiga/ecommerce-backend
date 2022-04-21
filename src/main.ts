@@ -2,7 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import { PrismaInterceptor } from './common/interceptors/prisma.interceptor';
+import { ExceptionInterceptor } from './common/interceptors/exception.interceptor';
 
 /** Starts the application */
 async function bootstrap(): Promise<void> {
@@ -16,7 +16,7 @@ async function bootstrap(): Promise<void> {
     }),
   );
 
-  app.useGlobalInterceptors(new PrismaInterceptor());
+  app.useGlobalInterceptors(new ExceptionInterceptor());
 
   const config = new DocumentBuilder()
     .setTitle('eCommerce Back End')

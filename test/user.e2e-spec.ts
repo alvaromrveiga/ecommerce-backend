@@ -8,7 +8,7 @@ import { isDate, isDateString, isUUID } from 'class-validator';
 import { AppModule } from 'src/app.module';
 import { EmailInUseException } from 'src/common/exceptions/user/email-in-use.exception';
 import { UserNotFoundException } from 'src/common/exceptions/user/user-not-found.exception';
-import { PrismaInterceptor } from 'src/common/interceptors/prisma.interceptor';
+import { ExceptionInterceptor } from 'src/common/interceptors/exception.interceptor';
 import { UpdateUserDto } from 'src/models/user/dto/update-user.dto';
 import { User } from 'src/models/user/entities/user.entity';
 import { MissingPasswordUpdateException } from 'src/models/user/errors/missing-password-update.exception';
@@ -37,7 +37,7 @@ describe('UserController (e2e)', () => {
       }),
     );
 
-    app.useGlobalInterceptors(new PrismaInterceptor());
+    app.useGlobalInterceptors(new ExceptionInterceptor());
 
     await app.init();
 

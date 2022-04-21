@@ -4,7 +4,7 @@ import { isDate, isUUID } from 'class-validator';
 import { AppModule } from 'src/app.module';
 import { ProductNameInUseException } from 'src/common/exceptions/product/product-name-in-use.exception';
 import { ProductNotFoundException } from 'src/common/exceptions/product/product-not-found.exception';
-import { PrismaInterceptor } from 'src/common/interceptors/prisma.interceptor';
+import { ExceptionInterceptor } from 'src/common/interceptors/exception.interceptor';
 import { CreateProductDto } from 'src/models/product/dto/create-product.dto';
 import { UpdateProductDto } from 'src/models/product/dto/update-product.dto';
 import { Product } from 'src/models/product/entities/product.entity';
@@ -33,7 +33,7 @@ describe('UserController (e2e)', () => {
       }),
     );
 
-    app.useGlobalInterceptors(new PrismaInterceptor());
+    app.useGlobalInterceptors(new ExceptionInterceptor());
 
     await app.init();
 

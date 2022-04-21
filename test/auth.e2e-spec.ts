@@ -4,7 +4,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { isJWT } from 'class-validator';
 import ms from 'ms';
 import { AppModule } from 'src/app.module';
-import { PrismaInterceptor } from 'src/common/interceptors/prisma.interceptor';
+import { ExceptionInterceptor } from 'src/common/interceptors/exception.interceptor';
 import { jwtConfig } from 'src/config/jwt.config';
 import { PrismaService } from 'src/prisma/prisma.service';
 import request from 'supertest';
@@ -29,7 +29,7 @@ describe('AuthController (e2e)', () => {
       }),
     );
 
-    app.useGlobalInterceptors(new PrismaInterceptor());
+    app.useGlobalInterceptors(new ExceptionInterceptor());
 
     await app.init();
 
