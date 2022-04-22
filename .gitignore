@@ -3,6 +3,9 @@
 /node_modules
 /docs
 
+# Temporary files
+/tmp
+
 # Logs
 logs
 *.log

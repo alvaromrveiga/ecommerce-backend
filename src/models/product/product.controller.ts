@@ -9,7 +9,10 @@ import {
   Patch,
   Post,
   Query,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/auth/public.decorator';
 import { IsAdmin } from 'src/common/decorators/is-admin.decorator';
@@ -36,6 +39,16 @@ export class ProductController {
   @Post()
   create(@Body() createProductDto: CreateProductDto): Promise<Product> {
     return this.productService.create(createProductDto);
+  }
+
+  @ApiOperation({ summary: 'Admin uploads a new product picture' })
+  @ApiBearerAuth()
+  @IsAdmin()
+  @UseInterceptors(FileInterceptor('file'))
+  @Post('picture')
+  @HttpCode(HttpStatus.OK)
+  uploadPhoto(@UploadedFile() file: Express.Multer.File): void {
+    console.log(file);
   }
 
   /** Returns all products with pagination
