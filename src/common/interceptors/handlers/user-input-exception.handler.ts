@@ -1,5 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
-import { UserServiceInputException } from 'src/models/user/errors/user-service-input.exception';
+import { UserServiceInputException } from 'src/models/user/exceptions/user-service-input.exception';
 import { ExceptionHandler } from './exception.handler';
 
 /** Catches user input errors and throws the
