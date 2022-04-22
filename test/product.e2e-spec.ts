@@ -84,7 +84,6 @@ describe('UserController (e2e)', () => {
       .set({ Authorization: `Bearer ${adminToken}` })
       .send({
         name: 'Brand2 wood table',
-        picture: 'tablePicture.jpg',
         basePrice: 123.0,
         discountPercentage: 8,
         stock: 20,
@@ -121,7 +120,6 @@ describe('UserController (e2e)', () => {
         .set({ Authorization: `Bearer ${adminToken}` })
         .send({
           name: 'Brand1 wheelchair',
-          picture: 'picture.jpg',
           basePrice: 199.99,
           discountPercentage: 10,
           stock: 16,
@@ -139,7 +137,7 @@ describe('UserController (e2e)', () => {
       expect(isUUID(product.id, 4)).toBeTruthy();
       expect(product.name).toEqual('Brand1 wheelchair');
       expect(product.urlName).toEqual('brand1-wheelchair');
-      expect(product.picture).toEqual('picture.jpg');
+      expect(product.picture).toEqual(null);
       expect(product.basePrice).toEqual('199.99');
       expect(product.discountPercentage).toEqual(10);
       expect(product.stock).toEqual(16);
@@ -154,7 +152,6 @@ describe('UserController (e2e)', () => {
           .set({ Authorization: `Bearer ${adminToken}` })
           .send({
             name: 'Brand1 wood table',
-            picture: 'picture.jpg',
             basePrice: 139.99,
             discountPercentage: 15,
             stock: 38,
@@ -293,7 +290,7 @@ describe('UserController (e2e)', () => {
       const product = response.body as Product;
 
       expect(product.name).toEqual('Brand2 wood table');
-      expect(product.picture).toEqual('tablePicture.jpg');
+      expect(product.picture).toEqual(null);
       expect(product.basePrice).toEqual('123');
       expect(product.discountPercentage).toEqual(8);
       expect(product.stock).toEqual(20);
@@ -319,7 +316,6 @@ describe('UserController (e2e)', () => {
         .set({ Authorization: `Bearer ${adminToken}` })
         .send({
           name: 'Brand2 wood and glass table',
-          picture: 'newTablePicture.jpg',
           basePrice: 219.99,
           discountPercentage: 15,
           stock: 56,
@@ -332,7 +328,7 @@ describe('UserController (e2e)', () => {
       expect(isUUID(product.id, 4)).toBeTruthy();
       expect(product.name).toEqual('Brand2 wood and glass table');
       expect(product.urlName).toEqual('brand2-wood-and-glass-table');
-      expect(product.picture).toEqual('newTablePicture.jpg');
+      expect(product.picture).toEqual(null);
       expect(product.basePrice).toEqual('219.99');
       expect(product.discountPercentage).toEqual(15);
       expect(product.stock).toEqual(56);

@@ -14,6 +14,7 @@ export class CreateProductDto extends OmitType(Product, [
   'id',
   'createdAt',
   'urlName',
+  'picture',
 ] as const) {
   /**
    * Product name
@@ -22,14 +23,6 @@ export class CreateProductDto extends OmitType(Product, [
   @IsString()
   @IsNotEmpty()
   name: string;
-
-  /**
-   * Product picture
-   * @example "image.jpg"
-   */
-  @IsString()
-  @IsOptional()
-  picture?: string;
 
   /**
    * Product price not considering discounts.

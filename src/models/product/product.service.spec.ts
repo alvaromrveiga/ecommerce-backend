@@ -58,7 +58,6 @@ describe('ProductService', () => {
 
     await productService.create({
       name: 'Brand1 black wheelchair',
-      picture: 'image.jpg',
       basePrice: '80.00',
       discountPercentage: 10,
       stock: 3,
@@ -68,7 +67,6 @@ describe('ProductService', () => {
 
     await productService.create({
       name: 'Brand2 black wheelchair',
-      picture: 'image.jpg',
       basePrice: '90.00',
       stock: 1,
       description: 'Black wheelchair for offices',
@@ -77,7 +75,6 @@ describe('ProductService', () => {
 
     await productService.create({
       name: 'Brand1 table',
-      picture: 'image.jpg',
       basePrice: '50.00',
       discountPercentage: 15,
       stock: 6,
@@ -95,7 +92,6 @@ describe('ProductService', () => {
     it('should create product', async () => {
       await productService.create({
         name: 'Brand3 black wheelchair',
-        picture: 'image.jpg',
         basePrice: '70.00',
         discountPercentage: 5,
         stock: 7,
@@ -109,7 +105,6 @@ describe('ProductService', () => {
         data: {
           name: 'Brand3 black wheelchair',
           urlName: 'brand3-black-wheelchair',
-          picture: 'image.jpg',
           basePrice: '70.00',
           discountPercentage: 5,
           stock: 7,
@@ -175,7 +170,6 @@ describe('ProductService', () => {
         'a2f891a5-4f1f-43e9-92d4-7d8e9de2bf7c',
         {
           name: 'Brand2 black and orange wheelchair',
-          picture: 'otherImage.jpg',
           basePrice: '180.00',
           discountPercentage: 50,
           description: 'Black and orange wheelchair on promotion!',
@@ -188,7 +182,6 @@ describe('ProductService', () => {
         data: {
           name: 'Brand2 black and orange wheelchair',
           urlName: 'brand2-black-and-orange-wheelchair',
-          picture: 'otherImage.jpg',
           basePrice: '180.00',
           discountPercentage: 50,
           description: 'Black and orange wheelchair on promotion!',
@@ -199,7 +192,6 @@ describe('ProductService', () => {
       expect(product.id).toEqual('a2f891a5-4f1f-43e9-92d4-7d8e9de2bf7c');
       expect(product.name).toEqual('Brand2 black and orange wheelchair');
       expect(product.urlName).toEqual('brand2-black-and-orange-wheelchair');
-      expect(product.picture).toEqual('otherImage.jpg');
       expect(product.basePrice).toEqual('180.00');
       expect(product.discountPercentage).toEqual(50);
       expect(product.description).toEqual(
