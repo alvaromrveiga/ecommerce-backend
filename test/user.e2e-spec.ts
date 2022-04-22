@@ -11,10 +11,10 @@ import { UserNotFoundException } from 'src/common/exceptions/user/user-not-found
 import { ExceptionInterceptor } from 'src/common/interceptors/exception.interceptor';
 import { UpdateUserDto } from 'src/models/user/dto/update-user.dto';
 import { User } from 'src/models/user/entities/user.entity';
-import { MissingPasswordUpdateException } from 'src/models/user/errors/missing-password-update.exception';
+import { MissingPasswordUpdateException } from 'src/models/user/exceptions/missing-password-update.exception';
 import { PrismaService } from 'src/prisma/prisma.service';
 import request from 'supertest';
-import { InvalidPasswordUpdateException } from '../src/models/user/errors/invalid-password-update.exception';
+import { InvalidPasswordUpdateException } from '../src/models/user/exceptions/invalid-password-update.exception';
 
 describe('UserController (e2e)', () => {
   let app: INestApplication;

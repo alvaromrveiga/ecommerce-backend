@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
-import { InvalidPasswordUpdateException } from './errors/invalid-password-update.exception';
-import { MissingPasswordUpdateException } from './errors/missing-password-update.exception';
+import { InvalidPasswordUpdateException } from './exceptions/invalid-password-update.exception';
+import { MissingPasswordUpdateException } from './exceptions/missing-password-update.exception';
 import { UserService } from './user.service';
 
 let userArray: User[] = [];

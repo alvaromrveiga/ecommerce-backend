@@ -7,8 +7,8 @@ import { UpdateUserRoleDto } from './dto/update-user-role.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserWithoutPassword } from './entities/user-without-password.entity';
 import { User } from './entities/user.entity';
-import { InvalidPasswordUpdateException } from './errors/invalid-password-update.exception';
-import { MissingPasswordUpdateException } from './errors/missing-password-update.exception';
+import { InvalidPasswordUpdateException } from './exceptions/invalid-password-update.exception';
+import { MissingPasswordUpdateException } from './exceptions/missing-password-update.exception';
 
 /** Responsible for managing users in the database.
  * CRUD endpoints are available for users.
