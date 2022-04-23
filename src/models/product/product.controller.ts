@@ -41,14 +41,36 @@ export class ProductController {
     return this.productService.create(createProductDto);
   }
 
-  @ApiOperation({ summary: 'Admin uploads a new product picture' })
+  /**
+   * Uploads a new picture for the product.
+   * Needs to be type jpeg, jpg or png and maximum 3MB.
+   *
+   * Check <a href="https://alvaromrveiga.github.io/ecommerce-backend/miscellaneous/variables.html#multerUploadConfig">
+   * multerUploadConfig</a> file in the docs.
+   */
+  @ApiOperation({
+    summary: 'Admin uploads a new product picture',
+    requestBody: {
+      content: {
+        'multipart/form-data': {
+          schema: {
+            type: 'object',
+            properties: { file: { type: 'string', format: 'binary' } },
+          },
+        },
+      },
+    },
+  })
   @ApiBearerAuth()
   @IsAdmin()
   @UseInterceptors(FileInterceptor('file'))
-  @Post('picture')
+  @Post('picture/:id')
   @HttpCode(HttpStatus.OK)
-  uploadPhoto(@UploadedFile() file: Express.Multer.File): void {
-    console.log(file);
+  uploadPhoto(
+    @Param('id') id: string,
+    @UploadedFile() file: Express.Multer.File,
+  ): Promise<Product> {
+    return this.productService.uploadPicture(id, file);
   }
 
   /** Returns all products with pagination
