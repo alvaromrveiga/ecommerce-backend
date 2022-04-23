@@ -28,6 +28,14 @@ export class ProductService {
     return product;
   }
 
+  /** Uploads new product picture */
+  async uploadPicture(id: string, file: Express.Multer.File): Promise<Product> {
+    return this.prisma.product.update({
+      where: { id },
+      data: { picture: file.filename },
+    });
+  }
+
   /** Returns all products with pagination
    * Default is starting on page 1 showing 10 results per page
    * and ordering by name

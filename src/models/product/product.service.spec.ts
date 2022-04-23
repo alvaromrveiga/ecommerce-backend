@@ -114,6 +114,22 @@ describe('ProductService', () => {
     });
   });
 
+  describe('upload picture', () => {
+    it('should upload picture', async () => {
+      const file = {
+        filename: 'testPicture.jpg',
+      } as Express.Multer.File;
+
+      const product = await productService.uploadPicture(
+        productArray[1].id,
+        file,
+      );
+
+      expect(product.picture).toEqual(file.filename);
+      expect(productArray[1].picture).toEqual(file.filename);
+    });
+  });
+
   describe('findAll', () => {
     it('should find all products', async () => {
       const products = await productService.findAll({});
