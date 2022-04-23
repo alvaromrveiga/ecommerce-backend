@@ -44,7 +44,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li >UserServiceInputException</li>
+  <li >FileTypeError</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -62,7 +62,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/models/user/exceptions/user-service-input.exception.ts</code>
+            <code>src/models/product/exceptions/file-type.exception.ts</code>
         </p>
 
 
@@ -70,8 +70,8 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Used to extend another exception to make it
-instanceof UserServiceInputException</p>
+                <p>Used when the user inputs an invalid file type
+uploading a picture</p>
 
             </p>
 
@@ -79,7 +79,7 @@ instanceof UserServiceInputException</p>
                 <h3>Extends</h3>
             </p>
             <p class="comment">
-                    <code>Error</code>
+                        <code><a href="../injectables/ProductService.html" target="_self" >ProductServiceInputException</a></code>
             </p>
 
 
@@ -91,19 +91,21 @@ instanceof UserServiceInputException</p>
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(message: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>constructor(fileTypes: RegExp)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="5" class="link-to-prism">src/models/user/exceptions/user-service-input.exception.ts:5</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/models/product/exceptions/file-type.exception.ts:6</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
-                            <div class="io-description"><p>Used to extend another exception to make it
-instanceof UserServiceInputException</p>
+                            <div class="io-description"><p>Throws exception with message &#39;File upload only supports the following
+filetypes - {fileTypes}&#39;.</p>
+<p>Used when the user inputs an invalid file type
+uploading a picture</p>
 </div>
                             <div>
                                     <b>Parameters :</b>
@@ -117,10 +119,10 @@ instanceof UserServiceInputException</p>
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>message</td>
+                                                        <td>fileTypes</td>
                                                   
                                                         <td>
-                                                                        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                                    <code>RegExp</code>
                                                         </td>
                                                   
                                                     <td>
@@ -148,13 +150,20 @@ instanceof UserServiceInputException</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export class UserServiceInputException extends Error {
-  /**
-   * Used to extend another exception to make it
-   * instanceof UserServiceInputException
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ProductServiceInputException } from &#x27;./product-service-input.exception&#x27;;
+
+/** Used when the user inputs an invalid file type
+ * uploading a picture
+ */
+export class FileTypeError extends ProductServiceInputException {
+  /** Throws exception with message &#x27;File upload only supports the following
+   * filetypes - {fileTypes}&#x27;.
+   *
+   * Used when the user inputs an invalid file type
+   * uploading a picture
    */
-  constructor(message: string) {
-    super(message);
+  constructor(fileTypes: RegExp) {
+    super(&#x60;File upload only supports the following filetypes - ${fileTypes}&#x60;);
   }
 }
 </code></pre>
@@ -195,7 +204,7 @@ instanceof UserServiceInputException</p>
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
-            var COMPODOC_CURRENT_PAGE_URL = 'UserServiceInputException.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'FileTypeError.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

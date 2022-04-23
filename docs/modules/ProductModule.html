@@ -172,10 +172,12 @@
 import { ProductService } from &#x27;./product.service&#x27;;
 import { ProductController } from &#x27;./product.controller&#x27;;
 import { PrismaModule } from &#x27;src/prisma/prisma.module&#x27;;
+import { MulterModule } from &#x27;@nestjs/platform-express&#x27;;
+import { multerUploadConfig } from &#x27;src/config/multer-upload.config&#x27;;
 
 @Module({
   controllers: [ProductController],
-  imports: [PrismaModule],
+  imports: [PrismaModule, MulterModule.register(multerUploadConfig)],
   providers: [ProductService],
 })
 export class ProductModule {}

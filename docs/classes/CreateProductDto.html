@@ -105,10 +105,6 @@
                             </li>
                             <li>
                                     <span class="modifier">Optional</span>
-                                <a href="#picture" >picture</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Optional</span>
                                 <a href="#stock" >stock</a>
                             </li>
                         </ul>
@@ -158,7 +154,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/models/product/dto/create-product.dto.ts:42</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/models/product/dto/create-product.dto.ts:35</a></div>
                         </td>
                     </tr>
 
@@ -202,7 +198,7 @@ with currency.js</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/models/product/dto/create-product.dto.ts:65</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/models/product/dto/create-product.dto.ts:58</a></div>
                         </td>
                     </tr>
 
@@ -244,7 +240,7 @@ with currency.js</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/models/product/dto/create-product.dto.ts:50</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/models/product/dto/create-product.dto.ts:43</a></div>
                         </td>
                     </tr>
 
@@ -285,55 +281,13 @@ with currency.js</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/models/product/dto/create-product.dto.ts:24</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/models/product/dto/create-product.dto.ts:25</a></div>
                         </td>
                     </tr>
 
             <tr>
                 <td class="col-md-4">
                     <div class="io-description"><p>Product name</p>
-<div><pre class="line-numbers"><code class="language-html"></code></pre></div></div>
-                </td>
-            </tr>
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="picture"></a>
-                    <span class="name">
-                            <span class="modifier">Optional</span>
-                        <span ><b>picture</b></span>
-                        <a href="#picture"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @IsString()<br />@IsOptional()<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/models/product/dto/create-product.dto.ts:32</a></div>
-                        </td>
-                    </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Product picture</p>
 <div><pre class="line-numbers"><code class="language-html"></code></pre></div></div>
                 </td>
             </tr>
@@ -369,7 +323,7 @@ with currency.js</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/models/product/dto/create-product.dto.ts:57</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/models/product/dto/create-product.dto.ts:50</a></div>
                         </td>
                     </tr>
 
@@ -410,6 +364,7 @@ export class CreateProductDto extends OmitType(Product, [
   &#x27;id&#x27;,
   &#x27;createdAt&#x27;,
   &#x27;urlName&#x27;,
+  &#x27;picture&#x27;,
 ] as const) {
   /**
    * Product name
@@ -418,14 +373,6 @@ export class CreateProductDto extends OmitType(Product, [
   @IsString()
   @IsNotEmpty()
   name: string;
-
-  /**
-   * Product picture
-   * @example &quot;image.jpg&quot;
-   */
-  @IsString()
-  @IsOptional()
-  picture?: string;
 
   /**
    * Product price not considering discounts.

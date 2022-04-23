@@ -139,8 +139,8 @@ respective HTTP error</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="12"
-                            class="link-to-prism">src/common/interceptors/handlers/user-input-exception.handler.ts:12</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="13"
+                            class="link-to-prism">src/common/interceptors/handlers/user-input-exception.handler.ts:13</a></div>
                 </td>
             </tr>
 
@@ -202,7 +202,8 @@ respective HTTP error</p>
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { BadRequestException } from &#x27;@nestjs/common&#x27;;
-import { UserServiceInputException } from &#x27;src/models/user/errors/user-service-input.exception&#x27;;
+import { ProductServiceInputException } from &#x27;src/models/product/exceptions/product-service-input.exception&#x27;;
+import { UserServiceInputException } from &#x27;src/models/user/exceptions/user-service-input.exception&#x27;;
 import { ExceptionHandler } from &#x27;./exception.handler&#x27;;
 
 /** Catches user input errors and throws the
@@ -214,6 +215,10 @@ export class UserInputExceptionHandler implements ExceptionHandler {
    */
   handle(error: Error): void {
     if (error instanceof UserServiceInputException) {
+      throw new BadRequestException(error.message);
+    }
+
+    if (error instanceof ProductServiceInputException) {
       throw new BadRequestException(error.message);
     }
   }
