@@ -1,4 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
+import { ProductServiceInputException } from 'src/models/product/exceptions/product-service-input.exception';
 import { UserServiceInputException } from 'src/models/user/exceptions/user-service-input.exception';
 import { ExceptionHandler } from './exception.handler';
 
@@ -11,6 +12,10 @@ export class UserInputExceptionHandler implements ExceptionHandler {
    */
   handle(error: Error): void {
     if (error instanceof UserServiceInputException) {
+      throw new BadRequestException(error.message);
+    }
+
+    if (error instanceof ProductServiceInputException) {
       throw new BadRequestException(error.message);
     }
   }

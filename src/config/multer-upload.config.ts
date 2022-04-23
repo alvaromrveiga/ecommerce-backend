@@ -1,6 +1,7 @@
 import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
 import { diskStorage } from 'multer';
 import path from 'path';
+import { FileTypeError } from 'src/models/product/exceptions/file-type.exception';
 
 /** Configurations for the multer library used for file upload */
 export const multerUploadConfig: MulterOptions = {
@@ -26,10 +27,10 @@ export const multerUploadConfig: MulterOptions = {
       return callback(null, true);
     }
 
-    return callback(new Error(), false);
+    return callback(new FileTypeError(imageTypes), false);
   },
 
   limits: {
-    fileSize: 2 * (1024 * 1024),
+    fileSize: 3 * (1024 * 1024),
   },
 };
