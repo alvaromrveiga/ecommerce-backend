@@ -3,7 +3,15 @@ import { diskStorage } from 'multer';
 import path from 'path';
 import { FileTypeError } from 'src/models/product/exceptions/file-type.exception';
 
-/** Configurations for the multer library used for file upload */
+/** Constant containing a Regular Expression
+ * with the valid image upload types
+ */
+export const validImageUploadTypesRegex = /jpeg|jpg|png/;
+
+/** Configurations for the multer library used for file upload.
+ *
+ * Accepts types jpeg, jpg and png of size up to 3MB
+ */
 export const multerUploadConfig: MulterOptions = {
   storage: diskStorage({
     destination: './tmp',
@@ -16,10 +24,8 @@ export const multerUploadConfig: MulterOptions = {
   }),
 
   fileFilter: (request, file, callback) => {
-    const imageTypes = /jpeg|jpg|png/;
-
-    const mimetype = imageTypes.test(file.mimetype);
-    const extname = imageTypes.test(
+    const mimetype = validImageUploadTypesRegex.test(file.mimetype);
+    const extname = validImageUploadTypesRegex.test(
       path.extname(file.originalname).toLowerCase(),
     );
 
@@ -27,7 +33,7 @@ export const multerUploadConfig: MulterOptions = {
       return callback(null, true);
     }
 
-    return callback(new FileTypeError(imageTypes), false);
+    return callback(new FileTypeError(validImageUploadTypesRegex), false);
   },
 
   limits: {
