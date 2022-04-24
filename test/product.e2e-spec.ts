@@ -1,13 +1,19 @@
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import {
+  BadRequestException,
+  INestApplication,
+  ValidationPipe,
+} from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { isDate, isUUID } from 'class-validator';
 import { AppModule } from 'src/app.module';
 import { ProductNameInUseException } from 'src/common/exceptions/product/product-name-in-use.exception';
 import { ProductNotFoundException } from 'src/common/exceptions/product/product-not-found.exception';
 import { ExceptionInterceptor } from 'src/common/interceptors/exception.interceptor';
+import { validImageUploadTypesRegex } from 'src/config/multer-upload.config';
 import { CreateProductDto } from 'src/models/product/dto/create-product.dto';
 import { UpdateProductDto } from 'src/models/product/dto/update-product.dto';
 import { Product } from 'src/models/product/entities/product.entity';
+import { FileTypeError } from 'src/models/product/exceptions/file-type.exception';
 import { PrismaService } from 'src/prisma/prisma.service';
 import request from 'supertest';
 
@@ -197,6 +203,46 @@ describe('UserController (e2e)', () => {
           basePrice: 80.0,
         } as CreateProductDto)
         .expect(401);
+    });
+  });
+
+  describe('Post /product/picture/:id', () => {
+    const buffer = Buffer.from('test file');
+
+    it('should upload picture', async () => {
+      const response = await request(app.getHttpServer())
+        .post(`/product/picture/${product2Id}`)
+        .set({ Authorization: `Bearer ${adminToken}` })
+        .attach('file', buffer, 'testFile.png')
+        .expect(200);
+
+      const product: Product = response.body;
+      expect(product.picture.endsWith('testFile.png')).toBeTruthy();
+      expect(product.picture.startsWith('testFile.png')).toBeFalsy();
+
+      const databaseProduct = await prisma.product.findUnique({
+        where: { id: product2Id },
+      });
+
+      expect(product.picture).toEqual(databaseProduct.picture);
+    });
+
+    it('should not upload picture if type is invalid', async () => {
+      const buffer = Buffer.from('test file');
+
+      await expect(
+        request(app.getHttpServer())
+          .post(`/product/picture/${product2Id}`)
+          .set({ Authorization: `Bearer ${adminToken}` })
+          .attach('file', buffer, 'testFile.err')
+          .expect(400),
+      ).resolves.toMatchObject({
+        text: JSON.stringify(
+          new BadRequestException(
+            new FileTypeError(validImageUploadTypesRegex).message,
+          ).getResponse(),
+        ),
+      });
     });
   });
 
