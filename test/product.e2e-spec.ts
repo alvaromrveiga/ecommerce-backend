@@ -9,7 +9,10 @@ import { AppModule } from 'src/app.module';
 import { ProductNameInUseException } from 'src/common/exceptions/product/product-name-in-use.exception';
 import { ProductNotFoundException } from 'src/common/exceptions/product/product-not-found.exception';
 import { ExceptionInterceptor } from 'src/common/interceptors/exception.interceptor';
-import { validImageUploadTypesRegex } from 'src/config/multer-upload.config';
+import {
+  maxImageUploadSize,
+  validImageUploadTypesRegex,
+} from 'src/config/multer-upload.config';
 import { CreateProductDto } from 'src/models/product/dto/create-product.dto';
 import { UpdateProductDto } from 'src/models/product/dto/update-product.dto';
 import { Product } from 'src/models/product/entities/product.entity';
@@ -243,6 +246,40 @@ describe('UserController (e2e)', () => {
           ).getResponse(),
         ),
       });
+    });
+
+    it('should not upload picture if file is too large', async () => {
+      let blobParts = '';
+      for (let i = 0; i < maxImageUploadSize + 1; i++) {
+        blobParts += 'a';
+      }
+
+      const buffer = Buffer.from(blobParts);
+
+      await request(app.getHttpServer())
+        .post(`/product/picture/${product2Id}`)
+        .set({ Authorization: `Bearer ${adminToken}` })
+        .attach('file', buffer, 'testFile.png')
+        .expect(413);
+    });
+
+    it('should not upload picture if not admin', async () => {
+      const buffer = Buffer.from('test file');
+
+      await request(app.getHttpServer())
+        .post(`/product/picture/${product2Id}`)
+        .set({ Authorization: `Bearer ${token}` })
+        .attach('file', buffer, 'testFile.png')
+        .expect(403);
+    });
+
+    it('should not upload picture if unauthenticated', async () => {
+      const buffer = Buffer.from('test file');
+
+      await request(app.getHttpServer())
+        .post(`/product/picture/${product2Id}`)
+        .attach('file', buffer, 'testFile.png')
+        .expect(401);
     });
   });
 
