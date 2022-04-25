@@ -70,10 +70,16 @@
                             <a href="#jwtConfig" title="src/config/jwt.config.ts" ><b>jwtConfig</b>&nbsp;&nbsp;&nbsp;(src/.../jwt.config.ts)</a>
                         </li>
                         <li>
+                            <a href="#maxImageUploadSize" title="src/config/multer-upload.config.ts" ><b>maxImageUploadSize</b>&nbsp;&nbsp;&nbsp;(src/.../multer-upload.config.ts)</a>
+                        </li>
+                        <li>
                             <a href="#multerUploadConfig" title="src/config/multer-upload.config.ts" ><b>multerUploadConfig</b>&nbsp;&nbsp;&nbsp;(src/.../multer-upload.config.ts)</a>
                         </li>
                         <li>
                             <a href="#Public" title="src/auth/public.decorator.ts" ><b>Public</b>&nbsp;&nbsp;&nbsp;(src/.../public.decorator.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#validImageUploadTypesRegex" title="src/config/multer-upload.config.ts" ><b>validImageUploadTypesRegex</b>&nbsp;&nbsp;&nbsp;(src/.../multer-upload.config.ts)</a>
                         </li>
                     </ul>
                 </td>
@@ -225,6 +231,32 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="maxImageUploadSize"></a>
+                    <span class="name">
+                        <span ><b>maxImageUploadSize</b></span>
+                        <a href="#maxImageUploadSize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>3 * 1024 * 1024</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Constant that sets the maximum image upload file size</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="multerUploadConfig"></a>
                     <span class="name">
                         <span ><b>multerUploadConfig</b></span>
@@ -252,10 +284,8 @@
   }),
 
   fileFilter: (request, file, callback) &#x3D;&gt; {
-    const imageTypes &#x3D; /jpeg|jpg|png/;
-
-    const mimetype &#x3D; imageTypes.test(file.mimetype);
-    const extname &#x3D; imageTypes.test(
+    const mimetype &#x3D; validImageUploadTypesRegex.test(file.mimetype);
+    const extname &#x3D; validImageUploadTypesRegex.test(
       path.extname(file.originalname).toLowerCase(),
     );
 
@@ -263,11 +293,11 @@
       return callback(null, true);
     }
 
-    return callback(new FileTypeError(imageTypes), false);
+    return callback(new FileTypeError(validImageUploadTypesRegex), false);
   },
 
   limits: {
-    fileSize: 3 * (1024 * 1024),
+    fileSize: maxImageUploadSize,
   },
 }</code>
                     </td>
@@ -275,7 +305,35 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Configurations for the multer library used for file upload</p>
+                    <div class="io-description"><p>Configurations for the multer library used for file upload.</p>
+<p>Accepts types jpeg, jpg and png of size up to 3MB</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="validImageUploadTypesRegex"></a>
+                    <span class="name">
+                        <span ><b>validImageUploadTypesRegex</b></span>
+                        <a href="#validImageUploadTypesRegex"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>/jpeg|jpg|png/</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Constant containing a Regular Expression
+with the valid image upload types</p>
 </div>
                 </td>
             </tr>
