@@ -8,6 +8,9 @@ import { FileTypeError } from 'src/models/product/exceptions/file-type.exception
  */
 export const validImageUploadTypesRegex = /jpeg|jpg|png/;
 
+/** Constant that sets the maximum image upload file size */
+export const maxImageUploadSize = 3 * 1024 * 1024; // 3MB
+
 /** Configurations for the multer library used for file upload.
  *
  * Accepts types jpeg, jpg and png of size up to 3MB
@@ -37,6 +40,6 @@ export const multerUploadConfig: MulterOptions = {
   },
 
   limits: {
-    fileSize: 3 * (1024 * 1024),
+    fileSize: maxImageUploadSize,
   },
 };
