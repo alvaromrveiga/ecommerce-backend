@@ -23,7 +23,7 @@
 -   [x] Autenticação de usuário
 -   [x] Autorização de usuário (admin)
 - [x] CRUD de produtos
-  - [ ] Upload de imagens
+  - [x] Upload de imagens
 - [ ] CRUD de categorias
 - [ ] CRUD de compras
 
