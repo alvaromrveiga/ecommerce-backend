@@ -13,7 +13,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/auth/public.decorator';
 import { IsAdmin } from 'src/common/decorators/is-admin.decorator';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -34,7 +34,6 @@ export class ProductController {
 
   /** Creates a new product, only for admins */
   @ApiOperation({ summary: 'Admin creates a new product' })
-  @ApiBearerAuth()
   @IsAdmin()
   @Post()
   create(@Body() createProductDto: CreateProductDto): Promise<Product> {
@@ -42,7 +41,7 @@ export class ProductController {
   }
 
   /**
-   * Uploads a new picture for the product.
+   * Admin uploads a new picture for the product.
    * Needs to be type jpeg, jpg or png and maximum 3MB.
    *
    * Check <a href="https://alvaromrveiga.github.io/ecommerce-backend/miscellaneous/variables.html#multerUploadConfig">
@@ -61,7 +60,6 @@ export class ProductController {
       },
     },
   })
-  @ApiBearerAuth()
   @IsAdmin()
   @UseInterceptors(FileInterceptor('file'))
   @Post('picture/:id')
@@ -74,6 +72,7 @@ export class ProductController {
   }
 
   /** Returns all products with pagination
+   *
    * Default is starting on page 1 showing 10 results per page,
    * searching and ordering by name
    */
@@ -86,7 +85,6 @@ export class ProductController {
 
   /** Find product by ID, only for admins */
   @ApiOperation({ summary: 'Admin gets product by ID' })
-  @ApiBearerAuth()
   @IsAdmin()
   @Get('/id/:id')
   findOneById(@Param('id') id: string): Promise<Product> {
@@ -103,7 +101,6 @@ export class ProductController {
 
   /** Updates product information, only for admins */
   @ApiOperation({ summary: 'Admin updates product' })
-  @ApiBearerAuth()
   @IsAdmin()
   @Patch(':id')
   update(
@@ -115,7 +112,6 @@ export class ProductController {
 
   /** Deletes product from database, only for admins */
   @ApiOperation({ summary: 'Admin deletes product' })
-  @ApiBearerAuth()
   @IsAdmin()
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)

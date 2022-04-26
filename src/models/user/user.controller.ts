@@ -31,8 +31,8 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   /** Creates a new user */
-  @Public()
   @ApiOperation({ summary: 'Creates a new user' })
+  @Public()
   @Post()
   create(@Body() createUserDto: CreateUserDto): Promise<void> {
     return this.userService.create(createUserDto);
@@ -63,7 +63,6 @@ export class UserController {
 
   /** Updates user role, only for admins */
   @ApiOperation({ summary: "Admin set user's role" })
-  @ApiBearerAuth()
   @IsAdmin()
   @Patch('role')
   updateUserRole(

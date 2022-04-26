@@ -1,5 +1,9 @@
 import { applyDecorators, SetMetadata, UseGuards } from '@nestjs/common';
-import { ApiForbiddenResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiForbiddenResponse,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { RolesGuard } from '../guards/roles.guard';
 
 /** Value to verify if @IsAdmin() is being used in the endpoint
@@ -19,6 +23,7 @@ export function IsAdmin(): <TFunction>(
   return applyDecorators(
     SetMetadata(IS_ADMIN_KEY, true),
     UseGuards(RolesGuard),
+    ApiBearerAuth(),
     ApiUnauthorizedResponse({ description: 'Unauthorized' }),
     ApiForbiddenResponse({ description: 'Forbidden resource' }),
   );
