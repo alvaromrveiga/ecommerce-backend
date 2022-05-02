@@ -214,7 +214,7 @@ describe('UserController (e2e)', () => {
 
     it('should upload picture', async () => {
       const response = await request(app.getHttpServer())
-        .post(`/product/picture/${product2Id}`)
+        .patch(`/product/picture/${product2Id}`)
         .set({ Authorization: `Bearer ${adminToken}` })
         .attach('file', buffer, 'testFile.png')
         .expect(200);
@@ -235,7 +235,7 @@ describe('UserController (e2e)', () => {
 
       await expect(
         request(app.getHttpServer())
-          .post(`/product/picture/${product2Id}`)
+          .patch(`/product/picture/${product2Id}`)
           .set({ Authorization: `Bearer ${adminToken}` })
           .attach('file', buffer, 'testFile.err')
           .expect(400),
@@ -257,7 +257,7 @@ describe('UserController (e2e)', () => {
       const buffer = Buffer.from(blobParts);
 
       await request(app.getHttpServer())
-        .post(`/product/picture/${product2Id}`)
+        .patch(`/product/picture/${product2Id}`)
         .set({ Authorization: `Bearer ${adminToken}` })
         .attach('file', buffer, 'testFile.png')
         .expect(413);
@@ -267,7 +267,7 @@ describe('UserController (e2e)', () => {
       const buffer = Buffer.from('test file');
 
       await request(app.getHttpServer())
-        .post(`/product/picture/${product2Id}`)
+        .patch(`/product/picture/${product2Id}`)
         .set({ Authorization: `Bearer ${token}` })
         .attach('file', buffer, 'testFile.png')
         .expect(403);
@@ -277,7 +277,7 @@ describe('UserController (e2e)', () => {
       const buffer = Buffer.from('test file');
 
       await request(app.getHttpServer())
-        .post(`/product/picture/${product2Id}`)
+        .patch(`/product/picture/${product2Id}`)
         .attach('file', buffer, 'testFile.png')
         .expect(401);
     });
