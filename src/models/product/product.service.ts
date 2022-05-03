@@ -10,8 +10,8 @@ import { Product } from './entities/product.entity';
  */
 @Injectable()
 export class ProductService {
-  /** Responsible for managing users in the database.
-   * CRUD endpoints are available for users.
+  /** Responsible for managing products in the database.
+   * CRUD endpoints are available for products.
    *
    * Instantiates the class and the PrismaService dependency
    */
