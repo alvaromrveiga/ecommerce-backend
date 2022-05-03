@@ -16,7 +16,7 @@ import { Public } from 'src/auth/public.decorator';
 import { FileUpload } from 'src/common/decorators/file-upload.decorator';
 import { IsAdmin } from 'src/common/decorators/is-admin.decorator';
 import { CreateProductDto } from './dto/create-product.dto';
-import { FindAllProductsDto } from './dto/find-all-products.dto';
+import { FindProductsDto } from './dto/find-products.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
 import { ProductService } from './product.service';
@@ -47,7 +47,7 @@ export class ProductController {
   @ApiOperation({ summary: 'Returns all products' })
   @Public()
   @Get()
-  findAll(@Query() findAllProductsDto: FindAllProductsDto): Promise<Product[]> {
+  findAll(@Query() findAllProductsDto: FindProductsDto): Promise<Product[]> {
     return this.productService.findAll(findAllProductsDto);
   }
 
