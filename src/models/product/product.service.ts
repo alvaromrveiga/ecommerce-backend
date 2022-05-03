@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
-import { FindAllProductsDto } from './dto/find-all-products.dto';
+import { FindProductsDto } from './dto/find-products.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
 
@@ -44,7 +44,7 @@ export class ProductService {
     searchName = '',
     page = 1,
     offset = 10,
-  }: FindAllProductsDto): Promise<Product[]> {
+  }: FindProductsDto): Promise<Product[]> {
     const productsToSkip = (page - 1) * offset;
 
     return this.prisma.product.findMany({
@@ -61,6 +61,7 @@ export class ProductService {
   async findOneById(id: string): Promise<Product> {
     return this.prisma.product.findUnique({
       where: { id },
+      include: { categories: { select: { name: true } } },
       rejectOnNotFound: true,
     });
   }
@@ -69,6 +70,7 @@ export class ProductService {
   async findOneByUrlName(urlName: string): Promise<Product> {
     return this.prisma.product.findUnique({
       where: { urlName },
+      include: { categories: { select: { name: true } } },
       rejectOnNotFound: true,
     });
   }
