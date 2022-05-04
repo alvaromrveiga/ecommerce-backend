@@ -308,9 +308,9 @@ describe('UserController (e2e)', () => {
       expect(products[1].name).toEqual('Brand4 wood table');
     });
 
-    it('should return all products by searchName case insensitive', async () => {
+    it('should return all products by productName case insensitive', async () => {
       const response = await request(app.getHttpServer())
-        .get('/product?searchName=bRaNd1')
+        .get('/product?productName=bRaNd1')
         .send()
         .expect(200);
 

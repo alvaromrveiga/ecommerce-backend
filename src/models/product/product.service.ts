@@ -41,7 +41,7 @@ export class ProductService {
    * and ordering by name
    */
   async findAll({
-    searchName = '',
+    productName = '',
     page = 1,
     offset = 10,
   }: FindProductsDto): Promise<Product[]> {
@@ -51,7 +51,7 @@ export class ProductService {
       skip: productsToSkip,
       take: offset,
       where: {
-        name: { contains: searchName, mode: 'insensitive' },
+        name: { contains: productName, mode: 'insensitive' },
       },
       orderBy: { name: 'asc' },
     });

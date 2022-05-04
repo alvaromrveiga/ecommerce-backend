@@ -8,7 +8,7 @@ export class FindCategoriesDto {
    */
   @IsOptional()
   @IsString()
-  searchName?: string;
+  categoryName?: string;
 
   /** Show categories in this page
    * @example 1

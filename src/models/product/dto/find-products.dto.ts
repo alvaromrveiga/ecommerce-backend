@@ -8,7 +8,7 @@ export class FindProductsDto {
    */
   @IsOptional()
   @IsString()
-  searchName?: string;
+  productName?: string;
 
   /** Show products in this page
    * @example 1
