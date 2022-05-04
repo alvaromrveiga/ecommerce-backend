@@ -13,6 +13,7 @@ import {
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/auth/public.decorator';
 import { IsAdmin } from 'src/common/decorators/is-admin.decorator';
+import { FindProductsDto } from '../product/dto/find-products.dto';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { FindCategoriesDto } from './dto/find-categories.dto';
@@ -54,14 +55,25 @@ export class CategoryController {
   }
 
   /** Find category by ID, only for admins */
-  @ApiOperation({ summary: 'Admin gets category by ID' })
+  @ApiOperation({ summary: 'Admin gets category by ID and its products' })
   @IsAdmin()
   @Get('/id/:id')
-  async findOne(
+  async findOneById(
     @Param('id') id: string,
-    @Query() findCategoriesDto: FindCategoriesDto,
+    @Query() findProductsDto: FindProductsDto,
   ): Promise<Category> {
-    return this.categoryService.findOneById(id, findCategoriesDto);
+    return this.categoryService.findOneById(id, findProductsDto);
+  }
+
+  /** Find category by name */
+  @ApiOperation({ summary: 'Returns category by name and its products' })
+  @Public()
+  @Get(':name')
+  async findOneByName(
+    @Param('name') name: string,
+    @Query() findProductsDto: FindProductsDto,
+  ): Promise<Category> {
+    return this.categoryService.findOneById(name, findProductsDto);
   }
 
   /** Updates category information, only for admins */

@@ -32,7 +32,7 @@ export class CategoryService {
    * and ordering by name
    */
   async findAll({
-    searchName = '',
+    categoryName = '',
     page = 1,
     offset = 10,
   }: FindCategoriesDto): Promise<Category[]> {
@@ -42,7 +42,7 @@ export class CategoryService {
       skip: categoriesToSkip,
       take: offset,
       where: {
-        name: { contains: searchName, mode: 'insensitive' },
+        name: { contains: categoryName, mode: 'insensitive' },
       },
       orderBy: { name: 'asc' },
     });
@@ -51,7 +51,7 @@ export class CategoryService {
   /** Find category by ID and show the products that have this category */
   async findOneById(
     id: string,
-    { page = 1, offset = 10 }: FindProductsDto,
+    { productName = '', page = 1, offset = 10 }: FindProductsDto,
   ): Promise<Category> {
     const productsToSkip = (page - 1) * offset;
 
@@ -60,6 +60,30 @@ export class CategoryService {
       include: {
         products: {
           select: { id: true, name: true, urlName: true, picture: true },
+          where: { name: { contains: productName, mode: 'insensitive' } },
+          skip: productsToSkip,
+          take: offset,
+        },
+      },
+      rejectOnNotFound: true,
+    });
+
+    return category;
+  }
+
+  /** Find category by name and show the products that have this category */
+  async findOneByName(
+    name: string,
+    { productName = '', page = 1, offset = 10 }: FindProductsDto,
+  ): Promise<Category> {
+    const productsToSkip = (page - 1) * offset;
+
+    const category = await this.prisma.category.findUnique({
+      where: { name },
+      include: {
+        products: {
+          select: { id: true, name: true, urlName: true, picture: true },
+          where: { name: { contains: productName, mode: 'insensitive' } },
           skip: productsToSkip,
           take: offset,
         },
