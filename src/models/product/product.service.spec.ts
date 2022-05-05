@@ -70,6 +70,11 @@ describe('ProductService', () => {
       basePrice: '90.00',
       stock: 1,
       description: 'Black wheelchair for offices',
+      categories: [
+        'fa244865-0878-4688-ac63-e3ecf4939a89',
+        'b5f2684c-0af7-497c-a3d1-362496b4df60',
+        'cd558399-ce65-496e-b905-513b499d8eeb',
+      ],
     });
     productArray[1].id = 'a2f891a5-4f1f-43e9-92d4-7d8e9de2bf7c';
 
@@ -109,7 +114,46 @@ describe('ProductService', () => {
           discountPercentage: 5,
           stock: 7,
           description: 'Black wheelchair for offices',
+          categories: { connect: [] },
         },
+        include: { categories: { select: { name: true } } },
+      });
+    });
+
+    it('should create product with categories', async () => {
+      await productService.create({
+        name: 'Brand3 black wheelchair',
+        basePrice: '70.00',
+        discountPercentage: 5,
+        stock: 7,
+        description: 'Black wheelchair for offices',
+        categories: [
+          'fa244865-0878-4688-ac63-e3ecf4939a89',
+          'b5f2684c-0af7-497c-a3d1-362496b4df60',
+          'cd558399-ce65-496e-b905-513b499d8eeb',
+        ],
+      });
+
+      expect(productArray.length).toEqual(4);
+      expect(productArray[3].urlName).toEqual('brand3-black-wheelchair');
+
+      expect(prismaService.product.create).toHaveBeenCalledWith({
+        data: {
+          name: 'Brand3 black wheelchair',
+          urlName: 'brand3-black-wheelchair',
+          basePrice: '70.00',
+          discountPercentage: 5,
+          stock: 7,
+          description: 'Black wheelchair for offices',
+          categories: {
+            connect: [
+              { id: 'fa244865-0878-4688-ac63-e3ecf4939a89' },
+              { id: 'b5f2684c-0af7-497c-a3d1-362496b4df60' },
+              { id: 'cd558399-ce65-496e-b905-513b499d8eeb' },
+            ],
+          },
+        },
+        include: { categories: { select: { name: true } } },
       });
     });
   });
@@ -156,11 +200,11 @@ describe('ProductService', () => {
 
       expect(product).toEqual(productArray[1]);
 
-      expect(prismaService.product.findUnique).toHaveBeenCalledWith(
-        expect.objectContaining({
-          where: { id: 'a2f891a5-4f1f-43e9-92d4-7d8e9de2bf7c' },
-        }),
-      );
+      expect(prismaService.product.findUnique).toHaveBeenCalledWith({
+        where: { id: 'a2f891a5-4f1f-43e9-92d4-7d8e9de2bf7c' },
+        include: { categories: { select: { name: true } } },
+        rejectOnNotFound: true,
+      });
     });
   });
 
@@ -172,11 +216,11 @@ describe('ProductService', () => {
 
       expect(product).toEqual(productArray[0]);
 
-      expect(prismaService.product.findUnique).toHaveBeenCalledWith(
-        expect.objectContaining({
-          where: { urlName: 'brand1-black-wheelchair' },
-        }),
-      );
+      expect(prismaService.product.findUnique).toHaveBeenCalledWith({
+        where: { urlName: 'brand1-black-wheelchair' },
+        include: { categories: { select: { name: true } } },
+        rejectOnNotFound: true,
+      });
     });
   });
 

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { FindProductsDto } from './dto/find-products.dto';
@@ -21,8 +22,15 @@ export class ProductService {
   async create(createProductDto: CreateProductDto): Promise<Product> {
     const urlName = this.formatUrlName(createProductDto.name);
 
+    const categories = this.connectCategoriesById(createProductDto.categories);
+
     const product = await this.prisma.product.create({
-      data: { ...createProductDto, urlName },
+      data: {
+        ...createProductDto,
+        urlName,
+        categories,
+      },
+      include: { categories: { select: { name: true } } },
     });
 
     return product;
@@ -54,6 +62,7 @@ export class ProductService {
         name: { contains: productName, mode: 'insensitive' },
       },
       orderBy: { name: 'asc' },
+      include: { categories: { select: { name: true } } },
     });
   }
 
@@ -126,5 +135,21 @@ export class ProductService {
       where: { id },
       data: { ...updateProductDto, urlName },
     });
+  }
+
+  private connectCategoriesById(
+    categories: string[],
+  ): Prisma.CategoryUncheckedCreateNestedManyWithoutProductsInput {
+    let categoriesConnection = { connect: [] };
+
+    if (categories) {
+      categoriesConnection = {
+        connect: categories.map((cat) => {
+          return { id: cat };
+        }),
+      };
+    }
+
+    return categoriesConnection;
   }
 }
