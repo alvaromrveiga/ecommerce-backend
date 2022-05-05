@@ -56,7 +56,7 @@ export class CategoryController {
 
   /** Find category by ID, only for admins */
   @ApiOperation({ summary: 'Admin gets category by ID and its products' })
-  @IsAdmin()
+  @Public()
   @Get('/id/:id')
   async findOneById(
     @Param('id') id: string,
@@ -73,7 +73,7 @@ export class CategoryController {
     @Param('name') name: string,
     @Query() findProductsDto: FindProductsDto,
   ): Promise<Category> {
-    return this.categoryService.findOneById(name, findProductsDto);
+    return this.categoryService.findOneByName(name, findProductsDto);
   }
 
   /** Updates category information, only for admins */
