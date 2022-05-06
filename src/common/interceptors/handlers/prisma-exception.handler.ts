@@ -1,5 +1,6 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { PrismaError } from 'prisma-error-enum';
+import { CategoryNotFoundException } from 'src/common/exceptions/category/category-not-found.exception';
 import { ProductNameInUseException } from 'src/common/exceptions/product/product-name-in-use.exception';
 import { ProductNotFoundException } from 'src/common/exceptions/product/product-not-found.exception';
 import { EmailInUseException } from 'src/common/exceptions/user/email-in-use.exception';
@@ -34,6 +35,9 @@ export class PrismaExceptionHandler implements ExceptionHandler {
             throw new ProductNotFoundException();
           }
 
+          if (this.isCreateProductError(error)) {
+            throw new CategoryNotFoundException();
+          }
           break;
         }
         default:
@@ -80,6 +84,14 @@ export class PrismaExceptionHandler implements ExceptionHandler {
 
   /** Returns wether the error happened on an product prisma query or not */
   private isProductError(error: PrismaClientKnownRequestError): boolean {
-    return error.message.includes('prisma.product');
+    return (
+      error.message.includes('prisma.product.update') ||
+      error.message.includes('prisma.product.delete')
+    );
+  }
+
+  /** Returns wether the error happened on an create product prisma query or not */
+  private isCreateProductError(error: PrismaClientKnownRequestError): boolean {
+    return error.message.includes('prisma.product.create');
   }
 }
