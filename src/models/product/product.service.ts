@@ -137,6 +137,9 @@ export class ProductService {
     });
   }
 
+  /**
+   * Format the categories IDs array into the prisma query way
+   */
   private connectCategoriesById(
     categories: string[],
   ): Prisma.CategoryUncheckedCreateNestedManyWithoutProductsInput {
@@ -144,8 +147,8 @@ export class ProductService {
 
     if (categories) {
       categoriesConnection = {
-        connect: categories.map((cat) => {
-          return { id: cat };
+        connect: categories.map((category) => {
+          return { id: category };
         }),
       };
     }
