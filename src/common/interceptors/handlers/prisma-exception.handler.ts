@@ -38,6 +38,10 @@ export class PrismaExceptionHandler implements ExceptionHandler {
           if (this.isCreateProductError(error)) {
             throw new CategoryNotFoundException();
           }
+
+          if (this.isCategoryError(error)) {
+            throw new CategoryNotFoundException();
+          }
           break;
         }
         default:
@@ -48,6 +52,10 @@ export class PrismaExceptionHandler implements ExceptionHandler {
     if (this.isPrismaUnknownError(error)) {
       if (error.message === 'No Product found') {
         throw new ProductNotFoundException();
+      }
+
+      if (error.message === 'No Category found') {
+        throw new CategoryNotFoundException();
       }
     }
 
@@ -82,7 +90,7 @@ export class PrismaExceptionHandler implements ExceptionHandler {
     return error.message.includes('prisma.user');
   }
 
-  /** Returns wether the error happened on an product prisma query or not */
+  /** Returns wether the error happened on an update or delete product prisma query or not */
   private isProductError(error: PrismaClientKnownRequestError): boolean {
     return (
       error.message.includes('prisma.product.update') ||
@@ -93,5 +101,10 @@ export class PrismaExceptionHandler implements ExceptionHandler {
   /** Returns wether the error happened on an create product prisma query or not */
   private isCreateProductError(error: PrismaClientKnownRequestError): boolean {
     return error.message.includes('prisma.product.create');
+  }
+
+  /** Returns wether the error happened on an category prisma query or not */
+  private isCategoryError(error: PrismaClientKnownRequestError): boolean {
+    return error.message.includes('prisma.category');
   }
 }
