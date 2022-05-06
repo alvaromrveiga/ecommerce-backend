@@ -6,6 +6,7 @@ import {
 import { Test, TestingModule } from '@nestjs/testing';
 import { isDate, isUUID } from 'class-validator';
 import { AppModule } from 'src/app.module';
+import { CategoryNotFoundException } from 'src/common/exceptions/category/category-not-found.exception';
 import { ProductNameInUseException } from 'src/common/exceptions/product/product-name-in-use.exception';
 import { ProductNotFoundException } from 'src/common/exceptions/product/product-not-found.exception';
 import { ExceptionInterceptor } from 'src/common/interceptors/exception.interceptor';
@@ -25,6 +26,7 @@ describe('UserController (e2e)', () => {
   let token: string;
   let adminToken: string;
   let product2Id: string;
+  let categoryIds: string[];
   let prisma: PrismaService;
 
   beforeAll(async () => {
@@ -52,6 +54,8 @@ describe('UserController (e2e)', () => {
   beforeEach(async () => {
     await prisma.user.deleteMany();
     await prisma.product.deleteMany();
+    await prisma.category.deleteMany();
+    categoryIds = [];
 
     await request(app.getHttpServer()).post('/user').send({
       email: 'tester@example.com',
@@ -80,6 +84,18 @@ describe('UserController (e2e)', () => {
 
     adminToken = response.body.accessToken;
 
+    response = await request(app.getHttpServer())
+      .post('/category')
+      .set({ Authorization: `Bearer ${adminToken}` })
+      .send({ name: 'Madeira' });
+    categoryIds.push(response.body.id);
+
+    response = await request(app.getHttpServer())
+      .post('/category')
+      .set({ Authorization: `Bearer ${adminToken}` })
+      .send({ name: 'Casa' });
+    categoryIds.push(response.body.id);
+
     await request(app.getHttpServer())
       .post('/product')
       .set({ Authorization: `Bearer ${adminToken}` })
@@ -97,6 +113,7 @@ describe('UserController (e2e)', () => {
         discountPercentage: 8,
         stock: 20,
         description: 'Brand2 wood table for offices',
+        categories: categoryIds,
       } as CreateProductDto);
 
     const { id } = await prisma.product.findUnique({
@@ -154,6 +171,25 @@ describe('UserController (e2e)', () => {
       expect(isDate(new Date(product.createdAt))).toBeTruthy();
     });
 
+    it('should create product with categories', async () => {
+      const response = await request(app.getHttpServer())
+        .post('/product')
+        .set({ Authorization: `Bearer ${adminToken}` })
+        .send({
+          name: 'Brand1 wheelchair',
+          basePrice: 199.99,
+          discountPercentage: 10,
+          stock: 16,
+          description: 'Brand1 wheelchair for offices',
+          categories: categoryIds,
+        } as CreateProductDto)
+        .expect(201);
+
+      expect(response.body.categories).toEqual(
+        expect.arrayContaining([{ name: 'Madeira' }, { name: 'Casa' }]),
+      );
+    });
+
     it('should not create product if name already in use', async () => {
       await expect(
         request(app.getHttpServer())
@@ -184,6 +220,22 @@ describe('UserController (e2e)', () => {
           .expect(400),
       ).resolves.toMatchObject({
         text: JSON.stringify(new ProductNameInUseException().getResponse()),
+      });
+    });
+
+    it('should not create product if there is an invalid category', async () => {
+      await expect(
+        request(app.getHttpServer())
+          .post('/product')
+          .set({ Authorization: `Bearer ${adminToken}` })
+          .send({
+            name: 'Brand1 wheelchair',
+            basePrice: 199.99,
+            categories: [...categoryIds, 'invalidId'],
+          } as CreateProductDto)
+          .expect(404),
+      ).resolves.toMatchObject({
+        text: JSON.stringify(new CategoryNotFoundException().getResponse()),
       });
     });
 
@@ -294,6 +346,10 @@ describe('UserController (e2e)', () => {
 
       expect(products.length).toEqual(4);
       expect(products[1].name).toEqual('Brand2 wood table');
+
+      expect(response.body[1].categories).toEqual(
+        expect.arrayContaining([{ name: 'Casa' }, { name: 'Madeira' }]),
+      );
     });
 
     it('should return all products with custom pagination', async () => {
@@ -332,7 +388,15 @@ describe('UserController (e2e)', () => {
       const product = response.body as Product;
 
       expect(product.name).toEqual('Brand2 wood table');
+      expect(product.picture).toEqual(null);
+      expect(product.basePrice).toEqual('123');
+      expect(product.discountPercentage).toEqual(8);
       expect(product.stock).toEqual(20);
+      expect(product.description).toEqual('Brand2 wood table for offices');
+
+      expect(response.body.categories).toEqual(
+        expect.arrayContaining([{ name: 'Madeira' }, { name: 'Casa' }]),
+      );
     });
 
     it('should not get product by invalid Id', async () => {
@@ -378,6 +442,10 @@ describe('UserController (e2e)', () => {
       expect(product.discountPercentage).toEqual(8);
       expect(product.stock).toEqual(20);
       expect(product.description).toEqual('Brand2 wood table for offices');
+
+      expect(response.body.categories).toEqual(
+        expect.arrayContaining([{ name: 'Madeira' }, { name: 'Casa' }]),
+      );
     });
 
     it('should not get product by urlName if urlName is inexistent', async () => {
