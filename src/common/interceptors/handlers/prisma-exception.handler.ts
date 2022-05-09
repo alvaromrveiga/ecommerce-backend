@@ -1,5 +1,6 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { PrismaError } from 'prisma-error-enum';
+import { CategoryNameInUseException } from 'src/common/exceptions/category/category-name-in-use.exception';
 import { CategoryNotFoundException } from 'src/common/exceptions/category/category-not-found.exception';
 import { ProductNameInUseException } from 'src/common/exceptions/product/product-name-in-use.exception';
 import { ProductNotFoundException } from 'src/common/exceptions/product/product-not-found.exception';
@@ -25,8 +26,13 @@ export class PrismaExceptionHandler implements ExceptionHandler {
           if (this.isProductNameConstraintViolation(error)) {
             throw new ProductNameInUseException();
           }
+
+          if (this.isCategoryNameConstraintViolation(error)) {
+            throw new CategoryNameInUseException();
+          }
           break;
-        case PrismaError.RecordsNotFound: {
+
+        case PrismaError.RecordsNotFound:
           if (this.isUserError(error)) {
             throw new UserNotFoundException();
           }
@@ -43,7 +49,7 @@ export class PrismaExceptionHandler implements ExceptionHandler {
             throw new CategoryNotFoundException();
           }
           break;
-        }
+
         default:
           throw error;
       }
@@ -82,6 +88,16 @@ export class PrismaExceptionHandler implements ExceptionHandler {
       (Object.values(error.meta)[0][0] === 'name' ||
         Object.values(error.meta)[0][0] === 'urlName') &&
       error.message.includes('prisma.product')
+    );
+  }
+
+  /** Returns wether the error happened in the category name field or not */
+  private isCategoryNameConstraintViolation(
+    error: PrismaClientKnownRequestError,
+  ): boolean {
+    return (
+      Object.values(error.meta)[0][0] === 'name' &&
+      error.message.includes('prisma.category')
     );
   }
 
