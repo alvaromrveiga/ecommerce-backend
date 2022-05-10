@@ -149,14 +149,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@ApiOperation({summary: &#x27;Admin creates a new product&#x27;})<br />@ApiBearerAuth()<br />@IsAdmin()<br />@Post()<br /></code>
+                    <code>@ApiOperation({summary: &#x27;Admin creates a new product&#x27;})<br />@IsAdmin()<br />@Post()<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="40"
-                            class="link-to-prism">src/models/product/product.controller.ts:40</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="38"
+                            class="link-to-prism">src/models/product/product.controller.ts:38</a></div>
                 </td>
             </tr>
 
@@ -219,7 +219,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>findAll(findAllProductsDto: <a href="../classes/FindAllProductsDto.html" target="_self">FindAllProductsDto</a>)</code>
+<code>findAll(findAllProductsDto: <a href="../classes/FindProductsDto.html" target="_self">FindProductsDto</a>)</code>
                 </td>
             </tr>
 
@@ -233,16 +233,16 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="83"
-                            class="link-to-prism">src/models/product/product.controller.ts:83</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="50"
+                            class="link-to-prism">src/models/product/product.controller.ts:50</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Returns all products with pagination
-Default is starting on page 1 showing 10 results per page,
+                    <div class="io-description"><p>Returns all products with pagination</p>
+<p>Default is starting on page 1 showing 10 results per page,
 searching and ordering by name</p>
 </div>
 
@@ -261,7 +261,7 @@ searching and ordering by name</p>
                                 <tr>
                                     <td>findAllProductsDto</td>
                                     <td>
-                                                <code><a href="../classes/FindAllProductsDto.html" target="_self" >FindAllProductsDto</a></code>
+                                                <code><a href="../classes/FindProductsDto.html" target="_self" >FindProductsDto</a></code>
                                     </td>
 
                                     <td>
@@ -307,14 +307,14 @@ searching and ordering by name</p>
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@ApiOperation({summary: &#x27;Admin gets product by ID&#x27;})<br />@ApiBearerAuth()<br />@IsAdmin()<br />@Get(&#x27;/id/:id&#x27;)<br /></code>
+                    <code>@ApiOperation({summary: &#x27;Admin gets product by ID&#x27;})<br />@IsAdmin()<br />@Get(&#x27;/id/:id&#x27;)<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="92"
-                            class="link-to-prism">src/models/product/product.controller.ts:92</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="58"
+                            class="link-to-prism">src/models/product/product.controller.ts:58</a></div>
                 </td>
             </tr>
 
@@ -391,8 +391,8 @@ searching and ordering by name</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="100"
-                            class="link-to-prism">src/models/product/product.controller.ts:100</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="66"
+                            class="link-to-prism">src/models/product/product.controller.ts:66</a></div>
                 </td>
             </tr>
 
@@ -463,14 +463,14 @@ searching and ordering by name</p>
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@ApiOperation({summary: &#x27;Admin deletes product&#x27;})<br />@ApiBearerAuth()<br />@IsAdmin()<br />@Delete(&#x27;:id&#x27;)<br />@HttpCode(HttpStatus.NO_CONTENT)<br /></code>
+                    <code>@ApiOperation({summary: &#x27;Admin deletes product&#x27;})<br />@IsAdmin()<br />@Delete(&#x27;:id&#x27;)<br />@HttpCode(HttpStatus.NO_CONTENT)<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="122"
-                            class="link-to-prism">src/models/product/product.controller.ts:122</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="104"
+                            class="link-to-prism">src/models/product/product.controller.ts:104</a></div>
                 </td>
             </tr>
 
@@ -541,14 +541,14 @@ searching and ordering by name</p>
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@ApiOperation({summary: &#x27;Admin updates product&#x27;})<br />@ApiBearerAuth()<br />@IsAdmin()<br />@Patch(&#x27;:id&#x27;)<br /></code>
+                    <code>@ApiOperation({summary: &#x27;Admin updates product&#x27;})<br />@IsAdmin()<br />@Patch(&#x27;:id&#x27;)<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="109"
-                            class="link-to-prism">src/models/product/product.controller.ts:109</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="92"
+                            class="link-to-prism">src/models/product/product.controller.ts:92</a></div>
                 </td>
             </tr>
 
@@ -631,21 +631,21 @@ searching and ordering by name</p>
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@ApiOperation({summary: &#x27;Admin uploads a new product picture&#x27;, requestBody: undefined})<br />@ApiBearerAuth()<br />@IsAdmin()<br />@UseInterceptors(undefined)<br />@Post(&#x27;picture/:id&#x27;)<br />@HttpCode(HttpStatus.OK)<br /></code>
+                    <code>@ApiOperation({summary: &#x27;Admin uploads a new product picture&#x27;})<br />@IsAdmin()<br />@FileUpload()<br />@Patch(&#x27;picture/:id&#x27;)<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="69"
-                            class="link-to-prism">src/models/product/product.controller.ts:69</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="81"
+                            class="link-to-prism">src/models/product/product.controller.ts:81</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Uploads a new picture for the product.
+                    <div class="io-description"><p>Admin uploads a new picture for the product.
 Needs to be type jpeg, jpg or png and maximum 3MB.</p>
 <p>Check <a href="https://alvaromrveiga.github.io/ecommerce-backend/miscellaneous/variables.html#multerUploadConfig">
 multerUploadConfig</a> file in the docs.</p>
@@ -719,14 +719,13 @@ multerUploadConfig</a> file in the docs.</p>
   Post,
   Query,
   UploadedFile,
-  UseInterceptors,
 } from &#x27;@nestjs/common&#x27;;
-import { FileInterceptor } from &#x27;@nestjs/platform-express&#x27;;
-import { ApiBearerAuth, ApiOperation, ApiTags } from &#x27;@nestjs/swagger&#x27;;
+import { ApiOperation, ApiTags } from &#x27;@nestjs/swagger&#x27;;
 import { Public } from &#x27;src/auth/public.decorator&#x27;;
+import { FileUpload } from &#x27;src/common/decorators/file-upload.decorator&#x27;;
 import { IsAdmin } from &#x27;src/common/decorators/is-admin.decorator&#x27;;
 import { CreateProductDto } from &#x27;./dto/create-product.dto&#x27;;
-import { FindAllProductsDto } from &#x27;./dto/find-all-products.dto&#x27;;
+import { FindProductsDto } from &#x27;./dto/find-products.dto&#x27;;
 import { UpdateProductDto } from &#x27;./dto/update-product.dto&#x27;;
 import { Product } from &#x27;./entities/product.entity&#x27;;
 import { ProductService } from &#x27;./product.service&#x27;;
@@ -743,59 +742,26 @@ export class ProductController {
 
   /** Creates a new product, only for admins */
   @ApiOperation({ summary: &#x27;Admin creates a new product&#x27; })
-  @ApiBearerAuth()
   @IsAdmin()
   @Post()
   create(@Body() createProductDto: CreateProductDto): Promise&lt;Product&gt; {
     return this.productService.create(createProductDto);
   }
 
-  /**
-   * Uploads a new picture for the product.
-   * Needs to be type jpeg, jpg or png and maximum 3MB.
-   *
-   * Check &lt;a href&#x3D;&quot;https://alvaromrveiga.github.io/ecommerce-backend/miscellaneous/variables.html#multerUploadConfig&quot;&gt;
-   * multerUploadConfig&lt;/a&gt; file in the docs.
-   */
-  @ApiOperation({
-    summary: &#x27;Admin uploads a new product picture&#x27;,
-    requestBody: {
-      content: {
-        &#x27;multipart/form-data&#x27;: {
-          schema: {
-            type: &#x27;object&#x27;,
-            properties: { file: { type: &#x27;string&#x27;, format: &#x27;binary&#x27; } },
-          },
-        },
-      },
-    },
-  })
-  @ApiBearerAuth()
-  @IsAdmin()
-  @UseInterceptors(FileInterceptor(&#x27;file&#x27;))
-  @Post(&#x27;picture/:id&#x27;)
-  @HttpCode(HttpStatus.OK)
-  uploadPhoto(
-    @Param(&#x27;id&#x27;) id: string,
-    @UploadedFile() file: Express.Multer.File,
-  ): Promise&lt;Product&gt; {
-    return this.productService.uploadPicture(id, file);
-  }
-
   /** Returns all products with pagination
+   *
    * Default is starting on page 1 showing 10 results per page,
    * searching and ordering by name
    */
   @ApiOperation({ summary: &#x27;Returns all products&#x27; })
   @Public()
   @Get()
-  findAll(@Query() findAllProductsDto: FindAllProductsDto): Promise&lt;Product[]&gt; {
+  findAll(@Query() findAllProductsDto: FindProductsDto): Promise&lt;Product[]&gt; {
     return this.productService.findAll(findAllProductsDto);
   }
 
   /** Find product by ID, only for admins */
   @ApiOperation({ summary: &#x27;Admin gets product by ID&#x27; })
-  @ApiBearerAuth()
   @IsAdmin()
   @Get(&#x27;/id/:id&#x27;)
   findOneById(@Param(&#x27;id&#x27;) id: string): Promise&lt;Product&gt; {
@@ -810,9 +776,26 @@ export class ProductController {
     return this.productService.findOneByUrlName(urlName);
   }
 
+  /**
+   * Admin uploads a new picture for the product.
+   * Needs to be type jpeg, jpg or png and maximum 3MB.
+   *
+   * Check &lt;a href&#x3D;&quot;https://alvaromrveiga.github.io/ecommerce-backend/miscellaneous/variables.html#multerUploadConfig&quot;&gt;
+   * multerUploadConfig&lt;/a&gt; file in the docs.
+   */
+  @ApiOperation({ summary: &#x27;Admin uploads a new product picture&#x27; })
+  @IsAdmin()
+  @FileUpload()
+  @Patch(&#x27;picture/:id&#x27;)
+  uploadPhoto(
+    @Param(&#x27;id&#x27;) id: string,
+    @UploadedFile() file: Express.Multer.File,
+  ): Promise&lt;Product&gt; {
+    return this.productService.uploadPicture(id, file);
+  }
+
   /** Updates product information, only for admins */
   @ApiOperation({ summary: &#x27;Admin updates product&#x27; })
-  @ApiBearerAuth()
   @IsAdmin()
   @Patch(&#x27;:id&#x27;)
   update(
@@ -824,7 +807,6 @@ export class ProductController {
 
   /** Deletes product from database, only for admins */
   @ApiOperation({ summary: &#x27;Admin deletes product&#x27; })
-  @ApiBearerAuth()
   @IsAdmin()
   @Delete(&#x27;:id&#x27;)
   @HttpCode(HttpStatus.NO_CONTENT)

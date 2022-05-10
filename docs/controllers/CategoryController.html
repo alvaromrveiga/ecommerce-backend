@@ -37,7 +37,7 @@
 
 <ol class="breadcrumb">
   <li>Controllers</li>
-  <li >UserController</li>
+  <li >CategoryController</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -55,14 +55,14 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/models/user/user.controller.ts</code>
+            <code>src/models/category/category.controller.ts</code>
         </p>
 
             <p class="comment">
                 <h3>Prefix</h3>
             </p>
             <p class="comment">
-                <code>user</code>
+                <code>category</code>
             </p>
 
 
@@ -70,7 +70,7 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Exposes user CRUD endpoints</p>
+                <p>Exposes category CRUD endpoints</p>
 
             </p>
 
@@ -91,20 +91,28 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#create" >create</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
-                                <a href="#findById" >findById</a>
+                                <a href="#findAll" >findAll</a>
                             </li>
                             <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findOneById" >findOneById</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findOneByName" >findOneByName</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#remove" >remove</a>
                             </li>
                             <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#update" >update</a>
-                            </li>
-                            <li>
-                                <a href="#updateUserRole" >updateUserRole</a>
                             </li>
                         </ul>
                     </td>
@@ -129,6 +137,7 @@
                 <td class="col-md-4">
                     <a name="create"></a>
                     <span class="name">
+                        <span class="modifier">Async</span>
                         <span ><b>create</b></span>
                         <a href="#create"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -136,7 +145,8 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>create(createUserDto: <a href="../classes/CreateUserDto.html" target="_self">CreateUserDto</a>)</code>
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>create(createCategoryDto: <a href="../classes/CreateCategoryDto.html" target="_self">CreateCategoryDto</a>)</code>
                 </td>
             </tr>
 
@@ -144,21 +154,21 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@ApiOperation({summary: &#x27;Creates a new user&#x27;})<br />@Public()<br />@Post()<br /></code>
+                    <code>@ApiOperation({summary: &#x27;Admin creates a new category&#x27;})<br />@IsAdmin()<br />@Post()<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="37"
-                            class="link-to-prism">src/models/user/user.controller.ts:37</a></div>
+                            class="link-to-prism">src/models/category/category.controller.ts:37</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Creates a new user</p>
+                    <div class="io-description"><p>Creates a new category, only for admins</p>
 </div>
 
                     <div class="io-description">
@@ -174,9 +184,9 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>createUserDto</td>
+                                    <td>createCategoryDto</td>
                                     <td>
-                                                <code><a href="../classes/CreateUserDto.html" target="_self" >CreateUserDto</a></code>
+                                                <code><a href="../classes/CreateCategoryDto.html" target="_self" >CreateCategoryDto</a></code>
                                     </td>
 
                                     <td>
@@ -191,7 +201,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+                        <b>Returns : </b>        <code><a href="../classes/Category.html" target="_self" >Promise&lt;Category&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -205,18 +215,18 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="findById"></a>
+                    <a name="findAll"></a>
                     <span class="name">
                         <span class="modifier">Async</span>
-                        <span ><b>findById</b></span>
-                        <a href="#findById"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>findAll</b></span>
+                        <a href="#findAll"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>findById(request: Request)</code>
+                    <code>findAll(findCategoriesDto: <a href="../classes/FindCategoriesDto.html" target="_self">FindCategoriesDto</a>)</code>
                 </td>
             </tr>
 
@@ -224,21 +234,23 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@ApiOperation({summary: &#x27;Gets user&#x27;s own profile&#x27;})<br />@ApiBearerAuth()<br />@Get()<br /></code>
+                    <code>@ApiOperation({summary: &#x27;Returns all categories&#x27;})<br />@Public()<br />@Get()<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="45"
-                            class="link-to-prism">src/models/user/user.controller.ts:45</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="51"
+                            class="link-to-prism">src/models/category/category.controller.ts:51</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Returns user&#39;s own profile information without password</p>
+                    <div class="io-description"><p>Returns all categories with pagination</p>
+<p>Default is starting on page 1 showing 10 results per page,
+searching and ordering by name</p>
 </div>
 
                     <div class="io-description">
@@ -254,9 +266,9 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>request</td>
+                                    <td>findCategoriesDto</td>
                                     <td>
-                                            <code>Request</code>
+                                                <code><a href="../classes/FindCategoriesDto.html" target="_self" >FindCategoriesDto</a></code>
                                     </td>
 
                                     <td>
@@ -271,7 +283,191 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;UserWithoutPassword&gt;</code>
+                        <b>Returns : </b>        <code><a href="../classes/Category.html" target="_self" >Promise&lt;Category[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findOneById"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>findOneById</b></span>
+                        <a href="#findOneById"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findOneById(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, findProductsDto: <a href="../classes/FindProductsDto.html" target="_self">FindProductsDto</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@ApiOperation({summary: &#x27;Admin gets category by ID and its products&#x27;})<br />@Public()<br />@Get(&#x27;/id/:id&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="61"
+                            class="link-to-prism">src/models/category/category.controller.ts:61</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Find category by ID, only for admins</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>findProductsDto</td>
+                                    <td>
+                                                <code><a href="../classes/FindProductsDto.html" target="_self" >FindProductsDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Category.html" target="_self" >Promise&lt;Category&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findOneByName"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>findOneByName</b></span>
+                        <a href="#findOneByName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findOneByName(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, findProductsDto: <a href="../classes/FindProductsDto.html" target="_self">FindProductsDto</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@ApiOperation({summary: &#x27;Returns category by name and its products&#x27;})<br />@Public()<br />@Get(&#x27;:name&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="72"
+                            class="link-to-prism">src/models/category/category.controller.ts:72</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Find category by name</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>name</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>findProductsDto</td>
+                                    <td>
+                                                <code><a href="../classes/FindProductsDto.html" target="_self" >FindProductsDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Category.html" target="_self" >Promise&lt;Category&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -287,6 +483,7 @@
                 <td class="col-md-4">
                     <a name="remove"></a>
                     <span class="name">
+                        <span class="modifier">Async</span>
                         <span ><b>remove</b></span>
                         <a href="#remove"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -294,7 +491,8 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>remove(request: Request, deleteUserDto: <a href="../classes/DeleteUserDto.html" target="_self">DeleteUserDto</a>)</code>
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>remove(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
@@ -302,21 +500,21 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@ApiOperation({summary: &#x27;Deletes user&#x27;})<br />@ApiBearerAuth()<br />@Delete()<br />@HttpCode(HttpStatus.NO_CONTENT)<br /></code>
+                    <code>@ApiOperation({summary: &#x27;Admin deletes category&#x27;})<br />@IsAdmin()<br />@Delete(&#x27;:id&#x27;)<br />@HttpCode(HttpStatus.NO_CONTENT)<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="79"
-                            class="link-to-prism">src/models/user/user.controller.ts:79</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="95"
+                            class="link-to-prism">src/models/category/category.controller.ts:95</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Deletes user and all user related information from the system</p>
+                    <div class="io-description"><p>Deletes category from database, only for admins</p>
 </div>
 
                     <div class="io-description">
@@ -332,21 +530,9 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>request</td>
+                                    <td>id</td>
                                     <td>
-                                            <code>Request</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>deleteUserDto</td>
-                                    <td>
-                                                <code><a href="../classes/DeleteUserDto.html" target="_self" >DeleteUserDto</a></code>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
 
                                     <td>
@@ -377,6 +563,7 @@
                 <td class="col-md-4">
                     <a name="update"></a>
                     <span class="name">
+                        <span class="modifier">Async</span>
                         <span ><b>update</b></span>
                         <a href="#update"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -384,7 +571,8 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>update(request: Request, updateUserDto: <a href="../classes/UpdateUserDto.html" target="_self">UpdateUserDto</a>)</code>
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>update(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, updateCategoryDto: <a href="../classes/UpdateCategoryDto.html" target="_self">UpdateCategoryDto</a>)</code>
                 </td>
             </tr>
 
@@ -392,21 +580,21 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@ApiOperation({summary: &#x27;Updates user&#x27;})<br />@ApiBearerAuth()<br />@Patch()<br /></code>
+                    <code>@ApiOperation({summary: &#x27;Admin updates category&#x27;})<br />@IsAdmin()<br />@Patch(&#x27;:id&#x27;)<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="55"
-                            class="link-to-prism">src/models/user/user.controller.ts:55</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="83"
+                            class="link-to-prism">src/models/category/category.controller.ts:83</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Updates user information</p>
+                    <div class="io-description"><p>Updates category information, only for admins</p>
 </div>
 
                     <div class="io-description">
@@ -422,9 +610,9 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>request</td>
+                                    <td>id</td>
                                     <td>
-                                            <code>Request</code>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
 
                                     <td>
@@ -434,87 +622,9 @@
 
                                 </tr>
                                 <tr>
-                                    <td>updateUserDto</td>
+                                    <td>updateCategoryDto</td>
                                     <td>
-                                                <code><a href="../classes/UpdateUserDto.html" target="_self" >UpdateUserDto</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;UserWithoutPassword&gt;</code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="updateUserRole"></a>
-                    <span class="name">
-                        <span ><b>updateUserRole</b></span>
-                        <a href="#updateUserRole"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>updateUserRole(updateUserRoleDto: <a href="../classes/UpdateUserRoleDto.html" target="_self">UpdateUserRoleDto</a>)</code>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <b>Decorators : </b>
-                    <br />
-                    <code>@ApiOperation({summary: &#x27;Admin set user&#x27;s role&#x27;})<br />@IsAdmin()<br />@Patch(&#x27;role&#x27;)<br /></code>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="68"
-                            class="link-to-prism">src/models/user/user.controller.ts:68</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Updates user role, only for admins</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>updateUserRoleDto</td>
-                                    <td>
-                                                <code><a href="../classes/UpdateUserRoleDto.html" target="_self" >UpdateUserRoleDto</a></code>
+                                                <code><a href="../classes/UpdateCategoryDto.html" target="_self" >UpdateCategoryDto</a></code>
                                     </td>
 
                                     <td>
@@ -529,7 +639,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;UserWithoutPassword&gt;</code>
+                        <b>Returns : </b>        <code><a href="../classes/Category.html" target="_self" >Promise&lt;Category&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -544,90 +654,101 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  Body,
   Controller,
-  Delete,
   Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
   HttpCode,
   HttpStatus,
-  Patch,
-  Post,
-  Req,
 } from &#x27;@nestjs/common&#x27;;
-import { ApiBearerAuth, ApiOperation, ApiTags } from &#x27;@nestjs/swagger&#x27;;
-import { Request } from &#x27;express&#x27;;
+import { ApiOperation, ApiTags } from &#x27;@nestjs/swagger&#x27;;
 import { Public } from &#x27;src/auth/public.decorator&#x27;;
 import { IsAdmin } from &#x27;src/common/decorators/is-admin.decorator&#x27;;
-import { CreateUserDto } from &#x27;./dto/create-user.dto&#x27;;
-import { DeleteUserDto } from &#x27;./dto/delete-user.dto&#x27;;
-import { UpdateUserRoleDto } from &#x27;./dto/update-user-role.dto&#x27;;
-import { UpdateUserDto } from &#x27;./dto/update-user.dto&#x27;;
-import { UserWithoutPassword } from &#x27;./entities/user-without-password.entity&#x27;;
-import { UserService } from &#x27;./user.service&#x27;;
+import { FindProductsDto } from &#x27;../product/dto/find-products.dto&#x27;;
+import { CategoryService } from &#x27;./category.service&#x27;;
+import { CreateCategoryDto } from &#x27;./dto/create-category.dto&#x27;;
+import { FindCategoriesDto } from &#x27;./dto/find-categories.dto&#x27;;
+import { UpdateCategoryDto } from &#x27;./dto/update-category.dto&#x27;;
+import { Category } from &#x27;./entities/category.entity&#x27;;
 
-/** Exposes user CRUD endpoints */
-@ApiTags(&#x27;user&#x27;)
-@Controller(&#x27;user&#x27;)
-export class UserController {
-  /** Exposes user CRUD endpoints
+/** Exposes category CRUD endpoints */
+@ApiTags(&#x27;category&#x27;)
+@Controller(&#x27;category&#x27;)
+export class CategoryController {
+  /** Exposes category CRUD endpoints
    *
-   * Instantiate class and UserService dependency
+   * Instantiate class and CategoryService dependency
    */
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly categoryService: CategoryService) {}
 
-  /** Creates a new user */
-  @ApiOperation({ summary: &#x27;Creates a new user&#x27; })
-  @Public()
-  @Post()
-  create(@Body() createUserDto: CreateUserDto): Promise&lt;void&gt; {
-    return this.userService.create(createUserDto);
-  }
-
-  /** Returns user&#x27;s own profile information without password */
-  @ApiOperation({ summary: &quot;Gets user&#x27;s own profile&quot; })
-  @ApiBearerAuth()
-  @Get()
-  async findById(@Req() request: Request): Promise&lt;UserWithoutPassword&gt; {
-    const userId &#x3D; request.user[&#x27;userId&#x27;];
-
-    return this.userService.findById(userId);
-  }
-
-  /** Updates user information */
-  @ApiOperation({ summary: &#x27;Updates user&#x27; })
-  @ApiBearerAuth()
-  @Patch()
-  update(
-    @Req() request: Request,
-    @Body() updateUserDto: UpdateUserDto,
-  ): Promise&lt;UserWithoutPassword&gt; {
-    const userId &#x3D; request.user[&#x27;userId&#x27;];
-
-    return this.userService.update(userId, updateUserDto);
-  }
-
-  /** Updates user role, only for admins */
-  @ApiOperation({ summary: &quot;Admin set user&#x27;s role&quot; })
+  /** Creates a new category, only for admins */
+  @ApiOperation({ summary: &#x27;Admin creates a new category&#x27; })
   @IsAdmin()
-  @Patch(&#x27;role&#x27;)
-  updateUserRole(
-    @Body() updateUserRoleDto: UpdateUserRoleDto,
-  ): Promise&lt;UserWithoutPassword&gt; {
-    return this.userService.updateUserRole(updateUserRoleDto);
+  @Post()
+  async create(
+    @Body() createCategoryDto: CreateCategoryDto,
+  ): Promise&lt;Category&gt; {
+    return this.categoryService.create(createCategoryDto);
   }
 
-  /** Deletes user and all user related information from the system */
-  @ApiOperation({ summary: &#x27;Deletes user&#x27; })
-  @ApiBearerAuth()
-  @Delete()
-  @HttpCode(HttpStatus.NO_CONTENT)
-  remove(
-    @Req() request: Request,
-    @Body() deleteUserDto: DeleteUserDto,
-  ): Promise&lt;void&gt; {
-    const userId &#x3D; request.user[&#x27;userId&#x27;];
+  /** Returns all categories with pagination
+   *
+   * Default is starting on page 1 showing 10 results per page,
+   * searching and ordering by name
+   */
+  @ApiOperation({ summary: &#x27;Returns all categories&#x27; })
+  @Public()
+  @Get()
+  async findAll(
+    @Query() findCategoriesDto: FindCategoriesDto,
+  ): Promise&lt;Category[]&gt; {
+    return this.categoryService.findAll(findCategoriesDto);
+  }
 
-    return this.userService.remove(userId, deleteUserDto);
+  /** Find category by ID, only for admins */
+  @ApiOperation({ summary: &#x27;Admin gets category by ID and its products&#x27; })
+  @Public()
+  @Get(&#x27;/id/:id&#x27;)
+  async findOneById(
+    @Param(&#x27;id&#x27;) id: string,
+    @Query() findProductsDto: FindProductsDto,
+  ): Promise&lt;Category&gt; {
+    return this.categoryService.findOneById(id, findProductsDto);
+  }
+
+  /** Find category by name */
+  @ApiOperation({ summary: &#x27;Returns category by name and its products&#x27; })
+  @Public()
+  @Get(&#x27;:name&#x27;)
+  async findOneByName(
+    @Param(&#x27;name&#x27;) name: string,
+    @Query() findProductsDto: FindProductsDto,
+  ): Promise&lt;Category&gt; {
+    return this.categoryService.findOneByName(name, findProductsDto);
+  }
+
+  /** Updates category information, only for admins */
+  @ApiOperation({ summary: &#x27;Admin updates category&#x27; })
+  @IsAdmin()
+  @Patch(&#x27;:id&#x27;)
+  async update(
+    @Param(&#x27;id&#x27;) id: string,
+    @Body() updateCategoryDto: UpdateCategoryDto,
+  ): Promise&lt;Category&gt; {
+    return this.categoryService.update(id, updateCategoryDto);
+  }
+
+  /** Deletes category from database, only for admins */
+  @ApiOperation({ summary: &#x27;Admin deletes category&#x27; })
+  @IsAdmin()
+  @Delete(&#x27;:id&#x27;)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(@Param(&#x27;id&#x27;) id: string): Promise&lt;void&gt; {
+    return this.categoryService.remove(id);
   }
 }
 </code></pre>
@@ -675,7 +796,7 @@ export class UserController {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'controller';
-            var COMPODOC_CURRENT_PAGE_URL = 'UserController.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'CategoryController.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

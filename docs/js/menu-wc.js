@@ -98,6 +98,37 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                             </li>
                             <li class="link">
+                                <a href="modules/CategoryModule.html" data-type="entity-link" >CategoryModule</a>
+                                    <li class="chapter inner">
+                                        <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
+                                            'data-target="#controllers-links-module-CategoryModule-39a2804edd6fe50bdc396922d77cd7e3a74442b298d6599c492608ff82b51c912638f638b37e2db462271c58b2ac3481f7503deba5583e8431354f4dcb317512"' : 'data-target="#xs-controllers-links-module-CategoryModule-39a2804edd6fe50bdc396922d77cd7e3a74442b298d6599c492608ff82b51c912638f638b37e2db462271c58b2ac3481f7503deba5583e8431354f4dcb317512"' }>
+                                            <span class="icon ion-md-swap"></span>
+                                            <span>Controllers</span>
+                                            <span class="icon ion-ios-arrow-down"></span>
+                                        </div>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="controllers-links-module-CategoryModule-39a2804edd6fe50bdc396922d77cd7e3a74442b298d6599c492608ff82b51c912638f638b37e2db462271c58b2ac3481f7503deba5583e8431354f4dcb317512"' :
+                                            'id="xs-controllers-links-module-CategoryModule-39a2804edd6fe50bdc396922d77cd7e3a74442b298d6599c492608ff82b51c912638f638b37e2db462271c58b2ac3481f7503deba5583e8431354f4dcb317512"' }>
+                                            <li class="link">
+                                                <a href="controllers/CategoryController.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >CategoryController</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                <li class="chapter inner">
+                                    <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
+                                        'data-target="#injectables-links-module-CategoryModule-39a2804edd6fe50bdc396922d77cd7e3a74442b298d6599c492608ff82b51c912638f638b37e2db462271c58b2ac3481f7503deba5583e8431354f4dcb317512"' : 'data-target="#xs-injectables-links-module-CategoryModule-39a2804edd6fe50bdc396922d77cd7e3a74442b298d6599c492608ff82b51c912638f638b37e2db462271c58b2ac3481f7503deba5583e8431354f4dcb317512"' }>
+                                        <span class="icon ion-md-arrow-round-down"></span>
+                                        <span>Injectables</span>
+                                        <span class="icon ion-ios-arrow-down"></span>
+                                    </div>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-CategoryModule-39a2804edd6fe50bdc396922d77cd7e3a74442b298d6599c492608ff82b51c912638f638b37e2db462271c58b2ac3481f7503deba5583e8431354f4dcb317512"' :
+                                        'id="xs-injectables-links-module-CategoryModule-39a2804edd6fe50bdc396922d77cd7e3a74442b298d6599c492608ff82b51c912638f638b37e2db462271c58b2ac3481f7503deba5583e8431354f4dcb317512"' }>
+                                        <li class="link">
+                                            <a href="injectables/CategoryService.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules" >CategoryService</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </li>
+                            <li class="link">
                                 <a href="modules/PrismaModule.html" data-type="entity-link" >PrismaModule</a>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
@@ -187,6 +218,18 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </div>
                         <ul class="links collapse " ${ isNormalMode ? 'id="classes-links"' : 'id="xs-classes-links"' }>
                             <li class="link">
+                                <a href="classes/Category.html" data-type="entity-link" >Category</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/CategoryNameInUseException.html" data-type="entity-link" >CategoryNameInUseException</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/CategoryNotFoundException.html" data-type="entity-link" >CategoryNotFoundException</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/CreateCategoryDto.html" data-type="entity-link" >CreateCategoryDto</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/CreateProductDto.html" data-type="entity-link" >CreateProductDto</a>
                             </li>
                             <li class="link">
@@ -202,7 +245,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/FileTypeError.html" data-type="entity-link" >FileTypeError</a>
                             </li>
                             <li class="link">
-                                <a href="classes/FindAllProductsDto.html" data-type="entity-link" >FindAllProductsDto</a>
+                                <a href="classes/FileUploadDto.html" data-type="entity-link" >FileUploadDto</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/FindCategoriesDto.html" data-type="entity-link" >FindCategoriesDto</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/FindProductsDto.html" data-type="entity-link" >FindProductsDto</a>
                             </li>
                             <li class="link">
                                 <a href="classes/InvalidEmailOrPasswordError.html" data-type="entity-link" >InvalidEmailOrPasswordError</a>
@@ -233,6 +282,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="classes/ProductServiceInputException.html" data-type="entity-link" >ProductServiceInputException</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/UpdateCategoryDto.html" data-type="entity-link" >UpdateCategoryDto</a>
                             </li>
                             <li class="link">
                                 <a href="classes/UpdateProductDto.html" data-type="entity-link" >UpdateProductDto</a>

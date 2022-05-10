@@ -40,7 +40,7 @@
 
 <ol class="breadcrumb">
   <li>Injectables</li>
-  <li >ProductService</li>
+  <li >CategoryService</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -58,7 +58,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/models/product/product.service.ts</code>
+            <code>src/models/category/category.service.ts</code>
         </p>
 
 
@@ -66,8 +66,8 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Responsible for managing products in the database.
-CRUD endpoints are available for products.</p>
+                <p>Responsible for managing categories in the database.
+CRUD endpoints are available for categories.</p>
 
             </p>
 
@@ -88,7 +88,7 @@ CRUD endpoints are available for products.</p>
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Private</span>
-                                <a href="#connectCategoriesById" >connectCategoriesById</a>
+                                <a href="#capitalizeOnlyFirstLetter" >capitalizeOnlyFirstLetter</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -104,11 +104,7 @@ CRUD endpoints are available for products.</p>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
-                                <a href="#findOneByUrlName" >findOneByUrlName</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#formatUrlName" >formatUrlName</a>
+                                <a href="#findOneByName" >findOneByName</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -120,11 +116,7 @@ CRUD endpoints are available for products.</p>
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
-                                <a href="#updateProductAndUrlName" >updateProductAndUrlName</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Async</span>
-                                <a href="#uploadPicture" >uploadPicture</a>
+                                <a href="#updateCategoryAndName" >updateCategoryAndName</a>
                             </li>
                         </ul>
                     </td>
@@ -149,14 +141,14 @@ CRUD endpoints are available for products.</p>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/models/product/product.service.ts:13</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/models/category/category.service.ts:13</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
-                            <div class="io-description"><p>Responsible for managing products in the database.
-CRUD endpoints are available for products.</p>
+                            <div class="io-description"><p>Responsible for managing categories in the database.
+CRUD endpoints are available for categories.</p>
 <p>Instantiates the class and the PrismaService dependency</p>
 </div>
                             <div>
@@ -200,403 +192,34 @@ CRUD endpoints are available for products.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="connectCategoriesById"></a>
+                    <a name="capitalizeOnlyFirstLetter"></a>
                     <span class="name">
                         <span class="modifier">Private</span>
-                        <span ><b>connectCategoriesById</b></span>
-                        <a href="#connectCategoriesById"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>capitalizeOnlyFirstLetter</b></span>
+                        <a href="#capitalizeOnlyFirstLetter"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>connectCategoriesById(categories: string[])</code>
+                    <code>capitalizeOnlyFirstLetter(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="143"
-                            class="link-to-prism">src/models/product/product.service.ts:143</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="124"
+                            class="link-to-prism">src/models/category/category.service.ts:124</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Format the categories IDs array into the prisma query way</p>
+                    <div class="io-description"><p>Capitalize only the first letter of the category name</p>
 </div>
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>categories</td>
-                                    <td>
-                                            <code>string[]</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Prisma.CategoryUncheckedCreateNestedManyWithoutProductsInput</code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="create"></a>
-                    <span class="name">
-                        <span class="modifier">Async</span>
-                        <span ><b>create</b></span>
-                        <a href="#create"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>create(createProductDto: <a href="../classes/CreateProductDto.html" target="_self">CreateProductDto</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="22"
-                            class="link-to-prism">src/models/product/product.service.ts:22</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Creates a new product</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>createProductDto</td>
-                                    <td>
-                                                <code><a href="../classes/CreateProductDto.html" target="_self" >CreateProductDto</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Product.html" target="_self" >Promise&lt;Product&gt;</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="findAll"></a>
-                    <span class="name">
-                        <span class="modifier">Async</span>
-                        <span ><b>findAll</b></span>
-                        <a href="#findAll"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>findAll(undefined: <a href="../classes/FindProductsDto.html" target="_self">FindProductsDto</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="51"
-                            class="link-to-prism">src/models/product/product.service.ts:51</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Returns all products with pagination
-Default is starting on page 1 showing 10 results per page
-and ordering by name</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                                <code><a href="../classes/FindProductsDto.html" target="_self" >FindProductsDto</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Product.html" target="_self" >Promise&lt;Product[]&gt;</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="findOneById"></a>
-                    <span class="name">
-                        <span class="modifier">Async</span>
-                        <span ><b>findOneById</b></span>
-                        <a href="#findOneById"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>findOneById(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="70"
-                            class="link-to-prism">src/models/product/product.service.ts:70</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Find product by ID</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>id</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Product.html" target="_self" >Promise&lt;Product&gt;</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="findOneByUrlName"></a>
-                    <span class="name">
-                        <span class="modifier">Async</span>
-                        <span ><b>findOneByUrlName</b></span>
-                        <a href="#findOneByUrlName"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>findOneByUrlName(urlName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="79"
-                            class="link-to-prism">src/models/product/product.service.ts:79</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Find product by Url Name</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>urlName</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Product.html" target="_self" >Promise&lt;Product&gt;</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="formatUrlName"></a>
-                    <span class="name">
-                        <span class="modifier">Private</span>
-                        <span ><b>formatUrlName</b></span>
-                        <a href="#formatUrlName"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>formatUrlName(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="115"
-                            class="link-to-prism">src/models/product/product.service.ts:115</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Formats the name to generate an urlName.</p>
-<p>Makes the name lower case, remove leading and trailing white spaces,
-turn to single the multiple spaces between words and make
-single spaces hyphens</p>
-<div><pre class="line-numbers"><code class="language-html"></code></pre></div></div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -626,13 +249,324 @@ single spaces hyphens</p>
                         </table>
                     </div>
                     <div>
-                        <b>Example :</b>
-                        <div>
-                            <pre class="line-numbers"><code class="language-html">&amp;quot; BraNd1    chAir   &amp;quot; becomes &amp;quot;brand1-chair&amp;quot;</code></pre>
-                        </div>
                     </div>
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="create"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>create</b></span>
+                        <a href="#create"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>create(createCategoryDto: <a href="../classes/CreateCategoryDto.html" target="_self">CreateCategoryDto</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="22"
+                            class="link-to-prism">src/models/category/category.service.ts:22</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates a new category</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>createCategoryDto</td>
+                                    <td>
+                                                <code><a href="../classes/CreateCategoryDto.html" target="_self" >CreateCategoryDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Category.html" target="_self" >Promise&lt;Category&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findAll"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>findAll</b></span>
+                        <a href="#findAll"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findAll(undefined: <a href="../classes/FindCategoriesDto.html" target="_self">FindCategoriesDto</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="36"
+                            class="link-to-prism">src/models/category/category.service.ts:36</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Returns all categories with pagination and can search by name
+Default is starting on page 1 showing 10 results per page
+and ordering by name</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                                <code><a href="../classes/FindCategoriesDto.html" target="_self" >FindCategoriesDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Category.html" target="_self" >Promise&lt;Category[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findOneById"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>findOneById</b></span>
+                        <a href="#findOneById"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findOneById(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, undefined: <a href="../classes/FindProductsDto.html" target="_self">FindProductsDto</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="54"
+                            class="link-to-prism">src/models/category/category.service.ts:54</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Find category by ID and show the products that have this category</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>id</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                                <code><a href="../classes/FindProductsDto.html" target="_self" >FindProductsDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Category.html" target="_self" >Promise&lt;Category&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findOneByName"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>findOneByName</b></span>
+                        <a href="#findOneByName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findOneByName(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, undefined: <a href="../classes/FindProductsDto.html" target="_self">FindProductsDto</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="77"
+                            class="link-to-prism">src/models/category/category.service.ts:77</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Find category by name and show the products that have this category</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>name</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                                <code><a href="../classes/FindProductsDto.html" target="_self" >FindProductsDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/Category.html" target="_self" >Promise&lt;Category&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -664,15 +598,15 @@ single spaces hyphens</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="103"
-                            class="link-to-prism">src/models/product/product.service.ts:103</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="119"
+                            class="link-to-prism">src/models/category/category.service.ts:119</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Removes product from database</p>
+                    <div class="io-description"><p>Removes category from database</p>
 </div>
 
                     <div class="io-description">
@@ -730,22 +664,22 @@ single spaces hyphens</p>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>update(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, updateProductDto: <a href="../classes/UpdateProductDto.html" target="_self">UpdateProductDto</a>)</code>
+                    <code>update(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, updateCategoryDto: <a href="../classes/UpdateCategoryDto.html" target="_self">UpdateCategoryDto</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="88"
-                            class="link-to-prism">src/models/product/product.service.ts:88</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="102"
+                            class="link-to-prism">src/models/category/category.service.ts:102</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Updates product information</p>
+                    <div class="io-description"><p>Updates category information</p>
 </div>
 
                     <div class="io-description">
@@ -773,9 +707,9 @@ single spaces hyphens</p>
 
                                 </tr>
                                 <tr>
-                                    <td>updateProductDto</td>
+                                    <td>updateCategoryDto</td>
                                     <td>
-                                                <code><a href="../classes/UpdateProductDto.html" target="_self" >UpdateProductDto</a></code>
+                                                <code><a href="../classes/UpdateCategoryDto.html" target="_self" >UpdateCategoryDto</a></code>
                                     </td>
 
                                     <td>
@@ -790,7 +724,7 @@ single spaces hyphens</p>
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Product.html" target="_self" >Promise&lt;Product&gt;</a></code>
+                        <b>Returns : </b>        <code><a href="../classes/Category.html" target="_self" >Promise&lt;Category&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -804,34 +738,34 @@ single spaces hyphens</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="updateProductAndUrlName"></a>
+                    <a name="updateCategoryAndName"></a>
                     <span class="name">
                         <span class="modifier">Private</span>
-                        <span ><b>updateProductAndUrlName</b></span>
-                        <a href="#updateProductAndUrlName"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>updateCategoryAndName</b></span>
+                        <a href="#updateCategoryAndName"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateProductAndUrlName(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, updateProductDto: <a href="../classes/UpdateProductDto.html" target="_self">UpdateProductDto</a>)</code>
+                    <code>updateCategoryAndName(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, updateCategoryDto: <a href="../classes/UpdateCategoryDto.html" target="_self">UpdateCategoryDto</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="128"
-                            class="link-to-prism">src/models/product/product.service.ts:128</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="132"
+                            class="link-to-prism">src/models/category/category.service.ts:132</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Formats UrlName and updates the product with the new one.</p>
-<p>Used when the user updates the product name.</p>
+                    <div class="io-description"><p>Formats name and updates the category with the new one.</p>
+<p>Used when the user updates the category name.</p>
 </div>
 
                     <div class="io-description">
@@ -859,9 +793,9 @@ single spaces hyphens</p>
 
                                 </tr>
                                 <tr>
-                                    <td>updateProductDto</td>
+                                    <td>updateCategoryDto</td>
                                     <td>
-                                                <code><a href="../classes/UpdateProductDto.html" target="_self" >UpdateProductDto</a></code>
+                                                <code><a href="../classes/UpdateCategoryDto.html" target="_self" >UpdateCategoryDto</a></code>
                                     </td>
 
                                     <td>
@@ -876,92 +810,7 @@ single spaces hyphens</p>
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Product.html" target="_self" >Promise&lt;Product&gt;</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="uploadPicture"></a>
-                    <span class="name">
-                        <span class="modifier">Async</span>
-                        <span ><b>uploadPicture</b></span>
-                        <a href="#uploadPicture"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>uploadPicture(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, file: Express.Multer.File)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="40"
-                            class="link-to-prism">src/models/product/product.service.ts:40</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Uploads new product picture</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>id</td>
-                                    <td>
-                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>file</td>
-                                    <td>
-                                            <code>Express.Multer.File</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="../classes/Product.html" target="_self" >Promise&lt;Product&gt;</a></code>
+                        <b>Returns : </b>        <code><a href="../classes/Category.html" target="_self" >Promise&lt;Category&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -978,161 +827,146 @@ single spaces hyphens</p>
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;;
-import { Prisma } from &#x27;@prisma/client&#x27;;
 import { PrismaService } from &#x27;src/prisma/prisma.service&#x27;;
-import { CreateProductDto } from &#x27;./dto/create-product.dto&#x27;;
-import { FindProductsDto } from &#x27;./dto/find-products.dto&#x27;;
-import { UpdateProductDto } from &#x27;./dto/update-product.dto&#x27;;
-import { Product } from &#x27;./entities/product.entity&#x27;;
+import { FindProductsDto } from &#x27;../product/dto/find-products.dto&#x27;;
+import { CreateCategoryDto } from &#x27;./dto/create-category.dto&#x27;;
+import { FindCategoriesDto } from &#x27;./dto/find-categories.dto&#x27;;
+import { UpdateCategoryDto } from &#x27;./dto/update-category.dto&#x27;;
+import { Category } from &#x27;./entities/category.entity&#x27;;
 
-/** Responsible for managing products in the database.
- * CRUD endpoints are available for products.
+/** Responsible for managing categories in the database.
+ * CRUD endpoints are available for categories.
  */
 @Injectable()
-export class ProductService {
-  /** Responsible for managing products in the database.
-   * CRUD endpoints are available for products.
+export class CategoryService {
+  /** Responsible for managing categories in the database.
+   * CRUD endpoints are available for categories.
    *
    * Instantiates the class and the PrismaService dependency
    */
   constructor(private readonly prisma: PrismaService) {}
 
-  /** Creates a new product */
-  async create(createProductDto: CreateProductDto): Promise&lt;Product&gt; {
-    const urlName &#x3D; this.formatUrlName(createProductDto.name);
+  /** Creates a new category */
+  async create(createCategoryDto: CreateCategoryDto): Promise&lt;Category&gt; {
+    const name &#x3D; this.capitalizeOnlyFirstLetter(createCategoryDto.name);
 
-    const categories &#x3D; this.connectCategoriesById(createProductDto.categories);
-
-    const product &#x3D; await this.prisma.product.create({
-      data: {
-        ...createProductDto,
-        urlName,
-        categories,
-      },
-      include: { categories: { select: { name: true } } },
+    const category &#x3D; await this.prisma.category.create({
+      data: { ...createCategoryDto, name },
     });
 
-    return product;
+    return category;
   }
 
-  /** Uploads new product picture */
-  async uploadPicture(id: string, file: Express.Multer.File): Promise&lt;Product&gt; {
-    return this.prisma.product.update({
-      where: { id },
-      data: { picture: file.filename },
-    });
-  }
-
-  /** Returns all products with pagination
+  /** Returns all categories with pagination and can search by name
    * Default is starting on page 1 showing 10 results per page
    * and ordering by name
    */
   async findAll({
-    productName &#x3D; &#x27;&#x27;,
+    categoryName &#x3D; &#x27;&#x27;,
     page &#x3D; 1,
     offset &#x3D; 10,
-  }: FindProductsDto): Promise&lt;Product[]&gt; {
-    const productsToSkip &#x3D; (page - 1) * offset;
+  }: FindCategoriesDto): Promise&lt;Category[]&gt; {
+    const categoriesToSkip &#x3D; (page - 1) * offset;
 
-    return this.prisma.product.findMany({
-      skip: productsToSkip,
+    return this.prisma.category.findMany({
+      skip: categoriesToSkip,
       take: offset,
       where: {
-        name: { contains: productName, mode: &#x27;insensitive&#x27; },
+        name: { contains: categoryName, mode: &#x27;insensitive&#x27; },
       },
       orderBy: { name: &#x27;asc&#x27; },
-      include: { categories: { select: { name: true } } },
     });
   }
 
-  /** Find product by ID */
-  async findOneById(id: string): Promise&lt;Product&gt; {
-    return this.prisma.product.findUnique({
+  /** Find category by ID and show the products that have this category */
+  async findOneById(
+    id: string,
+    { productName &#x3D; &#x27;&#x27;, page &#x3D; 1, offset &#x3D; 10 }: FindProductsDto,
+  ): Promise&lt;Category&gt; {
+    const productsToSkip &#x3D; (page - 1) * offset;
+
+    const category &#x3D; await this.prisma.category.findUnique({
       where: { id },
-      include: { categories: { select: { name: true } } },
+      include: {
+        products: {
+          select: { id: true, name: true, urlName: true, picture: true },
+          where: { name: { contains: productName, mode: &#x27;insensitive&#x27; } },
+          skip: productsToSkip,
+          take: offset,
+        },
+      },
       rejectOnNotFound: true,
     });
+
+    return category;
   }
 
-  /** Find product by Url Name */
-  async findOneByUrlName(urlName: string): Promise&lt;Product&gt; {
-    return this.prisma.product.findUnique({
-      where: { urlName },
-      include: { categories: { select: { name: true } } },
+  /** Find category by name and show the products that have this category */
+  async findOneByName(
+    name: string,
+    { productName &#x3D; &#x27;&#x27;, page &#x3D; 1, offset &#x3D; 10 }: FindProductsDto,
+  ): Promise&lt;Category&gt; {
+    const productsToSkip &#x3D; (page - 1) * offset;
+
+    name &#x3D; this.capitalizeOnlyFirstLetter(name);
+
+    const category &#x3D; await this.prisma.category.findUnique({
+      where: { name },
+      include: {
+        products: {
+          select: { id: true, name: true, urlName: true, picture: true },
+          where: { name: { contains: productName, mode: &#x27;insensitive&#x27; } },
+          skip: productsToSkip,
+          take: offset,
+        },
+      },
       rejectOnNotFound: true,
     });
+
+    return category;
   }
 
-  /** Updates product information */
+  /** Updates category information */
   async update(
     id: string,
-    updateProductDto: UpdateProductDto,
-  ): Promise&lt;Product&gt; {
-    if (updateProductDto.name) {
-      return this.updateProductAndUrlName(id, updateProductDto);
+    updateCategoryDto: UpdateCategoryDto,
+  ): Promise&lt;Category&gt; {
+    if (updateCategoryDto.name) {
+      return this.updateCategoryAndName(id, updateCategoryDto);
     }
 
-    return this.prisma.product.update({
+    const category &#x3D; await this.prisma.category.update({
       where: { id },
-      data: { ...updateProductDto },
+      data: { ...updateCategoryDto },
     });
+
+    return category;
   }
 
-  /** Removes product from database */
+  /** Removes category from database */
   async remove(id: string): Promise&lt;void&gt; {
-    await this.prisma.product.delete({ where: { id } });
+    await this.prisma.category.delete({ where: { id } });
   }
 
-  /** Formats the name to generate an urlName.
-   *
-   * Makes the name lower case, remove leading and trailing white spaces,
-   * turn to single the multiple spaces between words and make
-   * single spaces hyphens
-   *
-   * @example &quot; BraNd1    chAir   &quot; becomes &quot;brand1-chair&quot;
-   */
-  private formatUrlName(name: string): string {
-    const lowerCaseUrlName &#x3D; name.toLocaleLowerCase();
-    const trimmedUrlName &#x3D; lowerCaseUrlName.trim();
-    const singleSpaceUrlName &#x3D; trimmedUrlName.replace(/\s\s+/g, &#x27; &#x27;);
-    const spaceToHyphenUrlName &#x3D; singleSpaceUrlName.split(&#x27; &#x27;).join(&#x27;-&#x27;);
-
-    return spaceToHyphenUrlName;
+  /** Capitalize only the first letter of the category name */
+  private capitalizeOnlyFirstLetter(name: string): string {
+    return name[0].toUpperCase() + name.substring(1).toLocaleLowerCase();
   }
 
-  /** Formats UrlName and updates the product with the new one.
+  /** Formats name and updates the category with the new one.
    *
-   * Used when the user updates the product name.
+   * Used when the user updates the category name.
    */
-  private updateProductAndUrlName(
+  private updateCategoryAndName(
     id: string,
-    updateProductDto: UpdateProductDto,
-  ): Promise&lt;Product&gt; {
-    const urlName &#x3D; this.formatUrlName(updateProductDto.name);
+    updateCategoryDto: UpdateCategoryDto,
+  ): Promise&lt;Category&gt; {
+    const name &#x3D; this.capitalizeOnlyFirstLetter(updateCategoryDto.name);
 
-    return this.prisma.product.update({
+    return this.prisma.category.update({
       where: { id },
-      data: { ...updateProductDto, urlName },
+      data: { ...updateCategoryDto, name },
     });
-  }
-
-  /**
-   * Format the categories IDs array into the prisma query way
-   */
-  private connectCategoriesById(
-    categories: string[],
-  ): Prisma.CategoryUncheckedCreateNestedManyWithoutProductsInput {
-    let categoriesConnection &#x3D; { connect: [] };
-
-    if (categories) {
-      categoriesConnection &#x3D; {
-        connect: categories.map((category) &#x3D;&gt; {
-          return { id: category };
-        }),
-      };
-    }
-
-    return categoriesConnection;
   }
 }
 </code></pre>
@@ -1178,7 +1012,7 @@ export class ProductService {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
-            var COMPODOC_CURRENT_PAGE_URL = 'ProductService.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'CategoryService.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

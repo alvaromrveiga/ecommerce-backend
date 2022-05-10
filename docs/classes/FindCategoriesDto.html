@@ -44,7 +44,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li >CreateProductDto</li>
+  <li >FindCategoriesDto</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -62,7 +62,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/models/product/dto/create-product.dto.ts</code>
+            <code>src/models/category/dto/find-categories.dto.ts</code>
         </p>
 
 
@@ -70,7 +70,7 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Describes the fields needed to create a Product</p>
+                <p>Describes the information to search for categories</p>
 
             </p>
 
@@ -90,26 +90,16 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#basePrice" >basePrice</a>
+                                    <span class="modifier">Optional</span>
+                                <a href="#categoryName" >categoryName</a>
                             </li>
                             <li>
                                     <span class="modifier">Optional</span>
-                                <a href="#categories" >categories</a>
+                                <a href="#offset" >offset</a>
                             </li>
                             <li>
                                     <span class="modifier">Optional</span>
-                                <a href="#description" >description</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Optional</span>
-                                <a href="#discountPercentage" >discountPercentage</a>
-                            </li>
-                            <li>
-                                <a href="#name" >name</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Optional</span>
-                                <a href="#stock" >stock</a>
+                                <a href="#page" >page</a>
                             </li>
                         </ul>
                     </td>
@@ -134,96 +124,11 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="basePrice"></a>
-                    <span class="name">
-                        <span ><b>basePrice</b></span>
-                        <a href="#basePrice"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>    <code>string | number | Decimal</code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @IsNumber()<br />@IsNotEmpty()<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/models/product/dto/create-product.dto.ts:36</a></div>
-                        </td>
-                    </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Product price not considering discounts.
-Saved as decimal, calculations should be handled
-with currency.js</p>
-<div><pre class="line-numbers"><code class="language-html"></code></pre></div></div>
-                </td>
-            </tr>
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="categories"></a>
+                    <a name="categoryName"></a>
                     <span class="name">
                             <span class="modifier">Optional</span>
-                        <span ><b>categories</b></span>
-                        <a href="#categories"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>    <code>string[]</code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @IsOptional()<br />@IsArray()<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">src/models/product/dto/create-product.dto.ts:67</a></div>
-                        </td>
-                    </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Category IDs</p>
-<div><pre class="line-numbers"><code class="language-html"></code></pre></div></div>
-                </td>
-            </tr>
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="description"></a>
-                    <span class="name">
-                            <span class="modifier">Optional</span>
-                        <span ><b>description</b></span>
-                        <a href="#description"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>categoryName</b></span>
+                        <a href="#categoryName"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -238,19 +143,19 @@ with currency.js</p>
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @IsString()<br />@IsOptional()<br />
+                            @IsOptional()<br />@IsString()<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/models/product/dto/create-product.dto.ts:59</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/models/category/dto/find-categories.dto.ts:11</a></div>
                         </td>
                     </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Product description</p>
+                    <div class="io-description"><p>String containing in category name</p>
 <div><pre class="line-numbers"><code class="language-html"></code></pre></div></div>
                 </td>
             </tr>
@@ -261,11 +166,11 @@ with currency.js</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="discountPercentage"></a>
+                    <a name="offset"></a>
                     <span class="name">
                             <span class="modifier">Optional</span>
-                        <span ><b>discountPercentage</b></span>
-                        <a href="#discountPercentage"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>offset</b></span>
+                        <a href="#offset"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -280,19 +185,19 @@ with currency.js</p>
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @IsNumber()<br />@IsOptional()<br />
+                            @IsOptional()<br />@Type(undefined)<br />@IsInt()<br />@IsPositive()<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/models/product/dto/create-product.dto.ts:44</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/models/category/dto/find-categories.dto.ts:29</a></div>
                         </td>
                     </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Product discount in percentage. Defaults to 0</p>
+                    <div class="io-description"><p>Show this amount of categories per page</p>
 <div><pre class="line-numbers"><code class="language-html"></code></pre></div></div>
                 </td>
             </tr>
@@ -303,52 +208,11 @@ with currency.js</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="name"></a>
-                    <span class="name">
-                        <span ><b>name</b></span>
-                        <a href="#name"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @IsString()<br />@IsNotEmpty()<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/models/product/dto/create-product.dto.ts:26</a></div>
-                        </td>
-                    </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Product name</p>
-<div><pre class="line-numbers"><code class="language-html"></code></pre></div></div>
-                </td>
-            </tr>
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="stock"></a>
+                    <a name="page"></a>
                     <span class="name">
                             <span class="modifier">Optional</span>
-                        <span ><b>stock</b></span>
-                        <a href="#stock"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>page</b></span>
+                        <a href="#page"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -363,19 +227,19 @@ with currency.js</p>
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @IsInt()<br />@IsOptional()<br />
+                            @IsOptional()<br />@Type(undefined)<br />@IsInt()<br />@IsPositive()<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/models/product/dto/create-product.dto.ts:51</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/models/category/dto/find-categories.dto.ts:20</a></div>
                         </td>
                     </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Product stock amount. Defaults to 0</p>
+                    <div class="io-description"><p>Show categories in this page</p>
 <div><pre class="line-numbers"><code class="language-html"></code></pre></div></div>
                 </td>
             </tr>
@@ -394,73 +258,35 @@ with currency.js</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { OmitType } from &#x27;@nestjs/swagger&#x27;;
-import { Decimal } from &#x27;@prisma/client/runtime&#x27;;
-import {
-  IsArray,
-  IsInt,
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-} from &#x27;class-validator&#x27;;
-import { Product } from &#x27;../entities/product.entity&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Type } from &#x27;class-transformer&#x27;;
+import { IsInt, IsOptional, IsPositive, IsString } from &#x27;class-validator&#x27;;
 
-/** Describes the fields needed to create a Product */
-export class CreateProductDto extends OmitType(Product, [
-  &#x27;id&#x27;,
-  &#x27;createdAt&#x27;,
-  &#x27;urlName&#x27;,
-  &#x27;picture&#x27;,
-] as const) {
-  /**
-   * Product name
-   * @example &quot;Brand black wheelchair&quot;
+/** Describes the information to search for categories */
+export class FindCategoriesDto {
+  /** String containing in category name
+   * @example &quot;chair&quot;
    */
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  name: string;
+  categoryName?: string;
 
-  /**
-   * Product price not considering discounts.
-   * Saved as decimal, calculations should be handled
-   * with currency.js
-   * @example 70.00
+  /** Show categories in this page
+   * @example 1
    */
-  @IsNumber()
-  @IsNotEmpty()
-  basePrice: string | number | Decimal;
+  @IsOptional()
+  @Type(() &#x3D;&gt; Number)
+  @IsInt()
+  @IsPositive()
+  page?: number;
 
-  /**
-   * Product discount in percentage. Defaults to 0
+  /** Show this amount of categories per page
    * @example 10
    */
-  @IsNumber()
   @IsOptional()
-  discountPercentage?: number;
-
-  /** Product stock amount. Defaults to 0
-   * @example 42
-   */
+  @Type(() &#x3D;&gt; Number)
   @IsInt()
-  @IsOptional()
-  stock?: number;
-
-  /**
-   * Product description
-   * @example &quot;Black wheelchair for offices&quot;
-   */
-  @IsString()
-  @IsOptional()
-  description?: string;
-
-  /**
-   * Category IDs
-   * @example [&quot;857cd575-956b-49f3-a75e-2e651e21b871&quot;, &quot;fa244865-0878-4688-ac63-e3ecf4939a89&quot;]
-   */
-  @IsOptional()
-  @IsArray()
-  categories?: string[];
+  @IsPositive()
+  offset?: number;
 }
 </code></pre>
     </div>
@@ -500,7 +326,7 @@ export class CreateProductDto extends OmitType(Product, [
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
-            var COMPODOC_CURRENT_PAGE_URL = 'CreateProductDto.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'FindCategoriesDto.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
