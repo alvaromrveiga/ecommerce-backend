@@ -20,8 +20,10 @@ export class CategoryService {
 
   /** Creates a new category */
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
+    const name = this.capitalizeOnlyFirstLetter(createCategoryDto.name);
+
     const category = await this.prisma.category.create({
-      data: { ...createCategoryDto },
+      data: { ...createCategoryDto, name },
     });
 
     return category;
@@ -78,6 +80,8 @@ export class CategoryService {
   ): Promise<Category> {
     const productsToSkip = (page - 1) * offset;
 
+    name = this.capitalizeOnlyFirstLetter(name);
+
     const category = await this.prisma.category.findUnique({
       where: { name },
       include: {
@@ -99,6 +103,10 @@ export class CategoryService {
     id: string,
     updateCategoryDto: UpdateCategoryDto,
   ): Promise<Category> {
+    if (updateCategoryDto.name) {
+      return this.updateCategoryAndName(id, updateCategoryDto);
+    }
+
     const category = await this.prisma.category.update({
       where: { id },
       data: { ...updateCategoryDto },
@@ -110,5 +118,26 @@ export class CategoryService {
   /** Removes category from database */
   async remove(id: string): Promise<void> {
     await this.prisma.category.delete({ where: { id } });
+  }
+
+  /** Capitalize only the first letter of the category name */
+  private capitalizeOnlyFirstLetter(name: string): string {
+    return name[0].toUpperCase() + name.substring(1).toLocaleLowerCase();
+  }
+
+  /** Formats name and updates the category with the new one.
+   *
+   * Used when the user updates the category name.
+   */
+  private updateCategoryAndName(
+    id: string,
+    updateCategoryDto: UpdateCategoryDto,
+  ): Promise<Category> {
+    const name = this.capitalizeOnlyFirstLetter(updateCategoryDto.name);
+
+    return this.prisma.category.update({
+      where: { id },
+      data: { ...updateCategoryDto, name },
+    });
   }
 }

@@ -88,6 +88,20 @@ describe('CategoryService', () => {
         data: { name: 'Categoria' },
       });
     });
+
+    it('should create category with only first letter capitalized', async () => {
+      const category = await categoryService.create({
+        name: 'caTegoRia TeSte',
+      });
+
+      expect(category.name).toEqual('Categoria teste');
+      expect(categoryArray.length).toEqual(4);
+      expect(categoryArray[3].name).toEqual('Categoria teste');
+
+      expect(prismaService.category.create).toHaveBeenCalledWith({
+        data: { name: 'Categoria teste' },
+      });
+    });
   });
 
   describe('findAll', () => {
@@ -173,6 +187,19 @@ describe('CategoryService', () => {
       );
     });
 
+    it('should find one category by name capitalizing only first letter', async () => {
+      const category = await categoryService.findOneByName('madEiRa', {});
+
+      expect(category).toEqual(categoryArray[1]);
+
+      expect(prismaService.category.findUnique).toHaveBeenLastCalledWith(
+        expect.objectContaining({
+          where: { name: 'Madeira' },
+          rejectOnNotFound: true,
+        }),
+      );
+    });
+
     it('should find one category by name with pagination and searching by product name', async () => {
       const category = await categoryService.findOneByName('Madeira', {
         productName: 'Mesa',
@@ -204,6 +231,21 @@ describe('CategoryService', () => {
       const category = await categoryService.update(
         'ec3b4cfc-5028-47c2-b631-970088efae5e',
         { name: 'Madeira de lei' },
+      );
+
+      expect(category.id).toEqual('ec3b4cfc-5028-47c2-b631-970088efae5e');
+      expect(category.name).toEqual('Madeira de lei');
+
+      expect(prismaService.category.update).toHaveBeenCalledWith({
+        where: { id: 'ec3b4cfc-5028-47c2-b631-970088efae5e' },
+        data: { name: 'Madeira de lei' },
+      });
+    });
+
+    it('should update category with name with only first letter capitalized', async () => {
+      const category = await categoryService.update(
+        'ec3b4cfc-5028-47c2-b631-970088efae5e',
+        { name: 'maDeIrA De LEi' },
       );
 
       expect(category.id).toEqual('ec3b4cfc-5028-47c2-b631-970088efae5e');
