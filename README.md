@@ -24,7 +24,7 @@
 -   [x] Autorização de usuário (admin)
 - [x] CRUD de produtos
   - [x] Upload de imagens
-- [ ] CRUD de categorias
+- [x] CRUD de categorias
 - [ ] CRUD de compras
 
 ## 🔧 Instalação
