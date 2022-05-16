@@ -4,6 +4,7 @@ import { CategoryNameInUseException } from 'src/common/exceptions/category/categ
 import { CategoryNotFoundException } from 'src/common/exceptions/category/category-not-found.exception';
 import { ProductNameInUseException } from 'src/common/exceptions/product/product-name-in-use.exception';
 import { ProductNotFoundException } from 'src/common/exceptions/product/product-not-found.exception';
+import { PurchaseNotFoundException } from 'src/common/exceptions/purchase/purchase-not-found.exception';
 import { EmailInUseException } from 'src/common/exceptions/user/email-in-use.exception';
 import { UserNotFoundException } from 'src/common/exceptions/user/user-not-found.exception';
 import { ExceptionHandler } from './exception.handler';
@@ -32,6 +33,12 @@ export class PrismaExceptionHandler implements ExceptionHandler {
           }
           break;
 
+        case PrismaError.ForeignConstraintViolation: {
+          if (this.isPurchaseError(error)) {
+            throw new ProductNotFoundException();
+          }
+        }
+
         case PrismaError.RecordsNotFound:
           if (this.isUserError(error)) {
             throw new UserNotFoundException();
@@ -48,6 +55,10 @@ export class PrismaExceptionHandler implements ExceptionHandler {
           if (this.isCategoryError(error)) {
             throw new CategoryNotFoundException();
           }
+
+          if (this.isPurchaseError(error)) {
+            throw new PurchaseNotFoundException();
+          }
           break;
 
         default:
@@ -62,6 +73,10 @@ export class PrismaExceptionHandler implements ExceptionHandler {
 
       if (error.message === 'No Category found') {
         throw new CategoryNotFoundException();
+      }
+
+      if (error.message === 'No Purchase found') {
+        throw new PurchaseNotFoundException();
       }
     }
 
@@ -122,5 +137,10 @@ export class PrismaExceptionHandler implements ExceptionHandler {
   /** Returns wether the error happened on an category prisma query or not */
   private isCategoryError(error: PrismaClientKnownRequestError): boolean {
     return error.message.includes('prisma.category');
+  }
+
+  /** Returns wether the error happened on an purchase prisma query or not */
+  private isPurchaseError(error: PrismaClientKnownRequestError): boolean {
+    return error.message.includes('prisma.purchase');
   }
 }
