@@ -1,26 +1,100 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatePurchaseDto } from './dto/create-purchase.dto';
+import { FindPurchasesDto } from './dto/find-purchases.dto';
 import { UpdatePurchaseDto } from './dto/update-purchase.dto';
+import { Purchase } from './entities/purchase.entity';
 
+/** Responsible for managing purchases in the database.
+ * CRUD endpoints are available for purchases.
+ */
 @Injectable()
 export class PurchaseService {
-  create(createPurchaseDto: CreatePurchaseDto) {
-    return 'This action adds a new purchase';
+  /** Responsible for managing purchases in the database.
+   * CRUD endpoints are available for purchases.
+   *
+   * Instantiates the class and the PrismaService dependency
+   */
+  constructor(private readonly prisma: PrismaService) {}
+
+  /** Creates a new purchase */
+  async create(
+    userId: string,
+    createPurchaseDto: CreatePurchaseDto,
+  ): Promise<Purchase> {
+    const purchase = await this.prisma.purchase.create({
+      data: { ...createPurchaseDto, userId },
+      include: {
+        user: { select: { email: true } },
+        product: { select: { name: true } },
+      },
+    });
+
+    return purchase;
   }
 
-  findAll() {
-    return `This action returns all purchase`;
+  /** Returns all purchases with pagination
+   * Default is starting on page 1 showing 10 results per page
+   * and ordering by name
+   */
+  async findAll({
+    userId,
+    productId,
+    page = 1,
+    offset = 10,
+  }: FindPurchasesDto): Promise<Purchase[]> {
+    const purchasesToSkip = (page - 1) * offset;
+
+    const purchases = await this.prisma.purchase.findMany({
+      skip: purchasesToSkip,
+      take: offset,
+      where: {
+        userId: { equals: userId, mode: 'insensitive' },
+        productId: { equals: productId, mode: 'insensitive' },
+      },
+      orderBy: { createdAt: 'desc' },
+      include: {
+        user: { select: { email: true } },
+        product: { select: { name: true } },
+      },
+    });
+
+    return purchases;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} purchase`;
+  /** Find purchase by ID */
+  async findOne(id: string): Promise<Purchase> {
+    const purchase = await this.prisma.purchase.findUnique({
+      where: { id },
+      include: {
+        user: { select: { email: true } },
+        product: { select: { name: true } },
+      },
+      rejectOnNotFound: true,
+    });
+
+    return purchase;
   }
 
-  update(id: number, updatePurchaseDto: UpdatePurchaseDto) {
-    return `This action updates a #${id} purchase`;
+  /** Updates purchase information */
+  async update(
+    id: string,
+    updatePurchaseDto: UpdatePurchaseDto,
+  ): Promise<Purchase> {
+    const purchase = await this.prisma.purchase.update({
+      where: { id },
+      data: { ...updatePurchaseDto },
+      include: {
+        user: { select: { email: true } },
+        product: { select: { name: true } },
+      },
+    });
+
+    return purchase;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} purchase`;
+  /** Removes purchase from database */
+  async remove(id: string): Promise<void> {
+    await this.prisma.purchase.delete({ where: { id } });
   }
 }
