@@ -2,8 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatePurchaseDto } from './dto/create-purchase.dto';
 import { FindPurchasesDto } from './dto/find-purchases.dto';
+import { ReviewPurchaseDto } from './dto/review-purchase.dto';
 import { UpdatePurchaseDto } from './dto/update-purchase.dto';
 import { Purchase } from './entities/purchase.entity';
+import { NotPurchaseOwnerException } from './exceptions/not-purchase-owner.exception';
 
 /** Responsible for managing purchases in the database.
  * CRUD endpoints are available for purchases.
@@ -74,6 +76,30 @@ export class PurchaseService {
     });
 
     return purchase;
+  }
+
+  /** Users review products purchased by them */
+  async review(
+    userId: string,
+    purchaseId: string,
+    reviewPurchaseDto: ReviewPurchaseDto,
+  ): Promise<Purchase> {
+    const purchase = await this.prisma.purchase.findUnique({
+      where: { id: purchaseId },
+    });
+
+    if (userId !== purchase.userId) {
+      throw new NotPurchaseOwnerException();
+    }
+
+    return this.prisma.purchase.update({
+      where: { id: purchaseId },
+      data: { ...reviewPurchaseDto },
+      include: {
+        user: { select: { email: true } },
+        product: { select: { name: true } },
+      },
+    });
   }
 
   /** Updates purchase information */
