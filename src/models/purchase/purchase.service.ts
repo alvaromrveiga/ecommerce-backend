@@ -51,8 +51,8 @@ export class PurchaseService {
       skip: purchasesToSkip,
       take: offset,
       where: {
-        userId: { equals: userId, mode: 'insensitive' },
-        productId: { equals: productId, mode: 'insensitive' },
+        userId: { equals: userId },
+        productId: { equals: productId },
       },
       orderBy: { createdAt: 'desc' },
       include: {
