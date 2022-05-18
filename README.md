@@ -85,7 +85,7 @@
 
 ## 💻 Tecnologias
 
-- [Typescript](https://www.typescriptlang.org/) - minimizar erros e tooling
+- [Typescript](https://www.typescriptlang.org/) - tooling e minimizar erros
 - [Node.js](https://nodejs.org/en/) e [NestJS](https://nestjs.com/) com [Express](https://expressjs.com/) - construir o servidor
 - [Prisma](https://www.prisma.io/) com [PostgreSQL](https://www.postgresql.org/) - armazenar dados
 - [Passport](https://www.passportjs.org/) e [passport-jwt](https://www.passportjs.org/packages/passport-jwt/) - autenticação com Json Web Token
