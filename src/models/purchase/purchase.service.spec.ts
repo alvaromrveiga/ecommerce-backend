@@ -168,4 +168,58 @@ describe('PurchaseService', () => {
       );
     });
   });
+
+  describe('findOne', () => {
+    it('should find one purchase by id', async () => {
+      const purchase = await purchaseService.findOne(purchase2Id);
+
+      expect(purchase.id).toEqual(purchase2Id);
+      expect(purchase).toEqual(purchaseArray[1]);
+
+      expect(prismaService.purchase.findUnique).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: { id: purchase2Id },
+          rejectOnNotFound: true,
+        }),
+      );
+    });
+  });
+
+  describe('update', () => {
+    it('should update purchase', async () => {
+      const purchase = await purchaseService.update(purchase2Id, {
+        productId: product2Id,
+        totalPrice: 1000,
+        amount: 15,
+      });
+
+      expect(purchase.id).toEqual(purchase2Id);
+      expect(purchase.productId).toEqual(product2Id);
+      expect(purchase.totalPrice).toEqual(1000);
+      expect(purchase.amount).toEqual(15);
+
+      expect(prismaService.purchase.update).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: { id: purchase2Id },
+          data: { productId: product2Id, totalPrice: 1000, amount: 15 },
+        }),
+      );
+    });
+  });
+
+  describe('remove', () => {
+    it('should delete purchase', async () => {
+      await purchaseService.remove(purchase2Id);
+
+      expect(purchaseArray.length).toEqual(3);
+
+      expect(prismaService.purchase.delete).toHaveBeenCalledWith({
+        where: { id: purchase2Id },
+      });
+
+      const purchase = await purchaseService.findOne(purchase2Id);
+
+      expect(purchase).toBeUndefined();
+    });
+  });
 });
