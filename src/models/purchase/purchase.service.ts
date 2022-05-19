@@ -86,6 +86,7 @@ export class PurchaseService {
   ): Promise<Purchase> {
     const purchase = await this.prisma.purchase.findUnique({
       where: { id: purchaseId },
+      rejectOnNotFound: true,
     });
 
     if (userId !== purchase.userId) {
