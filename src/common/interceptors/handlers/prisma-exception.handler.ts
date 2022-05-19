@@ -33,11 +33,11 @@ export class PrismaExceptionHandler implements ExceptionHandler {
           }
           break;
 
-        case PrismaError.ForeignConstraintViolation: {
+        case PrismaError.ForeignConstraintViolation:
           if (this.isPurchaseError(error)) {
             throw new ProductNotFoundException();
           }
-        }
+          break;
 
         case PrismaError.RecordsNotFound:
           if (this.isUserError(error)) {
