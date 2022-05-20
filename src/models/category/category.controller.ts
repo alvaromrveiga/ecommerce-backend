@@ -56,7 +56,7 @@ export class CategoryController {
 
   /** Find category by ID, only for admins */
   @ApiOperation({ summary: 'Admin gets category by ID and its products' })
-  @Public()
+  @IsAdmin()
   @Get('/id/:id')
   async findOneById(
     @Param('id') id: string,

@@ -44,6 +44,7 @@ describe('CategoryController (e2e)', () => {
 
   beforeEach(async () => {
     await prisma.user.deleteMany();
+    await prisma.purchase.deleteMany();
     await prisma.product.deleteMany();
     await prisma.category.deleteMany();
     categoryIds = [];
@@ -223,6 +224,7 @@ describe('CategoryController (e2e)', () => {
     it('should get category by id with default product pagination', async () => {
       const response = await request(app.getHttpServer())
         .get(`/category/id/${categoryIds[1]}`)
+        .set({ Authorization: `Bearer ${adminToken}` })
         .send()
         .expect(200);
 
@@ -252,6 +254,7 @@ describe('CategoryController (e2e)', () => {
     it('should get category by id with custom product pagination and search by product name', async () => {
       const response = await request(app.getHttpServer())
         .get(`/category/id/${categoryIds[1]}?page=1&offset=5&productName=Table`)
+        .set({ Authorization: `Bearer ${adminToken}` })
         .send()
         .expect(200);
 
@@ -276,11 +279,27 @@ describe('CategoryController (e2e)', () => {
       await expect(
         request(app.getHttpServer())
           .get('/category/id/invalidCategory')
+          .set({ Authorization: `Bearer ${adminToken}` })
           .send()
           .expect(404),
       ).resolves.toMatchObject({
         text: JSON.stringify(new CategoryNotFoundException().getResponse()),
       });
+    });
+
+    it('should not get category by id if unauthenticated', async () => {
+      await request(app.getHttpServer())
+        .get('/category/id/invalidCategory')
+        .send()
+        .expect(401);
+    });
+
+    it('should not get category by id if not an admin', async () => {
+      await request(app.getHttpServer())
+        .get('/category/id/invalidCategory')
+        .set({ Authorization: `Bearer ${token}` })
+        .send()
+        .expect(403);
     });
   });
 
