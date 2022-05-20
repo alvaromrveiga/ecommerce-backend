@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Role } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatePurchaseDto } from './dto/create-purchase.dto';
 import { FindPurchasesDto } from './dto/find-purchases.dto';
@@ -64,16 +65,26 @@ export class PurchaseService {
     return purchases;
   }
 
-  /** Find purchase by ID */
-  async findOne(id: string): Promise<Purchase> {
+  /** Find purchase by ID, normal users can only get their purchases,
+   * Admins can get any.
+   */
+  async findOne(
+    purchaseId: string,
+    userId: string,
+    userRole: string,
+  ): Promise<Purchase> {
     const purchase = await this.prisma.purchase.findUnique({
-      where: { id },
+      where: { id: purchaseId },
       include: {
         user: { select: { email: true } },
         product: { select: { name: true } },
       },
       rejectOnNotFound: true,
     });
+
+    if (userRole !== Role.ADMIN && purchase.userId !== userId) {
+      throw new NotPurchaseOwnerException();
+    }
 
     return purchase;
   }

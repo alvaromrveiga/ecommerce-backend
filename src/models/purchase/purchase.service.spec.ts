@@ -1,5 +1,6 @@
 import { Provider } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { Role } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Purchase } from './entities/purchase.entity';
 import { NotPurchaseOwnerException } from './exceptions/not-purchase-owner.exception';
@@ -172,7 +173,11 @@ describe('PurchaseService', () => {
 
   describe('findOne', () => {
     it('should find one purchase by id', async () => {
-      const purchase = await purchaseService.findOne(purchase2Id);
+      const purchase = await purchaseService.findOne(
+        purchase2Id,
+        user2Id,
+        Role.USER,
+      );
 
       expect(purchase.id).toEqual(purchase2Id);
       expect(purchase).toEqual(purchaseArray[1]);
@@ -183,6 +188,30 @@ describe('PurchaseService', () => {
           rejectOnNotFound: true,
         }),
       );
+    });
+
+    it('should find purchase by id if user do not own the purchase but is an admin', async () => {
+      const purchase = await purchaseService.findOne(
+        purchase2Id,
+        'adminId',
+        Role.ADMIN,
+      );
+
+      expect(purchase.id).toEqual(purchase2Id);
+      expect(purchase).toEqual(purchaseArray[1]);
+
+      expect(prismaService.purchase.findUnique).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: { id: purchase2Id },
+          rejectOnNotFound: true,
+        }),
+      );
+    });
+
+    it('should not find purchase by id if user do not own the purchase and is not admin', async () => {
+      await expect(
+        purchaseService.findOne(purchase2Id, user1Id, Role.USER),
+      ).rejects.toThrow(new NotPurchaseOwnerException());
     });
   });
 
@@ -252,7 +281,11 @@ describe('PurchaseService', () => {
         where: { id: purchase2Id },
       });
 
-      const purchase = await purchaseService.findOne(purchase2Id);
+      const purchase = await purchaseService.findOne(
+        purchase2Id,
+        'adminId',
+        Role.ADMIN,
+      );
 
       expect(purchase).toBeUndefined();
     });
