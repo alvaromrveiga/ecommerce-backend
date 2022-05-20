@@ -11,7 +11,7 @@ import {
   Query,
   Req,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { IsAdmin } from 'src/common/decorators/is-admin.decorator';
 import { CreatePurchaseDto } from './dto/create-purchase.dto';
@@ -33,6 +33,7 @@ export class PurchaseController {
 
   /** Creates a new purchase, only for logged users */
   @ApiOperation({ summary: 'Creates a new purchase' })
+  @ApiBearerAuth()
   @Post()
   async create(
     @Req() request: Request,
@@ -50,23 +51,52 @@ export class PurchaseController {
    */
   @ApiOperation({ summary: 'Admin gets all purchases' })
   @IsAdmin()
-  @Get()
+  @Get('/admin')
   async findAll(
     @Query() findPurchasesDto: FindPurchasesDto,
   ): Promise<Purchase[]> {
     return this.purchaseService.findAll(findPurchasesDto);
   }
 
-  /** Find purchase by ID, only for admins */
-  @ApiOperation({ summary: 'Admin gets purchase by ID' })
-  @IsAdmin()
+  /** Returns all users' purchases with pagination,
+   *
+   * Default is starting on page 1 showing 10 results per page,
+   * matching by productId and ordering by most recent date
+   */
+  @ApiOperation({ summary: 'User gets all their purchases' })
+  @ApiBearerAuth()
+  @Get()
+  async findAllMine(
+    @Req() request: Request,
+    @Query() findPurchasesDto: FindPurchasesDto,
+  ): Promise<Purchase[]> {
+    const { userId } = request.user as { userId: string };
+    findPurchasesDto.userId = userId;
+
+    return this.purchaseService.findAll(findPurchasesDto);
+  }
+
+  /** Find purchase by ID, normal users can only get their purchases,
+   * Admins can get any.
+   */
+  @ApiOperation({ summary: 'Returns purchase by ID' })
+  @ApiBearerAuth()
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Purchase> {
-    return this.purchaseService.findOne(id);
+  async findOne(
+    @Req() request: Request,
+    @Param('id') purchaseId: string,
+  ): Promise<Purchase> {
+    const { userId, userRole } = request.user as {
+      userId: string;
+      userRole: string;
+    };
+
+    return this.purchaseService.findOne(purchaseId, userId, userRole);
   }
 
   /** Reviews purchased product, must be purchase owner */
   @ApiOperation({ summary: 'Reviews purchased product' })
+  @ApiBearerAuth()
   @Patch('/review/:id')
   async review(
     @Req() request: Request,
