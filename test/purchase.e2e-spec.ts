@@ -249,4 +249,53 @@ describe('CategoryController (e2e)', () => {
         .expect(401);
     });
   });
+
+  describe('Get /purchase', () => {
+    it('should findAll user purchases with default pagination ordered by createdAt desc', async () => {
+      const response = await request(app.getHttpServer())
+        .get('/purchase')
+        .set({ Authorization: `Bearer ${token}` })
+        .send()
+        .expect(200);
+
+      const purchases: Purchase[] = response.body;
+
+      expect(purchases.length).toEqual(2);
+      expect(purchases[0].id).toEqual(purchasesIds[2]);
+      expect(purchases[0].userId).toEqual(usersIds[0]);
+      expect(purchases[1].userId).toEqual(usersIds[0]);
+    });
+
+    it('should findAll user purchases with custom pagination ordered by createdAt desc', async () => {
+      const response = await request(app.getHttpServer())
+        .get('/purchase?page=2&offset=1')
+        .set({ Authorization: `Bearer ${token}` })
+        .send()
+        .expect(200);
+
+      const purchases: Purchase[] = response.body;
+
+      expect(purchases.length).toEqual(1);
+      expect(purchases[0].id).toEqual(purchasesIds[0]);
+      expect(purchases[0].userId).toEqual(usersIds[0]);
+    });
+
+    it('should findAll user purchases searching by productId', async () => {
+      const response = await request(app.getHttpServer())
+        .get(`/purchase?productId=${productsIds[1]}`)
+        .set({ Authorization: `Bearer ${token}` })
+        .send()
+        .expect(200);
+
+      const purchases: Purchase[] = response.body;
+
+      expect(purchases.length).toEqual(1);
+      expect(purchases[0].id).toEqual(purchasesIds[2]);
+      expect(purchases[0].userId).toEqual(usersIds[0]);
+    });
+
+    it('should not findAll user purchases if unauthenticated', async () => {
+      await request(app.getHttpServer()).get('/purchase').send().expect(401);
+    });
+  });
 });
