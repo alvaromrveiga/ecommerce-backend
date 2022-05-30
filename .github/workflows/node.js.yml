@@ -5,7 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ gh-actions-test ]
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
