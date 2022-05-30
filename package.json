@@ -25,7 +25,7 @@
     "migrate:test": "dotenv -e .env.test -- prisma migrate dev",
     "studio:dev": "prisma studio",
     "studio:test": "dotenv -e .env.test -- prisma studio",
-    "compodoc": "npx @compodoc/compodoc -p tsconfig.json -s -d ./docs"
+    "compodoc": "npx @compodoc/compodoc -p tsconfig.json -d ./docs"
   },
   "dependencies": {
     "@nestjs/common": "^8.4.4",
