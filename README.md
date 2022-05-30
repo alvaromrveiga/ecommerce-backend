@@ -25,7 +25,7 @@
 - [x] CRUD de produtos
   - [x] Upload de imagens
 - [x] CRUD de categorias
-- [ ] CRUD de compras
+- [x] CRUD de compras
 
 ## 🔧 Instalação
 
