@@ -24,6 +24,15 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        
+    - name: Create .env.test
+      run: | 
+        touch .env.test
+        echo DATABASE_URL="postgresql://postgres:postgres@localhost:5432/ecommerce-test?schema=public" >> .env.test
+        echo JWT_SECRET="Git#Hub1Actions2Secret3" >> .env.test
+        cat .env.test
+    
     - run: npm install
     - run: npm run build
+    - run: npm run migrate:test
     - run: npm run test:all
