@@ -2,9 +2,9 @@ name: Deploy Compodoc to gh-pages
 
 on:
   push:
-    branches: [ gh-actions-test ]
+    branches: [ main ]
   pull_request:
-    branches: [ gh-actions-test ]
+    branches: [ main ]
 
 jobs:
   build:
