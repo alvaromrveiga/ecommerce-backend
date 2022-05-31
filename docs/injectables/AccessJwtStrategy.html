@@ -40,7 +40,7 @@
 
 <ol class="breadcrumb">
   <li>Injectables</li>
-  <li >JwtAuthGuard</li>
+  <li >AccessJwtStrategy</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -58,7 +58,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/auth/jwt-auth.guard.ts</code>
+            <code>src/auth/access-jwt.strategy.ts</code>
         </p>
 
 
@@ -66,9 +66,7 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Uses the passport library AuthGuard to check
-if the route needs authentication</p>
-<p>For more on NestJs Guards: <a href="https://docs.nestjs.com/guards">https://docs.nestjs.com/guards</a></p>
+                <p>Passport library Access JsonWebToken configuration</p>
 
             </p>
 
@@ -88,7 +86,8 @@ if the route needs authentication</p>
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#canActivate" >canActivate</a>
+                                    <span class="modifier">Async</span>
+                                <a href="#validate" >validate</a>
                             </li>
                         </ul>
                     </td>
@@ -108,48 +107,19 @@ if the route needs authentication</p>
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(reflector: Reflector)</code>
+<code>constructor()</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/auth/jwt-auth.guard.ts:13</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/auth/access-jwt.strategy.ts:13</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
-                            <div class="io-description"><p>Uses the passport library AuthGuard to check
-if the route needs authentication</p>
-<p>For more on NestJs Guards: <a href="https://docs.nestjs.com/guards">https://docs.nestjs.com/guards</a></p>
-<p>Instantiates the class and the Reflector dependency</p>
+                            <div class="io-description"><p>Passport library JsonWebToken configuration</p>
 </div>
-                            <div>
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>reflector</td>
-                                                  
-                                                        <td>
-                                                                    <code>Reflector</code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
                     </td>
                 </tr>
             </tbody>
@@ -165,32 +135,33 @@ if the route needs authentication</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="canActivate"></a>
+                    <a name="validate"></a>
                     <span class="name">
-                        <span ><b>canActivate</b></span>
-                        <a href="#canActivate"><span class="icon ion-ios-link"></span></a>
+                        <span class="modifier">Async</span>
+                        <span ><b>validate</b></span>
+                        <a href="#validate"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>canActivate(context: ExecutionContext)</code>
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>validate(payload: <a href="../undefineds/AccessTokenPayload.html" target="_self">AccessTokenPayload</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="28"
-                            class="link-to-prism">src/auth/jwt-auth.guard.ts:28</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="24"
+                            class="link-to-prism">src/auth/access-jwt.strategy.ts:24</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>If the route uses the Public decorator it
-does not need authentication, else it does</p>
+                    <div class="io-description"><p>Validates and returns data after JsonWebToken is decrypted</p>
 </div>
 
                     <div class="io-description">
@@ -206,9 +177,9 @@ does not need authentication, else it does</p>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>context</td>
+                                    <td>payload</td>
                                     <td>
-                                            <code>ExecutionContext</code>
+                                                <code><a href="../miscellaneous/typealiases.html#AccessTokenPayload" target="_self" >AccessTokenPayload</a></code>
                                     </td>
 
                                     <td>
@@ -223,7 +194,7 @@ does not need authentication, else it does</p>
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>boolean | Promise | Observable</code>
+                        <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#AccessTokenContent" target="_self" >Promise&lt;AccessTokenContent&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -239,46 +210,34 @@ does not need authentication, else it does</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ExecutionContext, Injectable } from &#x27;@nestjs/common&#x27;;
-import { Reflector } from &#x27;@nestjs/core&#x27;;
-import { AuthGuard } from &#x27;@nestjs/passport&#x27;;
-import { Observable } from &#x27;rxjs&#x27;;
-import { IS_PUBLIC_KEY } from &#x27;./public.decorator&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;;
+import { PassportStrategy } from &#x27;@nestjs/passport&#x27;;
+import { ExtractJwt, Strategy } from &#x27;passport-jwt&#x27;;
+import { accessJwtConfig } from &#x27;src/config/jwt.config&#x27;;
+import { AccessTokenContent } from &#x27;./types/access-token-content&#x27;;
+import { AccessTokenPayload } from &#x27;./types/access-token-payload&#x27;;
 
-/** Uses the passport library AuthGuard to check
- * if the route needs authentication
- *
- * For more on NestJs Guards: https://docs.nestjs.com/guards
- */
+/** Passport library Access JsonWebToken configuration */
 @Injectable()
-export class JwtAuthGuard extends AuthGuard(&#x27;jwt&#x27;) {
-  /** Uses the passport library AuthGuard to check
-   * if the route needs authentication
-   *
-   * For more on NestJs Guards: https://docs.nestjs.com/guards
-   *
-   * Instantiates the class and the Reflector dependency
-   */
-  constructor(private reflector: Reflector) {
-    super();
+export class AccessJwtStrategy extends PassportStrategy(
+  Strategy,
+  &#x27;access-jwt&#x27;,
+) {
+  /** Passport library JsonWebToken configuration */
+  constructor() {
+    super({
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ignoreExpiration: false,
+      secretOrKey: accessJwtConfig.secret,
+    });
   }
 
-  /** If the route uses the Public decorator it
-   * does not need authentication, else it does
-   */
-  canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise&lt;boolean&gt; | Observable&lt;boolean&gt; {
-    const isPublic &#x3D; this.reflector.getAllAndOverride&lt;boolean&gt;(IS_PUBLIC_KEY, [
-      context.getHandler(),
-      context.getClass(),
-    ]);
-
-    if (isPublic) {
-      return true;
-    }
-
-    return super.canActivate(context);
+  /** Validates and returns data after JsonWebToken is decrypted */
+  async validate(payload: AccessTokenPayload): Promise&lt;AccessTokenContent&gt; {
+    return {
+      userId: payload.sub,
+      userRole: payload.role,
+    };
   }
 }
 </code></pre>
@@ -324,7 +283,7 @@ export class JwtAuthGuard extends AuthGuard(&#x27;jwt&#x27;) {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
-            var COMPODOC_CURRENT_PAGE_URL = 'JwtAuthGuard.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'AccessJwtStrategy.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

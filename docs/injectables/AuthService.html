@@ -117,7 +117,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/auth/auth.service.ts:10</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/auth/auth.service.ts:11</a></div>
                             </td>
                         </tr>
 
@@ -198,8 +198,8 @@ JwtService dependencies</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="26"
-                            class="link-to-prism">src/auth/auth.service.ts:26</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="27"
+                            class="link-to-prism">src/auth/auth.service.ts:27</a></div>
                 </td>
             </tr>
 
@@ -286,8 +286,8 @@ compares if the hashed password matches the inputted one.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="44"
-                            class="link-to-prism">src/auth/auth.service.ts:44</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="45"
+                            class="link-to-prism">src/auth/auth.service.ts:45</a></div>
                 </td>
             </tr>
 
@@ -360,6 +360,7 @@ compares if the hashed password matches the inputted one.</p>
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;;
 import { JwtService } from &#x27;@nestjs/jwt&#x27;;
 import { compare } from &#x27;bcrypt&#x27;;
+import { accessJwtConfig } from &#x27;src/config/jwt.config&#x27;;
 import { User } from &#x27;src/models/user/entities/user.entity&#x27;;
 import { UserService } from &#x27;src/models/user/user.service&#x27;;
 import { InvalidEmailOrPasswordError } from &#x27;./errors/invalid-email-or-password.error.&#x27;;
@@ -391,7 +392,7 @@ export class AuthService {
     const payload &#x3D; { sub: user.id, role: user.role };
 
     return {
-      accessToken: this.jwtService.sign(payload),
+      accessToken: this.jwtService.sign(payload, accessJwtConfig),
     };
   }
 

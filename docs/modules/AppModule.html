@@ -212,7 +212,7 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Module } from &#x27;@nestjs/common&#x27;;
 import { APP_GUARD } from &#x27;@nestjs/core&#x27;;
 import { AuthModule } from &#x27;./auth/auth.module&#x27;;
-import { JwtAuthGuard } from &#x27;./auth/jwt-auth.guard&#x27;;
+import { AccessJwtAuthGuard } from &#x27;./auth/access-jwt-auth.guard&#x27;;
 import { UserModule } from &#x27;./models/user/user.module&#x27;;
 import { PrismaModule } from &#x27;./prisma/prisma.module&#x27;;
 import { ProductModule } from &#x27;./models/product/product.module&#x27;;
@@ -231,7 +231,7 @@ import { PurchaseModule } from &#x27;./models/purchase/purchase.module&#x27;;
   providers: [
     {
       provide: APP_GUARD,
-      useClass: JwtAuthGuard,
+      useClass: AccessJwtAuthGuard,
     },
   ],
 })

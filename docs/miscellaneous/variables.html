@@ -61,13 +61,13 @@
                 <td class="col-md-4">
                     <ul class="index-list">
                         <li>
+                            <a href="#accessJwtConfig" title="src/config/jwt.config.ts" ><b>accessJwtConfig</b>&nbsp;&nbsp;&nbsp;(src/.../jwt.config.ts)</a>
+                        </li>
+                        <li>
                             <a href="#IS_ADMIN_KEY" title="src/common/decorators/is-admin.decorator.ts" ><b>IS_ADMIN_KEY</b>&nbsp;&nbsp;&nbsp;(src/.../is-admin.decorator.ts)</a>
                         </li>
                         <li>
                             <a href="#IS_PUBLIC_KEY" title="src/auth/public.decorator.ts" ><b>IS_PUBLIC_KEY</b>&nbsp;&nbsp;&nbsp;(src/.../public.decorator.ts)</a>
-                        </li>
-                        <li>
-                            <a href="#jwtConfig" title="src/config/jwt.config.ts" ><b>jwtConfig</b>&nbsp;&nbsp;&nbsp;(src/.../jwt.config.ts)</a>
                         </li>
                         <li>
                             <a href="#maxImageUploadSize" title="src/config/multer-upload.config.ts" ><b>maxImageUploadSize</b>&nbsp;&nbsp;&nbsp;(src/.../multer-upload.config.ts)</a>
@@ -88,6 +88,44 @@
     </table>
 </section>
 
+    <h3>src/config/jwt.config.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="accessJwtConfig"></a>
+                    <span class="name">
+                        <span ><b>accessJwtConfig</b></span>
+                        <a href="#accessJwtConfig"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>JwtSignOptions</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  secret: process.env.JWT_SECRET,
+  expiresIn: &#x27;15m&#x27;,
+}</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Configurations for the access jsonwebtoken used for authentication</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
     <h3>src/common/decorators/is-admin.decorator.ts</h3>
     <section>
     <h3></h3>    <table class="table table-sm table-bordered">
@@ -180,44 +218,6 @@
                 <td class="col-md-4">
                     <div class="io-description"><p>Makes an endpoint accessible by unauthenticated users</p>
 <p><br>Example: Create user and Login endpoints</p>
-</div>
-                </td>
-            </tr>
-
-        </tbody>
-    </table>
-</section>
-    <h3>src/config/jwt.config.ts</h3>
-    <section>
-    <h3></h3>    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="jwtConfig"></a>
-                    <span class="name">
-                        <span ><b>jwtConfig</b></span>
-                        <a href="#jwtConfig"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Default value : </i><code>{
-  secret: process.env.JWT_SECRET,
-  signOptions: { expiresIn: &#x27;15m&#x27; },
-}</code>
-                    </td>
-                </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Configurations for the jsonwebtoken library used for authentication</p>
 </div>
                 </td>
             </tr>
