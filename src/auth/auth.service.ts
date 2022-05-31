@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
+import { accessJwtConfig } from 'src/config/jwt.config';
 import { User } from 'src/models/user/entities/user.entity';
 import { UserService } from 'src/models/user/user.service';
 import { InvalidEmailOrPasswordError } from './errors/invalid-email-or-password.error.';
@@ -32,7 +33,7 @@ export class AuthService {
     const payload = { sub: user.id, role: user.role };
 
     return {
-      accessToken: this.jwtService.sign(payload),
+      accessToken: this.jwtService.sign(payload, accessJwtConfig),
     };
   }
 

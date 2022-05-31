@@ -1,5 +1,7 @@
-/** Configurations for the jsonwebtoken library used for authentication */
-export const jwtConfig = {
+import { JwtSignOptions } from '@nestjs/jwt';
+
+/** Configurations for the access jsonwebtoken used for authentication */
+export const accessJwtConfig: JwtSignOptions = {
   secret: process.env.JWT_SECRET,
-  signOptions: { expiresIn: '15m' },
+  expiresIn: '15m',
 };
