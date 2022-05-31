@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
-import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { AccessJwtAuthGuard } from './auth/access-jwt-auth.guard';
 import { UserModule } from './models/user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ProductModule } from './models/product/product.module';
@@ -20,7 +20,7 @@ import { PurchaseModule } from './models/purchase/purchase.module';
   providers: [
     {
       provide: APP_GUARD,
-      useClass: JwtAuthGuard,
+      useClass: AccessJwtAuthGuard,
     },
   ],
 })

@@ -10,7 +10,7 @@ import { IS_PUBLIC_KEY } from './public.decorator';
  * For more on NestJs Guards: https://docs.nestjs.com/guards
  */
 @Injectable()
-export class JwtAuthGuard extends AuthGuard('jwt') {
+export class AccessJwtAuthGuard extends AuthGuard('access-jwt') {
   /** Uses the passport library AuthGuard to check
    * if the route needs authentication
    *
