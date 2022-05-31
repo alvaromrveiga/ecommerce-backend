@@ -1,5 +1,6 @@
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
+import { accessJwtConfig } from 'src/config/jwt.config';
 import { UserService } from 'src/models/user/user.service';
 import { AuthService } from './auth.service';
 import { InvalidEmailOrPasswordError } from './errors/invalid-email-or-password.error.';
@@ -59,29 +60,34 @@ describe('AuthService', () => {
     expect(jwtService).toBeDefined();
   });
 
-  it('should login user', async () => {
-    const response = await authService.login(
-      'tester2@example.com',
-      'abc123456',
-    );
+  describe('login', () => {
+    it('should login user', async () => {
+      const response = await authService.login(
+        'tester2@example.com',
+        'abc123456',
+      );
 
-    expect(userService.findByEmail).toHaveBeenCalledWith('tester2@example.com');
-    expect(jwtService.sign).toHaveBeenCalledWith({
-      sub: '07b11faf-258b-4153-ae99-6d75bdcbcff5',
+      expect(userService.findByEmail).toHaveBeenCalledWith(
+        'tester2@example.com',
+      );
+      expect(jwtService.sign).toHaveBeenCalledWith(
+        { sub: '07b11faf-258b-4153-ae99-6d75bdcbcff5' },
+        { ...accessJwtConfig },
+      );
+
+      expect(response).toEqual({ accessToken: 'mockedValue' });
     });
 
-    expect(response).toEqual({ accessToken: 'mockedValue' });
-  });
+    it('should not login user if password is wrong', async () => {
+      await expect(
+        authService.login('tester2@example.com', 'wrongPassword'),
+      ).rejects.toThrow(new InvalidEmailOrPasswordError());
+    });
 
-  it('should not login user if password is wrong', async () => {
-    await expect(
-      authService.login('tester2@example.com', 'wrongPassword'),
-    ).rejects.toThrow(new InvalidEmailOrPasswordError());
-  });
-
-  it('should not login user if email does not exist', async () => {
-    await expect(
-      authService.login('unexistentTester@example.com', 'abc123456'),
-    ).rejects.toThrow(new InvalidEmailOrPasswordError());
+    it('should not login user if email does not exist', async () => {
+      await expect(
+        authService.login('unexistentTester@example.com', 'abc123456'),
+      ).rejects.toThrow(new InvalidEmailOrPasswordError());
+    });
   });
 });

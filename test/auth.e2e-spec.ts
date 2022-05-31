@@ -5,7 +5,7 @@ import { isJWT } from 'class-validator';
 import ms from 'ms';
 import { AppModule } from 'src/app.module';
 import { ExceptionInterceptor } from 'src/common/interceptors/exception.interceptor';
-import { jwtConfig } from 'src/config/jwt.config';
+import { accessJwtConfig } from 'src/config/jwt.config';
 import { PrismaService } from 'src/prisma/prisma.service';
 import request from 'supertest';
 
@@ -80,12 +80,13 @@ describe('AuthController (e2e)', () => {
 
       const { sub, role, iat, exp } = jwtService.verify(
         response.body.accessToken,
+        accessJwtConfig,
       );
 
       expect(sub).toEqual(user.id);
       expect(role).toEqual('USER');
 
-      const expiresInSeconds = ms(jwtConfig.signOptions.expiresIn) / 1000;
+      const expiresInSeconds = ms(accessJwtConfig.expiresIn as string) / 1000;
 
       expect(exp).toEqual(iat + expiresInSeconds);
     });
@@ -99,7 +100,10 @@ describe('AuthController (e2e)', () => {
         })
         .expect(200);
 
-      const { role } = jwtService.verify(response.body.accessToken);
+      const { role } = jwtService.verify(
+        response.body.accessToken,
+        accessJwtConfig,
+      );
 
       expect(role).toEqual('ADMIN');
     });
