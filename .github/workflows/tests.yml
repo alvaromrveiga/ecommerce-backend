@@ -5,13 +5,12 @@ name: Run automated tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -20,10 +19,10 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     services:
-      postgres: 
+      postgres:
         image: postgres:latest
         env:
-          POSTGRES_DB: ecommerce-test        
+          POSTGRES_DB: ecommerce-test
           POSTGRES_PASSWORD: postgres
           POSTGRES_USER: postgres
         ports:
@@ -36,21 +35,22 @@ jobs:
           --health-retries 5
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        
-    - name: Create .env.test
-      run: | 
-        touch .env.test
-        echo DATABASE_URL="postgresql://postgres:postgres@localhost:5432/ecommerce-test?schema=public" >> .env.test
-        echo JWT_SECRET="Git#Hub1Actions2Secret3" >> .env.test
-        cat .env.test
-    
-    - run: npm install
-    - run: npm run build
-    - run: npm run migrate:test
-    - run: npm run test:all
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Create .env.test
+        run: |
+          touch .env.test
+          echo DATABASE_URL="postgresql://postgres:postgres@localhost:5432/ecommerce-test?schema=public" >> .env.test
+          echo ACCESS_JWT_SECRET="Git#Hub1Actions2Secret3" >> .env.test
+          echo REFRESH_JWT_SECRET="Git#Hub1Actions2Refresh3Secret4" >> .env.test
+          cat .env.test
+
+      - run: npm install
+      - run: npm run build
+      - run: npm run migrate:test
+      - run: npm run test:all
