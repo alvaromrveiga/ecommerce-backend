@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { compare, hash } from 'bcrypt';
+import { hashConfig } from 'src/config/hash.config';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { DeleteUserDto } from './dto/delete-user.dto';
@@ -24,7 +25,10 @@ export class UserService {
 
   /** Creates a new user */
   async create(createUserDto: CreateUserDto): Promise<void> {
-    const hashedPassword = await hash(createUserDto.password, 10);
+    const hashedPassword = await hash(
+      createUserDto.password,
+      hashConfig.saltRounds,
+    );
 
     const lowerCaseEmail = createUserDto.email.toLowerCase();
 
@@ -111,7 +115,10 @@ export class UserService {
     if (updateUserDto.password && updateUserDto.currentPassword) {
       await this.validateCurrentPassword(id, updateUserDto.currentPassword);
 
-      const hashedPassword = await hash(updateUserDto.password, 10);
+      const hashedPassword = await hash(
+        updateUserDto.password,
+        hashConfig.saltRounds,
+      );
 
       updateUserDto.password = hashedPassword;
       delete updateUserDto.currentPassword;
