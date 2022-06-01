@@ -1,7 +1,9 @@
+import { Provider } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
-import { accessJwtConfig } from 'src/config/jwt.config';
+import { accessJwtConfig, refreshJwtConfig } from 'src/config/jwt.config';
 import { UserService } from 'src/models/user/user.service';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthService } from './auth.service';
 import { InvalidEmailOrPasswordError } from './errors/invalid-email-or-password.error.';
 
@@ -23,6 +25,8 @@ const userArray = [
   },
 ];
 
+const userTokensArray = [];
+
 const UserServiceMock = {
   provide: UserService,
   useValue: {
@@ -36,28 +40,52 @@ const UserServiceMock = {
 
 const JwtServiceMock = {
   provide: JwtService,
-  useValue: { sign: jest.fn().mockReturnValue('mockedValue') },
+  useValue: { signAsync: jest.fn().mockReturnValue('mockedValue') },
 };
+
+const PrismaServiceMock = {
+  provide: PrismaService,
+  useValue: {
+    userTokens: {
+      create: jest.fn().mockImplementation(({ data }) => {
+        return userTokensArray.push(data);
+      }),
+      deleteMany: jest.fn().mockImplementation(({ where }) => {
+        userTokensArray.filter((userToken) => {
+          return userToken.userId !== where.userId;
+        });
+      }),
+    },
+  },
+} as Provider;
 
 describe('AuthService', () => {
   let authService: AuthService;
   let userService: UserService;
   let jwtService: JwtService;
+  let prismaService: PrismaService;
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AuthService, UserServiceMock, JwtServiceMock],
+      providers: [
+        AuthService,
+        UserServiceMock,
+        JwtServiceMock,
+        PrismaServiceMock,
+      ],
     }).compile();
 
     authService = module.get<AuthService>(AuthService);
     userService = module.get<UserService>(UserService);
     jwtService = module.get<JwtService>(JwtService);
+    prismaService = module.get<PrismaService>(PrismaService);
   });
 
   it('should be defined', () => {
     expect(authService).toBeDefined();
     expect(userService).toBeDefined();
     expect(jwtService).toBeDefined();
+    expect(prismaService).toBeDefined();
   });
 
   describe('login', () => {
@@ -70,12 +98,20 @@ describe('AuthService', () => {
       expect(userService.findByEmail).toHaveBeenCalledWith(
         'tester2@example.com',
       );
-      expect(jwtService.sign).toHaveBeenCalledWith(
-        { sub: '07b11faf-258b-4153-ae99-6d75bdcbcff5' },
+      expect(jwtService.signAsync).toHaveBeenCalledWith(
+        { sub: '07b11faf-258b-4153-ae99-6d75bdcbcff5', role: undefined },
         { ...accessJwtConfig },
       );
 
-      expect(response).toEqual({ accessToken: 'mockedValue' });
+      expect(jwtService.signAsync).toHaveBeenCalledWith(
+        { sub: '07b11faf-258b-4153-ae99-6d75bdcbcff5' },
+        { ...refreshJwtConfig },
+      );
+
+      expect(response).toEqual({
+        accessToken: 'mockedValue',
+        refreshToken: 'mockedValue',
+      });
     });
 
     it('should not login user if password is wrong', async () => {
