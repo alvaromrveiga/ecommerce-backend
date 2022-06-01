@@ -143,7 +143,7 @@ CRUD endpoints are available for users.</p>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/models/user/user.service.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/models/user/user.service.ts:18</a></div>
                             </td>
                         </tr>
 
@@ -212,8 +212,8 @@ CRUD endpoints are available for users.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="26"
-                            class="link-to-prism">src/models/user/user.service.ts:26</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="27"
+                            class="link-to-prism">src/models/user/user.service.ts:27</a></div>
                 </td>
             </tr>
 
@@ -285,8 +285,8 @@ CRUD endpoints are available for users.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="56"
-                            class="link-to-prism">src/models/user/user.service.ts:56</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="60"
+                            class="link-to-prism">src/models/user/user.service.ts:60</a></div>
                 </td>
             </tr>
 
@@ -360,8 +360,8 @@ the hashed one.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="44"
-                            class="link-to-prism">src/models/user/user.service.ts:44</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="48"
+                            class="link-to-prism">src/models/user/user.service.ts:48</a></div>
                 </td>
             </tr>
 
@@ -436,8 +436,8 @@ won&#39;t be compared</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="107"
-                            class="link-to-prism">src/models/user/user.service.ts:107</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="111"
+                            class="link-to-prism">src/models/user/user.service.ts:111</a></div>
                 </td>
             </tr>
 
@@ -525,8 +525,8 @@ probably forgot about the other one and an error is thrown</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="94"
-                            class="link-to-prism">src/models/user/user.service.ts:94</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="98"
+                            class="link-to-prism">src/models/user/user.service.ts:98</a></div>
                 </td>
             </tr>
 
@@ -610,8 +610,8 @@ probably forgot about the other one and an error is thrown</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="63"
-                            class="link-to-prism">src/models/user/user.service.ts:63</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="67"
+                            class="link-to-prism">src/models/user/user.service.ts:67</a></div>
                 </td>
             </tr>
 
@@ -695,8 +695,8 @@ probably forgot about the other one and an error is thrown</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="80"
-                            class="link-to-prism">src/models/user/user.service.ts:80</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="84"
+                            class="link-to-prism">src/models/user/user.service.ts:84</a></div>
                 </td>
             </tr>
 
@@ -769,8 +769,8 @@ probably forgot about the other one and an error is thrown</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="132"
-                            class="link-to-prism">src/models/user/user.service.ts:132</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="139"
+                            class="link-to-prism">src/models/user/user.service.ts:139</a></div>
                 </td>
             </tr>
 
@@ -842,6 +842,7 @@ user hashed password saved in the database</p>
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;;
 import { compare, hash } from &#x27;bcrypt&#x27;;
+import { hashConfig } from &#x27;src/config/hash.config&#x27;;
 import { PrismaService } from &#x27;src/prisma/prisma.service&#x27;;
 import { CreateUserDto } from &#x27;./dto/create-user.dto&#x27;;
 import { DeleteUserDto } from &#x27;./dto/delete-user.dto&#x27;;
@@ -866,7 +867,10 @@ export class UserService {
 
   /** Creates a new user */
   async create(createUserDto: CreateUserDto): Promise&lt;void&gt; {
-    const hashedPassword &#x3D; await hash(createUserDto.password, 10);
+    const hashedPassword &#x3D; await hash(
+      createUserDto.password,
+      hashConfig.saltRounds,
+    );
 
     const lowerCaseEmail &#x3D; createUserDto.email.toLowerCase();
 
@@ -953,7 +957,10 @@ export class UserService {
     if (updateUserDto.password &amp;&amp; updateUserDto.currentPassword) {
       await this.validateCurrentPassword(id, updateUserDto.currentPassword);
 
-      const hashedPassword &#x3D; await hash(updateUserDto.password, 10);
+      const hashedPassword &#x3D; await hash(
+        updateUserDto.password,
+        hashConfig.saltRounds,
+      );
 
       updateUserDto.password &#x3D; hashedPassword;
       delete updateUserDto.currentPassword;

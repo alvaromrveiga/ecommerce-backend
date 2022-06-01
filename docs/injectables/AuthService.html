@@ -90,6 +90,15 @@
                                 <a href="#login" >login</a>
                             </li>
                             <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#logoutAll" >logoutAll</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#saveRefreshToken" >saveRefreshToken</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Private</span>
                                     <span class="modifier">Async</span>
                                 <a href="#validateUser" >validateUser</a>
@@ -112,12 +121,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(userService: <a href="../injectables/UserService.html" target="_self">UserService</a>, jwtService: JwtService)</code>
+<code>constructor(userService: <a href="../injectables/UserService.html" target="_self">UserService</a>, jwtService: JwtService, prismaService: <a href="../injectables/PrismaService.html" target="_self">PrismaService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/auth/auth.service.ts:11</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/auth/auth.service.ts:14</a></div>
                             </td>
                         </tr>
 
@@ -162,6 +171,18 @@ JwtService dependencies</p>
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>prismaService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PrismaService.html" target="_self" >PrismaService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -198,8 +219,8 @@ JwtService dependencies</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="27"
-                            class="link-to-prism">src/auth/auth.service.ts:27</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="31"
+                            class="link-to-prism">src/auth/auth.service.ts:31</a></div>
                 </td>
             </tr>
 
@@ -208,7 +229,7 @@ JwtService dependencies</p>
                 <td class="col-md-4">
                     <div class="io-description"><p>Validates if the inputted email exists and
 compares if the hashed password matches the inputted one.</p>
-<p>If so, returns the JWT accessToken</p>
+<p>If so, returns the access and refresh JWTs</p>
 </div>
 
                     <div class="io-description">
@@ -253,7 +274,166 @@ compares if the hashed password matches the inputted one.</p>
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+                        <b>Returns : </b>        <code><a href="../classes/LoginResponse.html" target="_self" >Promise&lt;LoginResponse&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="logoutAll"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>logoutAll</b></span>
+                        <a href="#logoutAll"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>logoutAll(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="55"
+                            class="link-to-prism">src/auth/auth.service.ts:55</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Deletes all user&#39;s refresh tokens</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>userId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saveRefreshToken"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>saveRefreshToken</b></span>
+                        <a href="#saveRefreshToken"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>saveRefreshToken(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, newRefreshToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="79"
+                            class="link-to-prism">src/auth/auth.service.ts:79</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Saves the new refresh token hashed in the database</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>userId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>newRefreshToken</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
 
                     </div>
                     <div class="io-description">
@@ -286,8 +466,8 @@ compares if the hashed password matches the inputted one.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="45"
-                            class="link-to-prism">src/auth/auth.service.ts:45</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="64"
+                            class="link-to-prism">src/auth/auth.service.ts:64</a></div>
                 </td>
             </tr>
 
@@ -359,10 +539,13 @@ compares if the hashed password matches the inputted one.</p>
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;;
 import { JwtService } from &#x27;@nestjs/jwt&#x27;;
-import { compare } from &#x27;bcrypt&#x27;;
-import { accessJwtConfig } from &#x27;src/config/jwt.config&#x27;;
+import { compare, hash } from &#x27;bcrypt&#x27;;
+import { hashConfig } from &#x27;src/config/hash.config&#x27;;
+import { accessJwtConfig, refreshJwtConfig } from &#x27;src/config/jwt.config&#x27;;
 import { User } from &#x27;src/models/user/entities/user.entity&#x27;;
 import { UserService } from &#x27;src/models/user/user.service&#x27;;
+import { PrismaService } from &#x27;src/prisma/prisma.service&#x27;;
+import { LoginResponse } from &#x27;./dto/login.response&#x27;;
 import { InvalidEmailOrPasswordError } from &#x27;./errors/invalid-email-or-password.error.&#x27;;
 
 /** Responsible for authenticating the user */
@@ -376,24 +559,40 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
+    private readonly prismaService: PrismaService,
   ) {}
 
   /** Validates if the inputted email exists and
    * compares if the hashed password matches the inputted one.
    *
-   * If so, returns the JWT accessToken
+   * If so, returns the access and refresh JWTs
    */
-  async login(
-    email: string,
-    password: string,
-  ): Promise&lt;{ accessToken: string }&gt; {
+  async login(email: string, password: string): Promise&lt;LoginResponse&gt; {
     const user &#x3D; await this.validateUser(email, password);
 
     const payload &#x3D; { sub: user.id, role: user.role };
 
+    const accessToken &#x3D; await this.jwtService.signAsync(
+      payload,
+      accessJwtConfig,
+    );
+
+    const refreshToken &#x3D; await this.jwtService.signAsync(
+      { sub: payload.sub },
+      refreshJwtConfig,
+    );
+
+    await this.saveRefreshToken(user.id, refreshToken);
+
     return {
-      accessToken: this.jwtService.sign(payload, accessJwtConfig),
+      accessToken,
+      refreshToken,
     };
+  }
+
+  /** Deletes all user&#x27;s refresh tokens */
+  async logoutAll(userId: string): Promise&lt;void&gt; {
+    await this.prismaService.userTokens.deleteMany({ where: { userId } });
   }
 
   /** Validates if the inputted email exists and
@@ -413,6 +612,21 @@ export class AuthService {
     }
 
     throw new InvalidEmailOrPasswordError();
+  }
+
+  /** Saves the new refresh token hashed in the database */
+  private async saveRefreshToken(
+    userId: string,
+    newRefreshToken: string,
+  ): Promise&lt;void&gt; {
+    const hashedRefreshToken &#x3D; await hash(
+      newRefreshToken,
+      hashConfig.saltRounds,
+    );
+
+    await this.prismaService.userTokens.create({
+      data: { userId, refreshToken: hashedRefreshToken },
+    });
   }
 }
 </code></pre>

@@ -64,6 +64,9 @@
                             <a href="#accessJwtConfig" title="src/config/jwt.config.ts" ><b>accessJwtConfig</b>&nbsp;&nbsp;&nbsp;(src/.../jwt.config.ts)</a>
                         </li>
                         <li>
+                            <a href="#hashConfig" title="src/config/hash.config.ts" ><b>hashConfig</b>&nbsp;&nbsp;&nbsp;(src/.../hash.config.ts)</a>
+                        </li>
+                        <li>
                             <a href="#IS_ADMIN_KEY" title="src/common/decorators/is-admin.decorator.ts" ><b>IS_ADMIN_KEY</b>&nbsp;&nbsp;&nbsp;(src/.../is-admin.decorator.ts)</a>
                         </li>
                         <li>
@@ -77,6 +80,9 @@
                         </li>
                         <li>
                             <a href="#Public" title="src/auth/public.decorator.ts" ><b>Public</b>&nbsp;&nbsp;&nbsp;(src/.../public.decorator.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#refreshJwtConfig" title="src/config/jwt.config.ts" ><b>refreshJwtConfig</b>&nbsp;&nbsp;&nbsp;(src/.../jwt.config.ts)</a>
                         </li>
                         <li>
                             <a href="#validImageUploadTypesRegex" title="src/config/multer-upload.config.ts" ><b>validImageUploadTypesRegex</b>&nbsp;&nbsp;&nbsp;(src/.../multer-upload.config.ts)</a>
@@ -110,7 +116,7 @@
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>{
-  secret: process.env.JWT_SECRET,
+  secret: process.env.ACCESS_JWT_SECRET,
   expiresIn: &#x27;15m&#x27;,
 }</code>
                     </td>
@@ -122,6 +128,72 @@
 </div>
                 </td>
             </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="refreshJwtConfig"></a>
+                    <span class="name">
+                        <span ><b>refreshJwtConfig</b></span>
+                        <a href="#refreshJwtConfig"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>JwtSignOptions</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  secret: process.env.REFRESH_JWT_SECRET,
+  expiresIn: &#x27;90d&#x27;,
+}</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Configurations for the refresh jsonwebtoken used for authentication</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/config/hash.config.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hashConfig"></a>
+                    <span class="name">
+                        <span ><b>hashConfig</b></span>
+                        <a href="#hashConfig"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  saltRounds: 10,
+}</code>
+                    </td>
+                </tr>
+
 
         </tbody>
     </table>
