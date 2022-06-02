@@ -28,6 +28,8 @@ model UserTokens {
   userId String
 
   refreshToken String
+  family       String   @unique
+  expiresAt    DateTime
   createdAt    DateTime @default(now())
 }
 
