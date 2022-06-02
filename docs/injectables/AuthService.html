@@ -86,8 +86,25 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#addDaysFromNow" >addDaysFromNow</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#createRefreshToken" >createRefreshToken</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#getTokenExpirationDate" >getTokenExpirationDate</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Async</span>
                                 <a href="#login" >login</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#logout" >logout</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -126,7 +143,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/auth/auth.service.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/auth/auth.service.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -201,6 +218,194 @@ JwtService dependencies</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="addDaysFromNow"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>addDaysFromNow</b></span>
+                        <a href="#addDaysFromNow"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addDaysFromNow(days: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="117"
+                            class="link-to-prism">src/auth/auth.service.ts:117</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Add amount of days from today&#39;s date</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>days</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" >Date</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createRefreshToken"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>createRefreshToken</b></span>
+                        <a href="#createRefreshToken"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createRefreshToken(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="80"
+                            class="link-to-prism">src/auth/auth.service.ts:80</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates the refresh token and saves it in the database</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>userId</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getTokenExpirationDate"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>getTokenExpirationDate</b></span>
+                        <a href="#getTokenExpirationDate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getTokenExpirationDate()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="107"
+                            class="link-to-prism">src/auth/auth.service.ts:107</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Returns the token expiration date</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" >Date</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="login"></a>
                     <span class="name">
                         <span class="modifier">Async</span>
@@ -219,8 +424,8 @@ JwtService dependencies</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="31"
-                            class="link-to-prism">src/auth/auth.service.ts:31</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="32"
+                            class="link-to-prism">src/auth/auth.service.ts:32</a></div>
                 </td>
             </tr>
 
@@ -288,6 +493,79 @@ compares if the hashed password matches the inputted one.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="logout"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>logout</b></span>
+                        <a href="#logout"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>logout(refreshToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="51"
+                            class="link-to-prism">src/auth/auth.service.ts:51</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Deletes the refreshToken from the database</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>refreshToken</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="logoutAll"></a>
                     <span class="name">
                         <span class="modifier">Async</span>
@@ -306,8 +584,8 @@ compares if the hashed password matches the inputted one.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="55"
-                            class="link-to-prism">src/auth/auth.service.ts:55</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="56"
+                            class="link-to-prism">src/auth/auth.service.ts:56</a></div>
                 </td>
             </tr>
 
@@ -373,15 +651,15 @@ compares if the hashed password matches the inputted one.</p>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>saveRefreshToken(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, newRefreshToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>saveRefreshToken(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, refreshToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, family: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="79"
-                            class="link-to-prism">src/auth/auth.service.ts:79</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="94"
+                            class="link-to-prism">src/auth/auth.service.ts:94</a></div>
                 </td>
             </tr>
 
@@ -416,7 +694,19 @@ compares if the hashed password matches the inputted one.</p>
 
                                 </tr>
                                 <tr>
-                                    <td>newRefreshToken</td>
+                                    <td>refreshToken</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>family</td>
                                     <td>
                                                 <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
@@ -466,8 +756,8 @@ compares if the hashed password matches the inputted one.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="64"
-                            class="link-to-prism">src/auth/auth.service.ts:64</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="65"
+                            class="link-to-prism">src/auth/auth.service.ts:65</a></div>
                 </td>
             </tr>
 
@@ -539,14 +829,15 @@ compares if the hashed password matches the inputted one.</p>
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;;
 import { JwtService } from &#x27;@nestjs/jwt&#x27;;
-import { compare, hash } from &#x27;bcrypt&#x27;;
-import { hashConfig } from &#x27;src/config/hash.config&#x27;;
+import { compare } from &#x27;bcrypt&#x27;;
 import { accessJwtConfig, refreshJwtConfig } from &#x27;src/config/jwt.config&#x27;;
 import { User } from &#x27;src/models/user/entities/user.entity&#x27;;
 import { UserService } from &#x27;src/models/user/user.service&#x27;;
 import { PrismaService } from &#x27;src/prisma/prisma.service&#x27;;
 import { LoginResponse } from &#x27;./dto/login.response&#x27;;
 import { InvalidEmailOrPasswordError } from &#x27;./errors/invalid-email-or-password.error.&#x27;;
+import { v4 as uuidV4 } from &#x27;uuid&#x27;;
+import ms from &#x27;ms&#x27;;
 
 /** Responsible for authenticating the user */
 @Injectable()
@@ -577,17 +868,17 @@ export class AuthService {
       accessJwtConfig,
     );
 
-    const refreshToken &#x3D; await this.jwtService.signAsync(
-      { sub: payload.sub },
-      refreshJwtConfig,
-    );
-
-    await this.saveRefreshToken(user.id, refreshToken);
+    const refreshToken &#x3D; await this.createRefreshToken(user.id);
 
     return {
       accessToken,
       refreshToken,
     };
+  }
+
+  /** Deletes the refreshToken from the database*/
+  async logout(refreshToken: string): Promise&lt;void&gt; {
+    await this.prismaService.userTokens.deleteMany({ where: { refreshToken } });
   }
 
   /** Deletes all user&#x27;s refresh tokens */
@@ -614,19 +905,48 @@ export class AuthService {
     throw new InvalidEmailOrPasswordError();
   }
 
+  /** Creates the refresh token and saves it in the database */
+  private async createRefreshToken(userId: string): Promise&lt;string&gt; {
+    const tokenFamily &#x3D; uuidV4();
+
+    const refreshToken &#x3D; await this.jwtService.signAsync(
+      { sub: userId, family: tokenFamily },
+      refreshJwtConfig,
+    );
+
+    await this.saveRefreshToken(userId, refreshToken, tokenFamily);
+
+    return refreshToken;
+  }
+
   /** Saves the new refresh token hashed in the database */
   private async saveRefreshToken(
     userId: string,
-    newRefreshToken: string,
+    refreshToken: string,
+    family: string,
   ): Promise&lt;void&gt; {
-    const hashedRefreshToken &#x3D; await hash(
-      newRefreshToken,
-      hashConfig.saltRounds,
-    );
+    const expiresAt &#x3D; this.getTokenExpirationDate();
 
     await this.prismaService.userTokens.create({
-      data: { userId, refreshToken: hashedRefreshToken },
+      data: { userId, refreshToken, family, expiresAt },
     });
+  }
+
+  /** Returns the token expiration date */
+  private getTokenExpirationDate(): Date {
+    const expiresInDays &#x3D;
+      ms(refreshJwtConfig.expiresIn as string) / 1000 / 60 / 60 / 24;
+
+    const expiresAt &#x3D; this.addDaysFromNow(expiresInDays);
+
+    return expiresAt;
+  }
+
+  /** Add amount of days from today&#x27;s date */
+  private addDaysFromNow(days: number): Date {
+    const result &#x3D; new Date();
+    result.setDate(result.getDate() + days);
+    return result;
   }
 }
 </code></pre>

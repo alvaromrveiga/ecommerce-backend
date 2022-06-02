@@ -303,6 +303,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/LoginResponse.html" data-type="entity-link" >LoginResponse</a>
                             </li>
                             <li class="link">
+                                <a href="classes/LogoutDto.html" data-type="entity-link" >LogoutDto</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/MissingPasswordUpdateException.html" data-type="entity-link" >MissingPasswordUpdateException</a>
                             </li>
                             <li class="link">

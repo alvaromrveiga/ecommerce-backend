@@ -90,6 +90,10 @@
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#logout" >logout</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#logoutAll" >logoutAll</a>
                             </li>
                         </ul>
@@ -138,8 +142,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="27"
-                            class="link-to-prism">src/auth/auth.controller.ts:27</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="28"
+                            class="link-to-prism">src/auth/auth.controller.ts:28</a></div>
                 </td>
             </tr>
 
@@ -192,6 +196,85 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="logout"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>logout</b></span>
+                        <a href="#logout"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>logout(undefined: <a href="../classes/LogoutDto.html" target="_self">LogoutDto</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@ApiOperation({summary: &#x27;Logs out user&#x27;})<br />@ApiBearerAuth()<br />@Post(&#x27;logout&#x27;)<br />@HttpCode(HttpStatus.OK)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="39"
+                            class="link-to-prism">src/auth/auth.controller.ts:39</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Logs out the User from the current session</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                                <code><a href="../classes/LogoutDto.html" target="_self" >LogoutDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="logoutAll"></a>
                     <span class="name">
                         <span class="modifier">Async</span>
@@ -211,14 +294,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@ApiOperation({summary: &#x27;Logs out user of all sessions&#x27;})<br />@Post(&#x27;logoutAll&#x27;)<br />@HttpCode(HttpStatus.OK)<br /></code>
+                    <code>@ApiOperation({summary: &#x27;Logs out user of all sessions&#x27;})<br />@ApiBearerAuth()<br />@Post(&#x27;logoutAll&#x27;)<br />@HttpCode(HttpStatus.OK)<br /></code>
                 </td>
             </tr>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="37"
-                            class="link-to-prism">src/auth/auth.controller.ts:37</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="48"
+                            class="link-to-prism">src/auth/auth.controller.ts:48</a></div>
                 </td>
             </tr>
 
@@ -280,11 +363,12 @@
   Post,
   Req,
 } from &#x27;@nestjs/common&#x27;;
-import { ApiOperation, ApiTags } from &#x27;@nestjs/swagger&#x27;;
+import { ApiBearerAuth, ApiOperation, ApiTags } from &#x27;@nestjs/swagger&#x27;;
 import { Request } from &#x27;express&#x27;;
 import { AuthService } from &#x27;./auth.service&#x27;;
 import { LoginCredentialsDto } from &#x27;./dto/login-credentials.dto&#x27;;
 import { LoginResponse } from &#x27;./dto/login.response&#x27;;
+import { LogoutDto } from &#x27;./dto/logout.dto&#x27;;
 import { Public } from &#x27;./public.decorator&#x27;;
 
 /** User authentication endpoints */
@@ -304,8 +388,18 @@ export class AuthController {
     return this.authService.login(email, password);
   }
 
+  /** Logs out the User from the current session */
+  @ApiOperation({ summary: &#x27;Logs out user&#x27; })
+  @ApiBearerAuth()
+  @Post(&#x27;logout&#x27;)
+  @HttpCode(HttpStatus.OK)
+  async logout(@Body() { refreshToken }: LogoutDto): Promise&lt;void&gt; {
+    return this.authService.logout(refreshToken);
+  }
+
   /** Logs out the User from all sessions */
   @ApiOperation({ summary: &#x27;Logs out user of all sessions&#x27; })
+  @ApiBearerAuth()
   @Post(&#x27;logoutAll&#x27;)
   @HttpCode(HttpStatus.OK)
   async logoutAll(@Req() request: Request): Promise&lt;void&gt; {
