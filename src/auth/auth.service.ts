@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { compare, hash } from 'bcrypt';
-import { hashConfig } from 'src/config/hash.config';
+import { compare } from 'bcrypt';
 import { accessJwtConfig, refreshJwtConfig } from 'src/config/jwt.config';
 import { User } from 'src/models/user/entities/user.entity';
 import { UserService } from 'src/models/user/user.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { LoginResponse } from './dto/login.response';
 import { InvalidEmailOrPasswordError } from './errors/invalid-email-or-password.error.';
+import { v4 as uuidV4 } from 'uuid';
+import ms from 'ms';
 
 /** Responsible for authenticating the user */
 @Injectable()
@@ -38,17 +39,17 @@ export class AuthService {
       accessJwtConfig,
     );
 
-    const refreshToken = await this.jwtService.signAsync(
-      { sub: payload.sub },
-      refreshJwtConfig,
-    );
-
-    await this.saveRefreshToken(user.id, refreshToken);
+    const refreshToken = await this.createRefreshToken(user.id);
 
     return {
       accessToken,
       refreshToken,
     };
+  }
+
+  /** Deletes the refreshToken from the database*/
+  async logout(refreshToken: string): Promise<void> {
+    await this.prismaService.userTokens.deleteMany({ where: { refreshToken } });
   }
 
   /** Deletes all user's refresh tokens */
@@ -75,18 +76,47 @@ export class AuthService {
     throw new InvalidEmailOrPasswordError();
   }
 
+  /** Creates the refresh token and saves it in the database */
+  private async createRefreshToken(userId: string): Promise<string> {
+    const tokenFamily = uuidV4();
+
+    const refreshToken = await this.jwtService.signAsync(
+      { sub: userId, family: tokenFamily },
+      refreshJwtConfig,
+    );
+
+    await this.saveRefreshToken(userId, refreshToken, tokenFamily);
+
+    return refreshToken;
+  }
+
   /** Saves the new refresh token hashed in the database */
   private async saveRefreshToken(
     userId: string,
-    newRefreshToken: string,
+    refreshToken: string,
+    family: string,
   ): Promise<void> {
-    const hashedRefreshToken = await hash(
-      newRefreshToken,
-      hashConfig.saltRounds,
-    );
+    const expiresAt = this.getTokenExpirationDate();
 
     await this.prismaService.userTokens.create({
-      data: { userId, refreshToken: hashedRefreshToken },
+      data: { userId, refreshToken, family, expiresAt },
     });
+  }
+
+  /** Returns the token expiration date */
+  private getTokenExpirationDate(): Date {
+    const expiresInDays =
+      ms(refreshJwtConfig.expiresIn as string) / 1000 / 60 / 60 / 24;
+
+    const expiresAt = this.addDaysFromNow(expiresInDays);
+
+    return expiresAt;
+  }
+
+  /** Add amount of days from today's date */
+  private addDaysFromNow(days: number): Date {
+    const result = new Date();
+    result.setDate(result.getDate() + days);
+    return result;
   }
 }
