@@ -103,8 +103,15 @@ describe('AuthService', () => {
         { ...accessJwtConfig },
       );
 
+      const uuidv4Regex = new RegExp(
+        /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i,
+      );
+
       expect(jwtService.signAsync).toHaveBeenCalledWith(
-        { sub: '07b11faf-258b-4153-ae99-6d75bdcbcff5' },
+        {
+          sub: '07b11faf-258b-4153-ae99-6d75bdcbcff5',
+          family: expect.stringMatching(uuidv4Regex),
+        },
         { ...refreshJwtConfig },
       );
 
