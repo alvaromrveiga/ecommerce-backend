@@ -6,11 +6,12 @@ import {
   Post,
   Req,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { AuthService } from './auth.service';
 import { LoginCredentialsDto } from './dto/login-credentials.dto';
 import { LoginResponse } from './dto/login.response';
+import { LogoutDto } from './dto/logout.dto';
 import { Public } from './public.decorator';
 
 /** User authentication endpoints */
@@ -30,8 +31,18 @@ export class AuthController {
     return this.authService.login(email, password);
   }
 
+  /** Logs out the User from the current session */
+  @ApiOperation({ summary: 'Logs out user' })
+  @ApiBearerAuth()
+  @Post('logout')
+  @HttpCode(HttpStatus.OK)
+  async logout(@Body() { refreshToken }: LogoutDto): Promise<void> {
+    return this.authService.logout(refreshToken);
+  }
+
   /** Logs out the User from all sessions */
   @ApiOperation({ summary: 'Logs out user of all sessions' })
+  @ApiBearerAuth()
   @Post('logoutAll')
   @HttpCode(HttpStatus.OK)
   async logoutAll(@Req() request: Request): Promise<void> {
