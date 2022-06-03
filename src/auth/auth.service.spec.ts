@@ -6,6 +6,7 @@ import { UserService } from 'src/models/user/user.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthService } from './auth.service';
 import { InvalidEmailOrPasswordError } from './errors/invalid-email-or-password.error.';
+import { RefreshTokenPayload } from './types/refresh-token-payload';
 
 const userArray = [
   {
@@ -110,8 +111,9 @@ describe('AuthService', () => {
       expect(jwtService.signAsync).toHaveBeenCalledWith(
         {
           sub: '07b11faf-258b-4153-ae99-6d75bdcbcff5',
-          family: expect.stringMatching(uuidv4Regex),
-        },
+          role: undefined,
+          tokenFamily: expect.stringMatching(uuidv4Regex),
+        } as RefreshTokenPayload,
         { ...refreshJwtConfig },
       );
 
