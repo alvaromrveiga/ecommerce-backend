@@ -12,6 +12,7 @@ import { AuthService } from './auth.service';
 import { LoginCredentialsDto } from './dto/login-credentials.dto';
 import { LoginResponse } from './dto/login.response';
 import { LogoutDto } from './dto/logout.dto';
+import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { Public } from './public.decorator';
 
 /** User authentication endpoints */
@@ -29,6 +30,17 @@ export class AuthController {
     @Body() { email, password }: LoginCredentialsDto,
   ): Promise<LoginResponse> {
     return this.authService.login(email, password);
+  }
+
+  /** Refreshes the user token for silent authentication */
+  @ApiOperation({ summary: 'Refreshes user token' })
+  @Public()
+  @Post('refresh')
+  @HttpCode(HttpStatus.OK)
+  async refreshToken(
+    @Body() { refreshToken }: RefreshTokenDto,
+  ): Promise<LoginResponse> {
+    return this.authService.refreshToken(refreshToken);
   }
 
   /** Logs out the User from the current session */
