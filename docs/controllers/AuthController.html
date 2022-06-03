@@ -96,6 +96,10 @@
                                     <span class="modifier">Async</span>
                                 <a href="#logoutAll" >logoutAll</a>
                             </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#refreshToken" >refreshToken</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -142,8 +146,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="28"
-                            class="link-to-prism">src/auth/auth.controller.ts:28</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="29"
+                            class="link-to-prism">src/auth/auth.controller.ts:29</a></div>
                 </td>
             </tr>
 
@@ -221,8 +225,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="39"
-                            class="link-to-prism">src/auth/auth.controller.ts:39</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="51"
+                            class="link-to-prism">src/auth/auth.controller.ts:51</a></div>
                 </td>
             </tr>
 
@@ -300,8 +304,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="48"
-                            class="link-to-prism">src/auth/auth.controller.ts:48</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="60"
+                            class="link-to-prism">src/auth/auth.controller.ts:60</a></div>
                 </td>
             </tr>
 
@@ -351,6 +355,85 @@
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="refreshToken"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>refreshToken</b></span>
+                        <a href="#refreshToken"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>refreshToken(undefined: <a href="../classes/RefreshTokenDto.html" target="_self">RefreshTokenDto</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@ApiOperation({summary: &#x27;Refreshes user token&#x27;})<br />@Public()<br />@Post(&#x27;refresh&#x27;)<br />@HttpCode(HttpStatus.OK)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="40"
+                            class="link-to-prism">src/auth/auth.controller.ts:40</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Refreshes the user token for silent authentication</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                                <code><a href="../classes/RefreshTokenDto.html" target="_self" >RefreshTokenDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/LoginResponse.html" target="_self" >Promise&lt;LoginResponse&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>    </div>
 
 
@@ -369,6 +452,7 @@ import { AuthService } from &#x27;./auth.service&#x27;;
 import { LoginCredentialsDto } from &#x27;./dto/login-credentials.dto&#x27;;
 import { LoginResponse } from &#x27;./dto/login.response&#x27;;
 import { LogoutDto } from &#x27;./dto/logout.dto&#x27;;
+import { RefreshTokenDto } from &#x27;./dto/refresh-token.dto&#x27;;
 import { Public } from &#x27;./public.decorator&#x27;;
 
 /** User authentication endpoints */
@@ -386,6 +470,17 @@ export class AuthController {
     @Body() { email, password }: LoginCredentialsDto,
   ): Promise&lt;LoginResponse&gt; {
     return this.authService.login(email, password);
+  }
+
+  /** Refreshes the user token for silent authentication */
+  @ApiOperation({ summary: &#x27;Refreshes user token&#x27; })
+  @Public()
+  @Post(&#x27;refresh&#x27;)
+  @HttpCode(HttpStatus.OK)
+  async refreshToken(
+    @Body() { refreshToken }: RefreshTokenDto,
+  ): Promise&lt;LoginResponse&gt; {
+    return this.authService.refreshToken(refreshToken);
   }
 
   /** Logs out the User from the current session */

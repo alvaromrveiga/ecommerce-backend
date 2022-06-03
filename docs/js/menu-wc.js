@@ -336,6 +336,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/PurchaseServiceInputException.html" data-type="entity-link" >PurchaseServiceInputException</a>
                             </li>
                             <li class="link">
+                                <a href="classes/RefreshTokenDto.html" data-type="entity-link" >RefreshTokenDto</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/ReviewPurchaseDto.html" data-type="entity-link" >ReviewPurchaseDto</a>
                             </li>
                             <li class="link">
