@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
+import ms from 'ms';
 import { accessJwtConfig, refreshJwtConfig } from 'src/config/jwt.config';
 import { User } from 'src/models/user/entities/user.entity';
 import { UserService } from 'src/models/user/user.service';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { v4 as uuidV4 } from 'uuid';
 import { LoginResponse } from './dto/login.response';
 import { InvalidEmailOrPasswordError } from './errors/invalid-email-or-password.error.';
-import { v4 as uuidV4 } from 'uuid';
-import ms from 'ms';
+import { RefreshTokenPayload } from './types/refresh-token-payload';
 
 /** Responsible for authenticating the user */
 @Injectable()
@@ -32,18 +33,36 @@ export class AuthService {
   async login(email: string, password: string): Promise<LoginResponse> {
     const user = await this.validateUser(email, password);
 
-    const payload = { sub: user.id, role: user.role };
+    const accessToken = await this.generateAccessToken(user.id, user.role);
 
-    const accessToken = await this.jwtService.signAsync(
-      payload,
-      accessJwtConfig,
-    );
-
-    const refreshToken = await this.createRefreshToken(user.id);
+    const refreshToken = await this.createRefreshToken(user.id, user.role);
 
     return {
       accessToken,
       refreshToken,
+    };
+  }
+
+  /** Refreshes and rotates user's access and refresh tokens */
+  async refreshToken(refreshToken: string): Promise<LoginResponse> {
+    const refreshTokenContent: RefreshTokenPayload =
+      await this.jwtService.verifyAsync(refreshToken, refreshJwtConfig);
+
+    await this.validateRefreshToken(refreshToken, refreshTokenContent);
+
+    const accessToken = await this.generateAccessToken(
+      refreshTokenContent.sub,
+      refreshTokenContent.role,
+    );
+
+    const newRefreshToken = await this.rotateRefreshToken(
+      refreshToken,
+      refreshTokenContent,
+    );
+
+    return {
+      accessToken,
+      refreshToken: newRefreshToken,
     };
   }
 
@@ -76,12 +95,33 @@ export class AuthService {
     throw new InvalidEmailOrPasswordError();
   }
 
+  /** Generates user's access token */
+  private async generateAccessToken(
+    userId: string,
+    userRole: string,
+  ): Promise<string> {
+    const payload = { sub: userId, role: userRole };
+
+    const accessToken = await this.jwtService.signAsync(
+      payload,
+      accessJwtConfig,
+    );
+
+    return accessToken;
+  }
+
   /** Creates the refresh token and saves it in the database */
-  private async createRefreshToken(userId: string): Promise<string> {
-    const tokenFamily = uuidV4();
+  private async createRefreshToken(
+    userId: string,
+    userRole: string,
+    tokenFamily?: string,
+  ): Promise<string> {
+    if (!tokenFamily) {
+      tokenFamily = uuidV4();
+    }
 
     const refreshToken = await this.jwtService.signAsync(
-      { sub: userId, family: tokenFamily },
+      { sub: userId, role: userRole, tokenFamily } as RefreshTokenPayload,
       refreshJwtConfig,
     );
 
@@ -101,6 +141,59 @@ export class AuthService {
     await this.prismaService.userTokens.create({
       data: { userId, refreshToken, family, expiresAt },
     });
+  }
+
+  /** Checks if the refresh token is valid */
+  private async validateRefreshToken(
+    refreshToken: string,
+    refreshTokenContent: RefreshTokenPayload,
+  ): Promise<boolean> {
+    const isRefreshTokenValid = await this.prismaService.userTokens.findMany({
+      where: { userId: refreshTokenContent.sub, refreshToken },
+    });
+
+    if (isRefreshTokenValid.length === 0) {
+      await this.removeCompromisedRefreshTokenFamily(
+        refreshTokenContent.sub,
+        refreshTokenContent.tokenFamily,
+      );
+
+      throw new Error('Invalid refresh token');
+    }
+
+    return true;
+  }
+
+  /** Removes a compromised refresh token family from the database
+   *
+   * If a token that is not in the database is used but it's family exists
+   * that means the token has been compromised and the family should me removed
+   *
+   * Refer to https://auth0.com/docs/secure/tokens/refresh-tokens/refresh-token-rotation#automatic-reuse-detection
+   */
+  private async removeCompromisedRefreshTokenFamily(
+    userId: string,
+    tokenFamily: string,
+  ): Promise<void> {
+    await this.prismaService.userTokens.deleteMany({
+      where: { userId, family: tokenFamily },
+    });
+  }
+
+  /** Removes the old token from the database and creates a new one */
+  private async rotateRefreshToken(
+    refreshToken: string,
+    refreshTokenContent: RefreshTokenPayload,
+  ): Promise<string> {
+    await this.prismaService.userTokens.deleteMany({ where: { refreshToken } });
+
+    const newRefreshToken = await this.createRefreshToken(
+      refreshTokenContent.sub,
+      refreshTokenContent.role,
+      refreshTokenContent.tokenFamily,
+    );
+
+    return newRefreshToken;
   }
 
   /** Returns the token expiration date */
