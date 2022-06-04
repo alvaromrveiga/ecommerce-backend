@@ -249,6 +249,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </div>
                         <ul class="links collapse " ${ isNormalMode ? 'id="classes-links"' : 'id="xs-classes-links"' }>
                             <li class="link">
+                                <a href="classes/AuthServiceInputException.html" data-type="entity-link" >AuthServiceInputException</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/Category.html" data-type="entity-link" >Category</a>
                             </li>
                             <li class="link">
@@ -291,10 +294,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/FindPurchasesDto.html" data-type="entity-link" >FindPurchasesDto</a>
                             </li>
                             <li class="link">
-                                <a href="classes/InvalidEmailOrPasswordError.html" data-type="entity-link" >InvalidEmailOrPasswordError</a>
+                                <a href="classes/InvalidEmailOrPasswordException.html" data-type="entity-link" >InvalidEmailOrPasswordException</a>
                             </li>
                             <li class="link">
                                 <a href="classes/InvalidPasswordUpdateException.html" data-type="entity-link" >InvalidPasswordUpdateException</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/InvalidRefreshTokenException.html" data-type="entity-link" >InvalidRefreshTokenException</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/JwtExceptionHandler.html" data-type="entity-link" >JwtExceptionHandler</a>
                             </li>
                             <li class="link">
                                 <a href="classes/LoginCredentialsDto.html" data-type="entity-link" >LoginCredentialsDto</a>

@@ -44,7 +44,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li >UserInputExceptionHandler</li>
+  <li >InvalidRefreshTokenException</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -62,7 +62,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/common/interceptors/handlers/user-input-exception.handler.ts</code>
+            <code>src/auth/exceptions/invalid-refresh-token.exception.ts</code>
         </p>
 
 
@@ -70,128 +70,50 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Catches user input errors and throws the
-respective HTTP error</p>
+                <p>Used when the user inputs an invalid token
+when refreshing</p>
 
             </p>
-
 
             <p class="comment">
-                <h3>Implements</h3>
+                <h3>Extends</h3>
             </p>
             <p class="comment">
-                            <code><a href="../interfaces/ExceptionHandler.html" target="_self" >ExceptionHandler</a></code>
+                        <code><a href="../injectables/AuthService.html" target="_self" >AuthServiceInputException</a></code>
             </p>
 
-
-            <section>
-    <h3 id="index">Index</h3>
-    <table class="table table-sm table-bordered index-table">
-        <tbody>
-
-                <tr>
-                    <td class="col-md-4">
-                        <h6><b>Methods</b></h6>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <ul class="index-list">
-                            <li>
-                                <a href="#handle" >handle</a>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-
-
-
-
-
-        </tbody>
-    </table>
-</section>
 
 
 
             <section>
-    
-    <h3 id="methods">
-        Methods
-    </h3>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="handle"></a>
-                    <span class="name">
-                        <span ><b>handle</b></span>
-                        <a href="#handle"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>handle(error: Error)</code>
-                </td>
-            </tr>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor()</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/auth/exceptions/invalid-refresh-token.exception.ts:6</a></div>
+                            </td>
+                        </tr>
 
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="19"
-                            class="link-to-prism">src/common/interceptors/handlers/user-input-exception.handler.ts:19</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Catches user input errors and throws the
-respective HTTP error</p>
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Throws exception with message &#39;Invalid refresh token&#39;.</p>
+<p>Used when the user inputs an invalid token
+when refreshing</p>
 </div>
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>error</td>
-                                    <td>
-                                            <code>Error</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 </section>
+
+
+
 
 
 
@@ -201,40 +123,19 @@ respective HTTP error</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  BadRequestException,
-  NotFoundException,
-  UnauthorizedException,
-} from &#x27;@nestjs/common&#x27;;
-import { AuthServiceInputException } from &#x27;src/auth/exceptions/auth-service-input.exception&#x27;;
-import { ProductServiceInputException } from &#x27;src/models/product/exceptions/product-service-input.exception&#x27;;
-import { PurchaseServiceInputException } from &#x27;src/models/purchase/exceptions/purchase-service-input.exception&#x27;;
-import { UserServiceInputException } from &#x27;src/models/user/exceptions/user-service-input.exception&#x27;;
-import { ExceptionHandler } from &#x27;./exception.handler&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { AuthServiceInputException } from &#x27;./auth-service-input.exception&#x27;;
 
-/** Catches user input errors and throws the
- * respective HTTP error
+/** Used when the user inputs an invalid token
+ * when refreshing
  */
-export class UserInputExceptionHandler implements ExceptionHandler {
-  /** Catches user input errors and throws the
-   * respective HTTP error
+export class InvalidRefreshTokenException extends AuthServiceInputException {
+  /** Throws exception with message &#x27;Invalid refresh token&#x27;.
+   *
+   * Used when the user inputs an invalid token
+   * when refreshing
    */
-  handle(error: Error): void {
-    if (error instanceof AuthServiceInputException) {
-      throw new UnauthorizedException(error.message);
-    }
-
-    if (error instanceof UserServiceInputException) {
-      throw new BadRequestException(error.message);
-    }
-
-    if (error instanceof ProductServiceInputException) {
-      throw new BadRequestException(error.message);
-    }
-
-    if (error instanceof PurchaseServiceInputException) {
-      throw new NotFoundException(error.message);
-    }
+  constructor() {
+    super(&#x27;Invalid refresh token&#x27;);
   }
 }
 </code></pre>
@@ -275,7 +176,7 @@ export class UserInputExceptionHandler implements ExceptionHandler {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
-            var COMPODOC_CURRENT_PAGE_URL = 'UserInputExceptionHandler.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'InvalidRefreshTokenException.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

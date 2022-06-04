@@ -127,8 +127,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="23"
-                            class="link-to-prism">src/common/interceptors/exception.interceptor.ts:23</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="24"
+                            class="link-to-prism">src/common/interceptors/exception.interceptor.ts:24</a></div>
                 </td>
             </tr>
 
@@ -206,6 +206,7 @@ information: <a href="https://docs.nestjs.com/interceptors">https://docs.nestjs.
   NestInterceptor,
 } from &#x27;@nestjs/common&#x27;;
 import { catchError, Observable } from &#x27;rxjs&#x27;;
+import { JwtExceptionHandler } from &#x27;./handlers/jwt-exception.handler&#x27;;
 import { PrismaExceptionHandler } from &#x27;./handlers/prisma-exception.handler&#x27;;
 import { UserInputExceptionHandler } from &#x27;./handlers/user-input-exception.handler&#x27;;
 
@@ -230,6 +231,8 @@ export class ExceptionInterceptor implements NestInterceptor {
         new UserInputExceptionHandler().handle(error);
 
         new PrismaExceptionHandler().handle(error);
+
+        new JwtExceptionHandler().handle(error);
 
         throw error;
       }),
