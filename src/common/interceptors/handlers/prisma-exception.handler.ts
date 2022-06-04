@@ -79,8 +79,6 @@ export class PrismaExceptionHandler implements ExceptionHandler {
         throw new PurchaseNotFoundException();
       }
     }
-
-    throw error;
   }
 
   /** Checks if the error contains clientVersion,
