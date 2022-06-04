@@ -5,7 +5,7 @@ import { accessJwtConfig, refreshJwtConfig } from 'src/config/jwt.config';
 import { UserService } from 'src/models/user/user.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthService } from './auth.service';
-import { InvalidEmailOrPasswordError } from './errors/invalid-email-or-password.error.';
+import { InvalidEmailOrPasswordException } from './exceptions/invalid-email-or-password.exception.';
 import { RefreshTokenPayload } from './types/refresh-token-payload';
 
 const userArray = [
@@ -126,13 +126,13 @@ describe('AuthService', () => {
     it('should not login user if password is wrong', async () => {
       await expect(
         authService.login('tester2@example.com', 'wrongPassword'),
-      ).rejects.toThrow(new InvalidEmailOrPasswordError());
+      ).rejects.toThrow(new InvalidEmailOrPasswordException());
     });
 
     it('should not login user if email does not exist', async () => {
       await expect(
         authService.login('unexistentTester@example.com', 'abc123456'),
-      ).rejects.toThrow(new InvalidEmailOrPasswordError());
+      ).rejects.toThrow(new InvalidEmailOrPasswordException());
     });
   });
 });
