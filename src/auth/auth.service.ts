@@ -8,7 +8,8 @@ import { UserService } from 'src/models/user/user.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { v4 as uuidV4 } from 'uuid';
 import { LoginResponse } from './dto/login.response';
-import { InvalidEmailOrPasswordError } from './errors/invalid-email-or-password.error.';
+import { InvalidEmailOrPasswordException } from './exceptions/invalid-email-or-password.exception.';
+import { InvalidRefreshTokenException } from './exceptions/invalid-refresh-token.exception';
 import { RefreshTokenPayload } from './types/refresh-token-payload';
 
 /** Responsible for authenticating the user */
@@ -92,7 +93,7 @@ export class AuthService {
       }
     }
 
-    throw new InvalidEmailOrPasswordError();
+    throw new InvalidEmailOrPasswordException();
   }
 
   /** Generates user's access token */
@@ -158,7 +159,7 @@ export class AuthService {
         refreshTokenContent.tokenFamily,
       );
 
-      throw new Error('Invalid refresh token');
+      throw new InvalidRefreshTokenException();
     }
 
     return true;
