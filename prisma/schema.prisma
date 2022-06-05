@@ -29,6 +29,7 @@ model UserTokens {
 
   refreshToken String
   family       String   @unique
+  browserInfo  String?
   expiresAt    DateTime
   createdAt    DateTime @default(now())
 }
