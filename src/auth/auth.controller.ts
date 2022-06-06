@@ -1,12 +1,14 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
   Req,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { UserTokens } from '@prisma/client';
 import { Request } from 'express';
 import { AuthService } from './auth.service';
 import { LoginCredentialsDto } from './dto/login-credentials.dto';
@@ -28,8 +30,15 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async login(
     @Body() { email, password }: LoginCredentialsDto,
+    @Req() request: Request,
   ): Promise<LoginResponse> {
-    return this.authService.login(email, password);
+    const browserInfo =
+      `${request.ip} ${request.headers['user-agent']} ${request.headers['accept-language']}`.replace(
+        / undefined/g,
+        '',
+      );
+
+    return this.authService.login(email, password, browserInfo);
   }
 
   /** Refreshes the user token for silent authentication */
@@ -39,8 +48,15 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async refreshToken(
     @Body() { refreshToken }: RefreshTokenDto,
+    @Req() request: Request,
   ): Promise<LoginResponse> {
-    return this.authService.refreshToken(refreshToken);
+    const browserInfo =
+      `${request.ip} ${request.headers['user-agent']} ${request.headers['accept-language']}`.replace(
+        / undefined/g,
+        '',
+      );
+
+    return this.authService.refreshToken(refreshToken, browserInfo);
   }
 
   /** Logs out the User from the current session */
@@ -61,5 +77,15 @@ export class AuthController {
     const { userId } = request.user as { userId: string };
 
     return this.authService.logoutAll(userId);
+  }
+
+  /** Returns all user's active tokens */
+  @ApiOperation({ summary: 'Returns all user active tokens' })
+  @ApiBearerAuth()
+  @Get('tokens')
+  async findAllTokens(@Req() request: Request): Promise<UserTokens[]> {
+    const { userId } = request.user as { userId: string };
+
+    return this.authService.findAllTokens(userId);
   }
 }

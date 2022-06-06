@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { UserTokens } from '@prisma/client';
 import { compare } from 'bcrypt';
-import ms from 'ms';
 import { accessJwtConfig, refreshJwtConfig } from 'src/config/jwt.config';
 import { User } from 'src/models/user/entities/user.entity';
 import { UserService } from 'src/models/user/user.service';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { getTokenExpirationDate } from 'src/util/getTokenExpirationDate';
 import { v4 as uuidV4 } from 'uuid';
 import { LoginResponse } from './dto/login.response';
 import { InvalidEmailOrPasswordException } from './exceptions/invalid-email-or-password.exception.';
@@ -31,12 +32,21 @@ export class AuthService {
    *
    * If so, returns the access and refresh JWTs
    */
-  async login(email: string, password: string): Promise<LoginResponse> {
+  async login(
+    email: string,
+    password: string,
+    browserInfo?: string,
+  ): Promise<LoginResponse> {
     const user = await this.validateUser(email, password);
 
-    const accessToken = await this.generateAccessToken(user.id, user.role);
+    const payload = { sub: user.id, userRole: user.role };
 
-    const refreshToken = await this.createRefreshToken(user.id, user.role);
+    const accessToken = await this.generateAccessToken(payload);
+
+    const refreshToken = await this.createRefreshToken(
+      { ...payload },
+      browserInfo,
+    );
 
     return {
       accessToken,
@@ -45,20 +55,24 @@ export class AuthService {
   }
 
   /** Refreshes and rotates user's access and refresh tokens */
-  async refreshToken(refreshToken: string): Promise<LoginResponse> {
+  async refreshToken(
+    refreshToken: string,
+    browserInfo?: string,
+  ): Promise<LoginResponse> {
     const refreshTokenContent: RefreshTokenPayload =
       await this.jwtService.verifyAsync(refreshToken, refreshJwtConfig);
 
     await this.validateRefreshToken(refreshToken, refreshTokenContent);
 
-    const accessToken = await this.generateAccessToken(
-      refreshTokenContent.sub,
-      refreshTokenContent.role,
-    );
+    const accessToken = await this.generateAccessToken({
+      sub: refreshTokenContent.sub,
+      userRole: refreshTokenContent.userRole,
+    });
 
     const newRefreshToken = await this.rotateRefreshToken(
       refreshToken,
       refreshTokenContent,
+      browserInfo,
     );
 
     return {
@@ -75,6 +89,15 @@ export class AuthService {
   /** Deletes all user's refresh tokens */
   async logoutAll(userId: string): Promise<void> {
     await this.prismaService.userTokens.deleteMany({ where: { userId } });
+  }
+
+  /** Returns all user's active tokens */
+  async findAllTokens(userId: string): Promise<UserTokens[]> {
+    const tokens = await this.prismaService.userTokens.findMany({
+      where: { userId },
+    });
+
+    return tokens;
   }
 
   /** Validates if the inputted email exists and
@@ -97,12 +120,10 @@ export class AuthService {
   }
 
   /** Generates user's access token */
-  private async generateAccessToken(
-    userId: string,
-    userRole: string,
-  ): Promise<string> {
-    const payload = { sub: userId, role: userRole };
-
+  private async generateAccessToken(payload: {
+    sub: string;
+    userRole: string;
+  }): Promise<string> {
     const accessToken = await this.jwtService.signAsync(
       payload,
       accessJwtConfig,
@@ -113,34 +134,43 @@ export class AuthService {
 
   /** Creates the refresh token and saves it in the database */
   private async createRefreshToken(
-    userId: string,
-    userRole: string,
-    tokenFamily?: string,
+    payload: {
+      sub: string;
+      userRole: string;
+      tokenFamily?: string;
+    },
+    browserInfo?: string,
   ): Promise<string> {
-    if (!tokenFamily) {
-      tokenFamily = uuidV4();
+    if (!payload.tokenFamily) {
+      payload.tokenFamily = uuidV4();
     }
 
     const refreshToken = await this.jwtService.signAsync(
-      { sub: userId, role: userRole, tokenFamily } as RefreshTokenPayload,
+      { ...payload },
       refreshJwtConfig,
     );
 
-    await this.saveRefreshToken(userId, refreshToken, tokenFamily);
+    await this.saveRefreshToken({
+      userId: payload.sub,
+      refreshToken,
+      family: payload.tokenFamily,
+      browserInfo,
+    });
 
     return refreshToken;
   }
 
   /** Saves the new refresh token hashed in the database */
-  private async saveRefreshToken(
-    userId: string,
-    refreshToken: string,
-    family: string,
-  ): Promise<void> {
-    const expiresAt = this.getTokenExpirationDate();
+  private async saveRefreshToken(refreshTokenCredentials: {
+    userId: string;
+    refreshToken: string;
+    family: string;
+    browserInfo?: string;
+  }): Promise<void> {
+    const expiresAt = getTokenExpirationDate();
 
     await this.prismaService.userTokens.create({
-      data: { userId, refreshToken, family, expiresAt },
+      data: { ...refreshTokenCredentials, expiresAt },
     });
   }
 
@@ -185,32 +215,19 @@ export class AuthService {
   private async rotateRefreshToken(
     refreshToken: string,
     refreshTokenContent: RefreshTokenPayload,
+    browserInfo?: string,
   ): Promise<string> {
     await this.prismaService.userTokens.deleteMany({ where: { refreshToken } });
 
     const newRefreshToken = await this.createRefreshToken(
-      refreshTokenContent.sub,
-      refreshTokenContent.role,
-      refreshTokenContent.tokenFamily,
+      {
+        sub: refreshTokenContent.sub,
+        userRole: refreshTokenContent.userRole,
+        tokenFamily: refreshTokenContent.tokenFamily,
+      },
+      browserInfo,
     );
 
     return newRefreshToken;
-  }
-
-  /** Returns the token expiration date */
-  private getTokenExpirationDate(): Date {
-    const expiresInDays =
-      ms(refreshJwtConfig.expiresIn as string) / 1000 / 60 / 60 / 24;
-
-    const expiresAt = this.addDaysFromNow(expiresInDays);
-
-    return expiresAt;
-  }
-
-  /** Add amount of days from today's date */
-  private addDaysFromNow(days: number): Date {
-    const result = new Date();
-    result.setDate(result.getDate() + days);
-    return result;
   }
 }
