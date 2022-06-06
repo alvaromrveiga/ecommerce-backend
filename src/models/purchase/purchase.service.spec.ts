@@ -101,6 +101,8 @@ describe('PurchaseService', () => {
       amount: 5,
     });
     purchaseArray[3].id = purchase4Id;
+
+    jest.clearAllMocks();
   });
 
   it('should be defined', () => {

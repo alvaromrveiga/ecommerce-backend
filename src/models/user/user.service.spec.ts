@@ -73,6 +73,8 @@ describe('UserService', () => {
       password: 'abc123456',
     });
     userArray[2].id = '36d01635-687c-41f7-9ca1-548c55cdf5d9';
+
+    jest.clearAllMocks();
   });
 
   it('should be defined', () => {

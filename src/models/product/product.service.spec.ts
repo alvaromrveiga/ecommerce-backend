@@ -86,6 +86,8 @@ describe('ProductService', () => {
       description: 'Table for offices',
     });
     productArray[2].id = '380379b4-a10f-49f0-9d0d-46a05794f0af';
+
+    jest.clearAllMocks();
   });
 
   it('should be defined', () => {

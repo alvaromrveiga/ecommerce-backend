@@ -69,6 +69,8 @@ describe('CategoryService', () => {
 
     await categoryService.create({ name: 'Higiene' });
     categoryArray[2].id = '48e09976-5556-4b1f-b830-d480aec4299c';
+
+    jest.clearAllMocks();
   });
 
   it('should be defined', () => {
