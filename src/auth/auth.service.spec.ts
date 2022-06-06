@@ -1,11 +1,13 @@
 import { Provider } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
+import { UserTokens } from '@prisma/client';
 import { accessJwtConfig, refreshJwtConfig } from 'src/config/jwt.config';
 import { UserService } from 'src/models/user/user.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthService } from './auth.service';
 import { InvalidEmailOrPasswordException } from './exceptions/invalid-email-or-password.exception.';
+import { InvalidRefreshTokenException } from './exceptions/invalid-refresh-token.exception';
 import { RefreshTokenPayload } from './types/refresh-token-payload';
 
 const userArray = [
@@ -26,7 +28,7 @@ const userArray = [
   },
 ];
 
-const userTokensArray = [];
+let userTokensArray: UserTokens[] = [];
 
 const UserServiceMock = {
   provide: UserService,
@@ -41,7 +43,24 @@ const UserServiceMock = {
 
 const JwtServiceMock = {
   provide: JwtService,
-  useValue: { signAsync: jest.fn().mockReturnValue('mockedValue') },
+  useValue: {
+    signAsync: jest.fn().mockReturnValue('mockedValue'),
+    verifyAsync: jest.fn().mockImplementation((refreshToken: string) => {
+      const isRefreshTokenValid = userTokensArray.some((userToken) => {
+        return userToken.refreshToken === refreshToken;
+      });
+
+      if (isRefreshTokenValid) {
+        return {
+          sub: userArray[1].id,
+          userRole: 'mockedRole',
+          tokenFamily: 'mockedTokenFamily',
+        } as RefreshTokenPayload;
+      }
+
+      return false;
+    }),
+  },
 };
 
 const PrismaServiceMock = {
@@ -49,7 +68,14 @@ const PrismaServiceMock = {
   useValue: {
     userTokens: {
       create: jest.fn().mockImplementation(({ data }) => {
-        return userTokensArray.push(data);
+        userTokensArray.push(data);
+
+        return data;
+      }),
+      findMany: jest.fn().mockImplementation(({ where }) => {
+        return userTokensArray.filter((userTokens) => {
+          return userTokens.userId === where.userId;
+        });
       }),
       deleteMany: jest.fn().mockImplementation(({ where }) => {
         userTokensArray.filter((userToken) => {
@@ -65,6 +91,7 @@ describe('AuthService', () => {
   let userService: UserService;
   let jwtService: JwtService;
   let prismaService: PrismaService;
+  let refreshToken: string;
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -80,6 +107,19 @@ describe('AuthService', () => {
     userService = module.get<UserService>(UserService);
     jwtService = module.get<JwtService>(JwtService);
     prismaService = module.get<PrismaService>(PrismaService);
+  });
+
+  beforeEach(async () => {
+    userTokensArray = [];
+
+    const response = await authService.login(
+      'tester2@example.com',
+      'abc123456',
+    );
+
+    refreshToken = response.refreshToken;
+
+    jest.clearAllMocks();
   });
 
   it('should be defined', () => {
@@ -100,7 +140,7 @@ describe('AuthService', () => {
         'tester2@example.com',
       );
       expect(jwtService.signAsync).toHaveBeenCalledWith(
-        { sub: '07b11faf-258b-4153-ae99-6d75bdcbcff5', role: undefined },
+        { sub: '07b11faf-258b-4153-ae99-6d75bdcbcff5', userRole: undefined },
         { ...accessJwtConfig },
       );
 
@@ -111,7 +151,7 @@ describe('AuthService', () => {
       expect(jwtService.signAsync).toHaveBeenCalledWith(
         {
           sub: '07b11faf-258b-4153-ae99-6d75bdcbcff5',
-          role: undefined,
+          userRole: undefined,
           tokenFamily: expect.stringMatching(uuidv4Regex),
         } as RefreshTokenPayload,
         { ...refreshJwtConfig },
@@ -133,6 +173,66 @@ describe('AuthService', () => {
       await expect(
         authService.login('unexistentTester@example.com', 'abc123456'),
       ).rejects.toThrow(new InvalidEmailOrPasswordException());
+    });
+  });
+
+  describe('refreshToken', () => {
+    it('should refresh token', async () => {
+      const response = await authService.refreshToken(
+        refreshToken,
+        '127.0.0.1 Tester browser',
+      );
+
+      expect(jwtService.verifyAsync).toHaveBeenCalledWith(
+        refreshToken,
+        refreshJwtConfig,
+      );
+
+      expect(prismaService.userTokens.findMany).toHaveBeenCalledWith({
+        where: { userId: userArray[1].id, refreshToken },
+      });
+
+      expect(jwtService.signAsync).toHaveBeenCalledWith(
+        { sub: userArray[1].id, userRole: 'mockedRole' },
+        accessJwtConfig,
+      );
+
+      expect(prismaService.userTokens.deleteMany).toHaveBeenCalledWith({
+        where: { refreshToken },
+      });
+
+      expect(jwtService.signAsync).toHaveBeenCalledWith(
+        {
+          sub: userArray[1].id,
+          userRole: 'mockedRole',
+          tokenFamily: 'mockedTokenFamily',
+        },
+        refreshJwtConfig,
+      );
+
+      expect(prismaService.userTokens.create).toHaveBeenCalledWith({
+        data: {
+          userId: userArray[1].id,
+          refreshToken,
+          family: 'mockedTokenFamily',
+          browserInfo: '127.0.0.1 Tester browser',
+          expiresAt: expect.any(Date),
+        },
+      });
+
+      expect(response).toEqual({
+        accessToken: 'mockedValue',
+        refreshToken: 'mockedValue',
+      });
+    });
+
+    it('should not refresh token if token is invalid', async () => {
+      await expect(
+        authService.refreshToken(
+          'invalidRefreshToken',
+          '127.0.0.1 Tester browser',
+        ),
+      ).rejects.toThrow(new InvalidRefreshTokenException());
     });
   });
 });
