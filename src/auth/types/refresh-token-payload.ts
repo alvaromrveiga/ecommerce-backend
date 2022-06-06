@@ -8,7 +8,7 @@ export type RefreshTokenPayload = {
   /** User role
    * @example "user"
    */
-  role: string;
+  userRole: string;
 
   /** Token family for refresh token rotation
    *
