@@ -2,6 +2,7 @@ import { Provider } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserTokens } from '@prisma/client';
+import { isDate, isUUID } from 'class-validator';
 import { accessJwtConfig, refreshJwtConfig } from 'src/config/jwt.config';
 import { UserService } from 'src/models/user/user.service';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -115,6 +116,7 @@ describe('AuthService', () => {
     const response = await authService.login(
       'tester2@example.com',
       'abc123456',
+      '127.0.0.1 Tester browser',
     );
 
     refreshToken = response.refreshToken;
@@ -233,6 +235,39 @@ describe('AuthService', () => {
           '127.0.0.1 Tester browser',
         ),
       ).rejects.toThrow(new InvalidRefreshTokenException());
+    });
+  });
+
+  describe('logout', () => {
+    it('should logout', async () => {
+      await authService.logout(refreshToken);
+
+      expect(prismaService.userTokens.deleteMany).toHaveBeenCalledWith({
+        where: { refreshToken },
+      });
+    });
+  });
+
+  describe('logoutAll', () => {
+    it('should logout user from all sessions', async () => {
+      await authService.logoutAll(userArray[1].id);
+
+      expect(prismaService.userTokens.deleteMany).toHaveBeenCalledWith({
+        where: { userId: userArray[1].id },
+      });
+    });
+  });
+
+  describe('findAllTokens', () => {
+    it('should find all user active tokens', async () => {
+      const tokens = await authService.findAllTokens(userArray[1].id);
+
+      expect(tokens.length).toEqual(1);
+      expect(tokens[0].userId).toEqual(userArray[1].id);
+      expect(tokens[0].refreshToken).toEqual(refreshToken);
+      expect(isUUID(tokens[0].family)).toBeTruthy();
+      expect(tokens[0].browserInfo).toEqual('127.0.0.1 Tester browser');
+      expect(isDate(tokens[0].expiresAt)).toBeTruthy();
     });
   });
 });
