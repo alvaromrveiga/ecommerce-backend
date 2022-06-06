@@ -8,5 +8,5 @@ export type AccessTokenPayload = {
   /** User role
    * @example "user"
    */
-  role: string;
+  userRole: string;
 };
