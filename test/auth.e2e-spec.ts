@@ -5,7 +5,7 @@ import { isJWT } from 'class-validator';
 import ms from 'ms';
 import { AppModule } from 'src/app.module';
 import { ExceptionInterceptor } from 'src/common/interceptors/exception.interceptor';
-import { accessJwtConfig } from 'src/config/jwt.config';
+import { accessJwtConfig, refreshJwtConfig } from 'src/config/jwt.config';
 import { PrismaService } from 'src/prisma/prisma.service';
 import request from 'supertest';
 
@@ -72,21 +72,35 @@ describe('AuthController (e2e)', () => {
         .expect(200);
 
       expect(response.body).toHaveProperty('accessToken');
+      expect(response.body).toHaveProperty('refreshToken');
       expect(isJWT(response.body.accessToken)).toBeTruthy();
+      expect(isJWT(response.body.refreshToken)).toBeTruthy();
 
       const user = await prisma.user.findUnique({
         where: { email: 'tester0@example.com' },
       });
 
-      const { sub, role, iat, exp } = jwtService.verify(
+      let { sub, userRole, iat, exp } = jwtService.verify(
         response.body.accessToken,
         accessJwtConfig,
       );
 
       expect(sub).toEqual(user.id);
-      expect(role).toEqual('USER');
+      expect(userRole).toEqual('USER');
 
-      const expiresInSeconds = ms(accessJwtConfig.expiresIn as string) / 1000;
+      let expiresInSeconds = ms(accessJwtConfig.expiresIn as string) / 1000;
+
+      expect(exp).toEqual(iat + expiresInSeconds);
+
+      ({ sub, userRole, iat, exp } = jwtService.verify(
+        response.body.refreshToken,
+        refreshJwtConfig,
+      ));
+
+      expect(sub).toEqual(user.id);
+      expect(userRole).toEqual('USER');
+
+      expiresInSeconds = ms(refreshJwtConfig.expiresIn as string) / 1000;
 
       expect(exp).toEqual(iat + expiresInSeconds);
     });
@@ -100,12 +114,19 @@ describe('AuthController (e2e)', () => {
         })
         .expect(200);
 
-      const { role } = jwtService.verify(
+      let { userRole } = jwtService.verify(
         response.body.accessToken,
         accessJwtConfig,
       );
 
-      expect(role).toEqual('ADMIN');
+      expect(userRole).toEqual('ADMIN');
+
+      ({ userRole } = jwtService.verify(
+        response.body.refreshToken,
+        refreshJwtConfig,
+      ));
+
+      expect(userRole).toEqual('ADMIN');
     });
 
     it('should login by case insensitive email', () => {
