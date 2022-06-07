@@ -86,6 +86,10 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Async</span>
+                                <a href="#findAllTokens" >findAllTokens</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#login" >login</a>
                             </li>
                             <li>
@@ -121,6 +125,86 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="findAllTokens"></a>
+                    <span class="name">
+                        <span class="modifier">Async</span>
+                        <span ><b>findAllTokens</b></span>
+                        <a href="#findAllTokens"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findAllTokens(request: Request)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@ApiOperation({summary: &#x27;Returns all user active tokens&#x27;})<br />@ApiBearerAuth()<br />@Get(&#x27;tokens&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="86"
+                            class="link-to-prism">src/auth/auth.controller.ts:86</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Returns all user&#39;s active tokens</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>request</td>
+                                    <td>
+                                            <code>Request</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Promise&lt;UserTokens[]&gt;</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="login"></a>
                     <span class="name">
                         <span class="modifier">Async</span>
@@ -132,7 +216,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>login(undefined: <a href="../classes/LoginCredentialsDto.html" target="_self">LoginCredentialsDto</a>)</code>
+                    <code>login(undefined: <a href="../classes/LoginCredentialsDto.html" target="_self">LoginCredentialsDto</a>, request: Request)</code>
                 </td>
             </tr>
 
@@ -146,8 +230,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="29"
-                            class="link-to-prism">src/auth/auth.controller.ts:29</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="31"
+                            class="link-to-prism">src/auth/auth.controller.ts:31</a></div>
                 </td>
             </tr>
 
@@ -172,6 +256,18 @@
                                 <tr>
                                     <td>
                                                 <code><a href="../classes/LoginCredentialsDto.html" target="_self" >LoginCredentialsDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>request</td>
+                                    <td>
+                                            <code>Request</code>
                                     </td>
 
                                     <td>
@@ -225,8 +321,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="51"
-                            class="link-to-prism">src/auth/auth.controller.ts:51</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="67"
+                            class="link-to-prism">src/auth/auth.controller.ts:67</a></div>
                 </td>
             </tr>
 
@@ -304,8 +400,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="60"
-                            class="link-to-prism">src/auth/auth.controller.ts:60</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="76"
+                            class="link-to-prism">src/auth/auth.controller.ts:76</a></div>
                 </td>
             </tr>
 
@@ -370,7 +466,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>refreshToken(undefined: <a href="../classes/RefreshTokenDto.html" target="_self">RefreshTokenDto</a>)</code>
+                    <code>refreshToken(undefined: <a href="../classes/RefreshTokenDto.html" target="_self">RefreshTokenDto</a>, request: Request)</code>
                 </td>
             </tr>
 
@@ -384,8 +480,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="40"
-                            class="link-to-prism">src/auth/auth.controller.ts:40</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="49"
+                            class="link-to-prism">src/auth/auth.controller.ts:49</a></div>
                 </td>
             </tr>
 
@@ -418,6 +514,18 @@
 
 
                                 </tr>
+                                <tr>
+                                    <td>request</td>
+                                    <td>
+                                            <code>Request</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -441,12 +549,14 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
   Req,
 } from &#x27;@nestjs/common&#x27;;
 import { ApiBearerAuth, ApiOperation, ApiTags } from &#x27;@nestjs/swagger&#x27;;
+import { UserTokens } from &#x27;@prisma/client&#x27;;
 import { Request } from &#x27;express&#x27;;
 import { AuthService } from &#x27;./auth.service&#x27;;
 import { LoginCredentialsDto } from &#x27;./dto/login-credentials.dto&#x27;;
@@ -468,8 +578,15 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async login(
     @Body() { email, password }: LoginCredentialsDto,
+    @Req() request: Request,
   ): Promise&lt;LoginResponse&gt; {
-    return this.authService.login(email, password);
+    const browserInfo &#x3D;
+      &#x60;${request.ip} ${request.headers[&#x27;user-agent&#x27;]} ${request.headers[&#x27;accept-language&#x27;]}&#x60;.replace(
+        / undefined/g,
+        &#x27;&#x27;,
+      );
+
+    return this.authService.login(email, password, browserInfo);
   }
 
   /** Refreshes the user token for silent authentication */
@@ -479,8 +596,15 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async refreshToken(
     @Body() { refreshToken }: RefreshTokenDto,
+    @Req() request: Request,
   ): Promise&lt;LoginResponse&gt; {
-    return this.authService.refreshToken(refreshToken);
+    const browserInfo &#x3D;
+      &#x60;${request.ip} ${request.headers[&#x27;user-agent&#x27;]} ${request.headers[&#x27;accept-language&#x27;]}&#x60;.replace(
+        / undefined/g,
+        &#x27;&#x27;,
+      );
+
+    return this.authService.refreshToken(refreshToken, browserInfo);
   }
 
   /** Logs out the User from the current session */
@@ -501,6 +625,16 @@ export class AuthController {
     const { userId } &#x3D; request.user as { userId: string };
 
     return this.authService.logoutAll(userId);
+  }
+
+  /** Returns all user&#x27;s active tokens */
+  @ApiOperation({ summary: &#x27;Returns all user active tokens&#x27; })
+  @ApiBearerAuth()
+  @Get(&#x27;tokens&#x27;)
+  async findAllTokens(@Req() request: Request): Promise&lt;UserTokens[]&gt; {
+    const { userId } &#x3D; request.user as { userId: string };
+
+    return this.authService.findAllTokens(userId);
   }
 }
 </code></pre>
