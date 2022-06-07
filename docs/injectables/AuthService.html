@@ -123,7 +123,7 @@
                             <li>
                                     <span class="modifier">Private</span>
                                     <span class="modifier">Async</span>
-                                <a href="#removeCompromisedRefreshTokenFamily" >removeCompromisedRefreshTokenFamily</a>
+                                <a href="#removeRefreshTokenFamilyIfCompromised" >removeRefreshTokenFamilyIfCompromised</a>
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
@@ -495,8 +495,8 @@ JwtService dependencies</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="234"
-                            class="link-to-prism">src/auth/auth.service.ts:234</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="242"
+                            class="link-to-prism">src/auth/auth.service.ts:242</a></div>
                 </td>
             </tr>
 
@@ -878,27 +878,27 @@ compares if the hashed password matches the inputted one.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="removeCompromisedRefreshTokenFamily"></a>
+                    <a name="removeRefreshTokenFamilyIfCompromised"></a>
                     <span class="name">
                         <span class="modifier">Private</span>
                         <span class="modifier">Async</span>
-                        <span ><b>removeCompromisedRefreshTokenFamily</b></span>
-                        <a href="#removeCompromisedRefreshTokenFamily"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>removeRefreshTokenFamilyIfCompromised</b></span>
+                        <a href="#removeRefreshTokenFamilyIfCompromised"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>removeCompromisedRefreshTokenFamily(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, tokenFamily: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>removeRefreshTokenFamilyIfCompromised(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, tokenFamily: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="206"
-                            class="link-to-prism">src/auth/auth.service.ts:206</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="208"
+                            class="link-to-prism">src/auth/auth.service.ts:208</a></div>
                 </td>
             </tr>
 
@@ -986,8 +986,8 @@ that means the token has been compromised and the family should me removed</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="216"
-                            class="link-to-prism">src/auth/auth.service.ts:216</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="224"
+                            class="link-to-prism">src/auth/auth.service.ts:224</a></div>
                 </td>
             </tr>
 
@@ -1497,12 +1497,14 @@ export class AuthService {
     refreshToken: string,
     refreshTokenContent: RefreshTokenPayload,
   ): Promise&lt;boolean&gt; {
-    const isRefreshTokenValid &#x3D; await this.prismaService.userTokens.findMany({
+    const userTokens &#x3D; await this.prismaService.userTokens.findMany({
       where: { userId: refreshTokenContent.sub, refreshToken },
     });
 
-    if (isRefreshTokenValid.length &#x3D;&#x3D;&#x3D; 0) {
-      await this.removeCompromisedRefreshTokenFamily(
+    const isRefreshTokenValid &#x3D; userTokens.length &gt; 0;
+
+    if (!isRefreshTokenValid) {
+      await this.removeRefreshTokenFamilyIfCompromised(
         refreshTokenContent.sub,
         refreshTokenContent.tokenFamily,
       );
@@ -1520,13 +1522,19 @@ export class AuthService {
    *
    * Refer to https://auth0.com/docs/secure/tokens/refresh-tokens/refresh-token-rotation#automatic-reuse-detection
    */
-  private async removeCompromisedRefreshTokenFamily(
+  private async removeRefreshTokenFamilyIfCompromised(
     userId: string,
     tokenFamily: string,
   ): Promise&lt;void&gt; {
-    await this.prismaService.userTokens.deleteMany({
+    const familyTokens &#x3D; await this.prismaService.userTokens.findMany({
       where: { userId, family: tokenFamily },
     });
+
+    if (familyTokens.length &gt; 0) {
+      await this.prismaService.userTokens.deleteMany({
+        where: { userId, family: tokenFamily },
+      });
+    }
   }
 
   /** Removes the old token from the database and creates a new one */
