@@ -180,12 +180,14 @@ export class AuthService {
     refreshToken: string,
     refreshTokenContent: RefreshTokenPayload,
   ): Promise<boolean> {
-    const isRefreshTokenValid = await this.prismaService.userTokens.findMany({
+    const userTokens = await this.prismaService.userTokens.findMany({
       where: { userId: refreshTokenContent.sub, refreshToken },
     });
 
-    if (isRefreshTokenValid.length === 0) {
-      await this.removeCompromisedRefreshTokenFamily(
+    const isRefreshTokenValid = userTokens.length > 0;
+
+    if (!isRefreshTokenValid) {
+      await this.removeRefreshTokenFamilyIfCompromised(
         refreshTokenContent.sub,
         refreshTokenContent.tokenFamily,
       );
@@ -203,13 +205,19 @@ export class AuthService {
    *
    * Refer to https://auth0.com/docs/secure/tokens/refresh-tokens/refresh-token-rotation#automatic-reuse-detection
    */
-  private async removeCompromisedRefreshTokenFamily(
+  private async removeRefreshTokenFamilyIfCompromised(
     userId: string,
     tokenFamily: string,
   ): Promise<void> {
-    await this.prismaService.userTokens.deleteMany({
+    const familyTokens = await this.prismaService.userTokens.findMany({
       where: { userId, family: tokenFamily },
     });
+
+    if (familyTokens.length > 0) {
+      await this.prismaService.userTokens.deleteMany({
+        where: { userId, family: tokenFamily },
+      });
+    }
   }
 
   /** Removes the old token from the database and creates a new one */

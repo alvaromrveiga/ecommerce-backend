@@ -255,7 +255,6 @@ describe('AuthController (e2e)', () => {
       const rotatedRefreshToken = await jwtService.signAsync(
         {
           sub: user.id,
-          userRole: user.role,
           tokenFamily: '7d539903-a4cc-44d7-a156-96748e686d41',
         },
         refreshJwtConfig,
@@ -273,6 +272,47 @@ describe('AuthController (e2e)', () => {
           ).getResponse(),
         ),
       });
+    });
+
+    it('should not refresh if token signature is valid but family was compromised', async () => {
+      const user = await prisma.user.findUnique({
+        where: { email: 'tester1@example.com' },
+      });
+
+      let userTokens = await prisma.userTokens.findMany({
+        where: { userId: user.id },
+      });
+      expect(userTokens.length).toEqual(1);
+
+      // Set timeout so the tokens are not exactly the same
+      setTimeout(async () => {
+        const rotatedRefreshToken = await jwtService.signAsync(
+          {
+            sub: user.id,
+            tokenFamily: userTokens[0].family,
+          },
+          refreshJwtConfig,
+        );
+
+        await expect(
+          request(app.getHttpServer())
+            .post('/refresh')
+            .send({ refreshToken: rotatedRefreshToken })
+            .expect(401),
+        ).resolves.toMatchObject({
+          text: JSON.stringify(
+            new UnauthorizedException(
+              new InvalidRefreshTokenException().message,
+            ).getResponse(),
+          ),
+        });
+
+        userTokens = await prisma.userTokens.findMany({
+          where: { userId: user.id },
+        });
+
+        expect(userTokens.length).toEqual(0);
+      }, 1000);
     });
   });
 
