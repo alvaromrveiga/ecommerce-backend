@@ -40,7 +40,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: 'yarn'
 
       - name: Create .env.test
         run: |
@@ -50,7 +50,7 @@ jobs:
           echo REFRESH_JWT_SECRET="Git#Hub1Actions2Refresh3Secret4" >> .env.test
           cat .env.test
 
-      - run: npm install
-      - run: npm run build
-      - run: npm run migrate:test
-      - run: npm run test:all
+      - run: yarn
+      - run: yarn build
+      - run: yarn migrate:test
+      - run: yarn test:all
