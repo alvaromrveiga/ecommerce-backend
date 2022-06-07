@@ -44,7 +44,7 @@ export class AuthService {
     const accessToken = await this.generateAccessToken(payload);
 
     const refreshToken = await this.createRefreshToken(
-      { ...payload },
+      { sub: payload.sub },
       browserInfo,
     );
 
@@ -64,9 +64,11 @@ export class AuthService {
 
     await this.validateRefreshToken(refreshToken, refreshTokenContent);
 
+    const userRole = await this.getUserRole(refreshTokenContent.sub);
+
     const accessToken = await this.generateAccessToken({
       sub: refreshTokenContent.sub,
-      userRole: refreshTokenContent.userRole,
+      userRole,
     });
 
     const newRefreshToken = await this.rotateRefreshToken(
@@ -136,7 +138,6 @@ export class AuthService {
   private async createRefreshToken(
     payload: {
       sub: string;
-      userRole: string;
       tokenFamily?: string;
     },
     browserInfo?: string,
@@ -222,12 +223,17 @@ export class AuthService {
     const newRefreshToken = await this.createRefreshToken(
       {
         sub: refreshTokenContent.sub,
-        userRole: refreshTokenContent.userRole,
         tokenFamily: refreshTokenContent.tokenFamily,
       },
       browserInfo,
     );
 
     return newRefreshToken;
+  }
+
+  private async getUserRole(userId: string): Promise<string> {
+    const user = await this.userService.findById(userId);
+
+    return user.role;
   }
 }

@@ -5,11 +5,6 @@ export type RefreshTokenPayload = {
    */
   sub: string;
 
-  /** User role
-   * @example "user"
-   */
-  userRole: string;
-
   /** Token family for refresh token rotation
    *
    * Check https://auth0.com/docs/secure/tokens/refresh-tokens/refresh-token-rotation

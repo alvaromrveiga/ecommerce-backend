@@ -106,25 +106,28 @@ describe('AuthController (e2e)', () => {
         where: { email: 'tester0@example.com' },
       });
 
-      let { sub, userRole, iat, exp } = await jwtService.verifyAsync(
-        response.body.accessToken,
-        accessJwtConfig,
-      );
+      let { sub, userRole, tokenFamily, iat, exp } =
+        await jwtService.verifyAsync(
+          response.body.accessToken,
+          accessJwtConfig,
+        );
 
       expect(sub).toEqual(user.id);
       expect(userRole).toEqual('USER');
+      expect(tokenFamily).toBeUndefined();
 
       let expiresInSeconds = ms(accessJwtConfig.expiresIn as string) / 1000;
 
       expect(exp).toEqual(iat + expiresInSeconds);
 
-      ({ sub, userRole, iat, exp } = await jwtService.verifyAsync(
+      ({ sub, userRole, tokenFamily, iat, exp } = await jwtService.verifyAsync(
         response.body.refreshToken,
         refreshJwtConfig,
       ));
 
       expect(sub).toEqual(user.id);
-      expect(userRole).toEqual('USER');
+      expect(userRole).toBeUndefined();
+      expect(isUUID(tokenFamily)).toBeTruthy();
 
       expiresInSeconds = ms(refreshJwtConfig.expiresIn as string) / 1000;
 
@@ -146,17 +149,10 @@ describe('AuthController (e2e)', () => {
         })
         .expect(200);
 
-      let { userRole } = await jwtService.verifyAsync(
+      const { userRole } = await jwtService.verifyAsync(
         response.body.accessToken,
         accessJwtConfig,
       );
-
-      expect(userRole).toEqual('ADMIN');
-
-      ({ userRole } = await jwtService.verifyAsync(
-        response.body.refreshToken,
-        refreshJwtConfig,
-      ));
 
       expect(userRole).toEqual('ADMIN');
     });
@@ -223,7 +219,7 @@ describe('AuthController (e2e)', () => {
       ));
 
       expect(sub).toEqual(user.id);
-      expect(userRole).toEqual('USER');
+      expect(userRole).toBeUndefined();
       expect(isUUID(tokenFamily)).toBeTruthy();
 
       const userTokens = await prisma.userTokens.findMany({

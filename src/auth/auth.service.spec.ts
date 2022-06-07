@@ -16,16 +16,19 @@ const userArray = [
     id: 'b2f63bff-3b16-4cde-a777-c2c3b2b02945',
     email: 'tester@example.com',
     password: '$2b$10$1XpzUYu8FuvuaBb3SC0xzuR9DX7KakbMLt0vLNoZ.UnLntDMFc4LK', // abc123456
+    role: 'USER',
   },
   {
     id: '07b11faf-258b-4153-ae99-6d75bdcbcff5',
     email: 'tester2@example.com',
     password: '$2b$10$J/OgIXlICsf/8kdh1AD4AOK5DxlM/6YNkSnVdauduEvYP9KZdwlQa', // abc123456
+    role: 'USER',
   },
   {
     id: '07230400-8e26-4562-a085-8ffdf975651c',
     email: 'tester3@example.com',
     password: '$2b$10$TlT.I9C2CqqFlvE2PlF2lezaF3nQWRrZA34OBsj83WeqODysZtJ1a', // abc123456
+    role: 'USER',
   },
 ];
 
@@ -37,6 +40,11 @@ const UserServiceMock = {
     findByEmail: jest.fn().mockImplementation((email) => {
       return userArray.find((user) => {
         return user.email === email;
+      });
+    }),
+    findById: jest.fn().mockImplementation((id) => {
+      return userArray.find((user) => {
+        return user.id === id;
       });
     }),
   },
@@ -54,7 +62,6 @@ const JwtServiceMock = {
       if (isRefreshTokenValid) {
         return {
           sub: userArray[1].id,
-          userRole: 'mockedRole',
           tokenFamily: 'mockedTokenFamily',
         } as RefreshTokenPayload;
       }
@@ -142,7 +149,7 @@ describe('AuthService', () => {
         'tester2@example.com',
       );
       expect(jwtService.signAsync).toHaveBeenCalledWith(
-        { sub: '07b11faf-258b-4153-ae99-6d75bdcbcff5', userRole: undefined },
+        { sub: '07b11faf-258b-4153-ae99-6d75bdcbcff5', userRole: 'USER' },
         { ...accessJwtConfig },
       );
 
@@ -194,8 +201,10 @@ describe('AuthService', () => {
         where: { userId: userArray[1].id, refreshToken },
       });
 
+      expect(userService.findById).toHaveBeenCalledWith(userArray[1].id);
+
       expect(jwtService.signAsync).toHaveBeenCalledWith(
-        { sub: userArray[1].id, userRole: 'mockedRole' },
+        { sub: userArray[1].id, userRole: 'USER' },
         accessJwtConfig,
       );
 
@@ -204,11 +213,7 @@ describe('AuthService', () => {
       });
 
       expect(jwtService.signAsync).toHaveBeenCalledWith(
-        {
-          sub: userArray[1].id,
-          userRole: 'mockedRole',
-          tokenFamily: 'mockedTokenFamily',
-        },
+        { sub: userArray[1].id, tokenFamily: 'mockedTokenFamily' },
         refreshJwtConfig,
       );
 
