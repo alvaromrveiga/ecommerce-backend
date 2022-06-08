@@ -98,7 +98,7 @@ describe('CategoryController (e2e)', () => {
       .set({ Authorization: `Bearer ${adminToken}` })
       .send({
         name: 'Brand2 wood table',
-        basePrice: 123.0,
+        basePrice: 123.99,
       } as CreateProductDto);
     productsIds.push(response.body.id);
 
@@ -107,7 +107,7 @@ describe('CategoryController (e2e)', () => {
       .set({ Authorization: `Bearer ${adminToken}` })
       .send({
         name: 'Brand1 wood chair',
-        basePrice: 70.0,
+        basePrice: 72.03,
       } as CreateProductDto);
     productsIds.push(response.body.id);
 
@@ -116,7 +116,6 @@ describe('CategoryController (e2e)', () => {
       .set({ Authorization: `Bearer ${token}` })
       .send({
         productId: productsIds[0],
-        totalPrice: 200,
         amount: 2,
       } as CreatePurchaseDto);
     purchasesIds.push(response.body.id);
@@ -126,7 +125,6 @@ describe('CategoryController (e2e)', () => {
       .set({ Authorization: `Bearer ${adminToken}` })
       .send({
         productId: productsIds[1],
-        totalPrice: 350,
         amount: 4,
       } as CreatePurchaseDto);
     purchasesIds.push(response.body.id);
@@ -136,7 +134,6 @@ describe('CategoryController (e2e)', () => {
       .set({ Authorization: `Bearer ${token}` })
       .send({
         productId: productsIds[1],
-        totalPrice: 250,
         amount: 3,
       } as CreatePurchaseDto);
     purchasesIds.push(response.body.id);
@@ -146,7 +143,6 @@ describe('CategoryController (e2e)', () => {
       .set({ Authorization: `Bearer ${adminToken}` })
       .send({
         productId: productsIds[0],
-        totalPrice: 300,
         amount: 8,
       } as CreatePurchaseDto);
     purchasesIds.push(response.body.id);
@@ -159,7 +155,6 @@ describe('CategoryController (e2e)', () => {
         .set({ Authorization: `Bearer ${token}` })
         .send({
           productId: productsIds[1],
-          totalPrice: 50,
           amount: 1,
         } as CreatePurchaseDto)
         .expect(201);
@@ -167,7 +162,7 @@ describe('CategoryController (e2e)', () => {
       const purchase: Purchase = response.body;
       expect(purchase.productId).toEqual(productsIds[1]);
       expect(purchase.userId).toEqual(usersIds[0]);
-      expect(purchase.totalPrice).toEqual('50');
+      expect(purchase.totalPrice).toEqual('72.03');
       expect(purchase.amount).toEqual(1);
       expect(isUUID(purchase.id, 4)).toBeTruthy();
       expect(isDate(new Date(purchase.createdAt))).toBeTruthy();
@@ -182,9 +177,8 @@ describe('CategoryController (e2e)', () => {
         .send({
           id: '609128f4-e010-415b-a712-a1fbc9a73400',
           productId: productsIds[1],
-          totalPrice: 50,
           amount: 1,
-        })
+        } as CreatePurchaseDto)
         .expect(400);
     });
 
@@ -193,7 +187,6 @@ describe('CategoryController (e2e)', () => {
         .post('/purchase')
         .send({
           productId: productsIds[1],
-          totalPrice: 50,
           amount: 1,
         } as CreatePurchaseDto)
         .expect(401);
@@ -391,7 +384,7 @@ describe('CategoryController (e2e)', () => {
       expect(purchase.id).toEqual(purchasesIds[2]);
       expect(purchase.userId).toEqual(usersIds[0]);
       expect(purchase.productId).toEqual(productsIds[1]);
-      expect(purchase.totalPrice).toEqual('250');
+      expect(purchase.totalPrice).toEqual('216.09');
       expect(purchase.amount).toEqual(3);
     });
 
@@ -459,7 +452,6 @@ describe('CategoryController (e2e)', () => {
         .set({ Authorization: `Bearer ${adminToken}` })
         .send({
           productId: productsIds[0],
-          totalPrice: 300,
           amount: 4,
         } as UpdatePurchaseDto)
         .expect(200);
@@ -469,7 +461,7 @@ describe('CategoryController (e2e)', () => {
       expect(purchase.id).toEqual(purchasesIds[2]);
       expect(purchase.userId).toEqual(usersIds[0]);
       expect(purchase.productId).toEqual(productsIds[0]);
-      expect(purchase.totalPrice).toEqual('300');
+      expect(purchase.totalPrice).toEqual('495.96');
       expect(purchase.amount).toEqual(4);
       expect(purchase.reviewComment).toBeNull();
       expect(purchase.reviewNote).toBeNull();
@@ -482,7 +474,6 @@ describe('CategoryController (e2e)', () => {
         .send({
           id: '4af7dbd4-bc93-4e37-b60f-67012b5d375b',
           productId: productsIds[0],
-          totalPrice: 300,
           amount: 4,
         })
         .expect(400);
@@ -495,7 +486,6 @@ describe('CategoryController (e2e)', () => {
           .set({ Authorization: `Bearer ${adminToken}` })
           .send({
             productId: productsIds[0],
-            totalPrice: 300,
             amount: 4,
           } as UpdatePurchaseDto)
           .expect(404),
@@ -510,7 +500,6 @@ describe('CategoryController (e2e)', () => {
         .set({ Authorization: `Bearer ${token}` })
         .send({
           productId: productsIds[0],
-          totalPrice: 300,
           amount: 4,
         } as UpdatePurchaseDto)
         .expect(403);
@@ -521,7 +510,6 @@ describe('CategoryController (e2e)', () => {
         .patch(`/purchase/${purchasesIds[2]}`)
         .send({
           productId: productsIds[0],
-          totalPrice: 300,
           amount: 4,
         } as UpdatePurchaseDto)
         .expect(401);

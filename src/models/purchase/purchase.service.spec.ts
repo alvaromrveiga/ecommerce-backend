@@ -1,12 +1,29 @@
 import { Provider } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Role } from '@prisma/client';
+import { Decimal } from '@prisma/client/runtime';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Product } from '../product/entities/product.entity';
 import { Purchase } from './entities/purchase.entity';
 import { NotPurchaseOwnerException } from './exceptions/not-purchase-owner.exception';
 import { PurchaseService } from './purchase.service';
 
 let purchaseArray: Purchase[];
+
+const productArray: Product[] = [
+  {
+    id: 'ce9873bd-d469-4f78-9405-ace81957c624',
+    basePrice: new Decimal(71.01),
+    name: 'TestProduct1',
+    urlName: 'testproduct1',
+  },
+  {
+    id: 'ebd4e8b2-1c65-43c7-998b-ce7f0f2364f1',
+    basePrice: new Decimal(69.99),
+    name: 'TestProduct2',
+    urlName: 'testproduct2',
+  },
+];
 
 const PrismaServiceMock = {
   provide: PrismaService,
@@ -44,6 +61,13 @@ const PrismaServiceMock = {
         purchaseArray.splice(purchaseIndex, 1);
       }),
     },
+    product: {
+      findUnique: jest.fn().mockImplementation(({ where }) => {
+        return productArray.find((product) => {
+          return product.id === where.id;
+        });
+      }),
+    },
   },
 } as Provider;
 
@@ -53,9 +77,6 @@ describe('PurchaseService', () => {
 
   const user1Id = '89f04688-f602-443b-94a1-d25385e2124a';
   const user2Id = 'bbfa050f-d297-47c4-90ed-cb2f5d8a5b6a';
-
-  const product1Id = 'ce9873bd-d469-4f78-9405-ace81957c624';
-  const product2Id = 'ebd4e8b2-1c65-43c7-998b-ce7f0f2364f1';
 
   const purchase1Id = 'd303b321-e99a-41ad-94be-d98526b4f7be';
   const purchase2Id = '26cd45c9-af93-456b-a77a-6f600145bbae';
@@ -75,29 +96,25 @@ describe('PurchaseService', () => {
     purchaseArray = [];
 
     await purchaseService.create(user1Id, {
-      productId: product1Id,
-      totalPrice: 140,
+      productId: productArray[0].id,
       amount: 2,
     });
     purchaseArray[0].id = purchase1Id;
 
     await purchaseService.create(user2Id, {
-      productId: product1Id,
-      totalPrice: 200,
+      productId: productArray[0].id,
       amount: 3,
     });
     purchaseArray[1].id = purchase2Id;
 
     await purchaseService.create(user1Id, {
-      productId: product2Id,
-      totalPrice: 260,
+      productId: productArray[1].id,
       amount: 4,
     });
     purchaseArray[2].id = purchase3Id;
 
     await purchaseService.create(user2Id, {
-      productId: product2Id,
-      totalPrice: 300,
+      productId: productArray[1].id,
       amount: 5,
     });
     purchaseArray[3].id = purchase4Id;
@@ -113,8 +130,7 @@ describe('PurchaseService', () => {
   describe('create', () => {
     it('should create purchase', async () => {
       const purchase = await purchaseService.create(user1Id, {
-        productId: product1Id,
-        totalPrice: 355.03,
+        productId: productArray[0].id,
         amount: 5,
       });
 
@@ -122,16 +138,16 @@ describe('PurchaseService', () => {
       expect(purchase).toEqual(purchaseArray[4]);
 
       expect(purchase.userId).toEqual(user1Id);
-      expect(purchase.productId).toEqual(product1Id);
-      expect(purchase.totalPrice).toEqual(355.03);
+      expect(purchase.productId).toEqual(productArray[0].id);
+      expect(purchase.totalPrice).toEqual(355.05);
       expect(purchase.amount).toEqual(5);
 
       expect(prismaService.purchase.create).toHaveBeenCalledWith(
         expect.objectContaining({
           data: {
             userId: user1Id,
-            productId: product1Id,
-            totalPrice: 355.03,
+            productId: productArray[0].id,
+            totalPrice: 355.05,
             amount: 5,
           },
         }),
@@ -159,14 +175,14 @@ describe('PurchaseService', () => {
     it('should find all purchases filtering by user ID and product ID', async () => {
       await purchaseService.findAll({
         userId: user1Id,
-        productId: product2Id,
+        productId: productArray[1].id,
       });
 
       expect(prismaService.purchase.findMany).toHaveBeenCalledWith(
         expect.objectContaining({
           where: {
             userId: { equals: user1Id },
-            productId: { equals: product2Id },
+            productId: { equals: productArray[1].id },
           },
         }),
       );
@@ -254,20 +270,23 @@ describe('PurchaseService', () => {
   describe('update', () => {
     it('should update purchase', async () => {
       const purchase = await purchaseService.update(purchase2Id, {
-        productId: product2Id,
-        totalPrice: 1000,
+        productId: productArray[1].id,
         amount: 15,
       });
 
       expect(purchase.id).toEqual(purchase2Id);
-      expect(purchase.productId).toEqual(product2Id);
-      expect(purchase.totalPrice).toEqual(1000);
+      expect(purchase.productId).toEqual(productArray[1].id);
+      expect(purchase.totalPrice).toEqual(1049.85);
       expect(purchase.amount).toEqual(15);
 
       expect(prismaService.purchase.update).toHaveBeenCalledWith(
         expect.objectContaining({
           where: { id: purchase2Id },
-          data: { productId: product2Id, totalPrice: 1000, amount: 15 },
+          data: {
+            productId: productArray[1].id,
+            totalPrice: 1049.85,
+            amount: 15,
+          },
         }),
       );
     });
