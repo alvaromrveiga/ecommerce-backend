@@ -87,6 +87,11 @@ CRUD endpoints are available for purchases.</p>
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#calculateTotalPrice" >calculateTotalPrice</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Async</span>
                                 <a href="#create" >create</a>
                             </li>
@@ -133,7 +138,7 @@ CRUD endpoints are available for purchases.</p>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/models/purchase/purchase.service.ts:15</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/models/purchase/purchase.service.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -184,6 +189,78 @@ CRUD endpoints are available for purchases.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="calculateTotalPrice"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>calculateTotalPrice</b></span>
+                        <a href="#calculateTotalPrice"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>calculateTotalPrice(createPurchaseDto: <a href="../classes/CreatePurchaseDto.html" target="_self">CreatePurchaseDto</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="148"
+                            class="link-to-prism">src/models/purchase/purchase.service.ts:148</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>createPurchaseDto</td>
+                                    <td>
+                                                <code><a href="../classes/CreatePurchaseDto.html" target="_self" >CreatePurchaseDto</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;number&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="create"></a>
                     <span class="name">
                         <span class="modifier">Async</span>
@@ -202,8 +279,8 @@ CRUD endpoints are available for purchases.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="24"
-                            class="link-to-prism">src/models/purchase/purchase.service.ts:24</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="25"
+                            class="link-to-prism">src/models/purchase/purchase.service.ts:25</a></div>
                 </td>
             </tr>
 
@@ -287,8 +364,8 @@ CRUD endpoints are available for purchases.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="43"
-                            class="link-to-prism">src/models/purchase/purchase.service.ts:43</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="46"
+                            class="link-to-prism">src/models/purchase/purchase.service.ts:46</a></div>
                 </td>
             </tr>
 
@@ -361,8 +438,8 @@ and ordering by name</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="71"
-                            class="link-to-prism">src/models/purchase/purchase.service.ts:71</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="74"
+                            class="link-to-prism">src/models/purchase/purchase.service.ts:74</a></div>
                 </td>
             </tr>
 
@@ -459,8 +536,8 @@ Admins can get any.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="135"
-                            class="link-to-prism">src/models/purchase/purchase.service.ts:135</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="144"
+                            class="link-to-prism">src/models/purchase/purchase.service.ts:144</a></div>
                 </td>
             </tr>
 
@@ -532,8 +609,8 @@ Admins can get any.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="93"
-                            class="link-to-prism">src/models/purchase/purchase.service.ts:93</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="96"
+                            class="link-to-prism">src/models/purchase/purchase.service.ts:96</a></div>
                 </td>
             </tr>
 
@@ -629,8 +706,8 @@ Admins can get any.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="118"
-                            class="link-to-prism">src/models/purchase/purchase.service.ts:118</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="121"
+                            class="link-to-prism">src/models/purchase/purchase.service.ts:121</a></div>
                 </td>
             </tr>
 
@@ -700,6 +777,7 @@ Admins can get any.</p>
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;;
 import { Role } from &#x27;@prisma/client&#x27;;
+import currency from &#x27;currency.js&#x27;;
 import { PrismaService } from &#x27;src/prisma/prisma.service&#x27;;
 import { CreatePurchaseDto } from &#x27;./dto/create-purchase.dto&#x27;;
 import { FindPurchasesDto } from &#x27;./dto/find-purchases.dto&#x27;;
@@ -725,8 +803,10 @@ export class PurchaseService {
     userId: string,
     createPurchaseDto: CreatePurchaseDto,
   ): Promise&lt;Purchase&gt; {
+    const totalPrice &#x3D; await this.calculateTotalPrice(createPurchaseDto);
+
     const purchase &#x3D; await this.prisma.purchase.create({
-      data: { ...createPurchaseDto, userId },
+      data: { ...createPurchaseDto, userId, totalPrice },
       include: {
         user: { select: { email: true } },
         product: { select: { name: true } },
@@ -819,21 +899,41 @@ export class PurchaseService {
     id: string,
     updatePurchaseDto: UpdatePurchaseDto,
   ): Promise&lt;Purchase&gt; {
-    const purchase &#x3D; await this.prisma.purchase.update({
+    const purchase &#x3D; await this.prisma.purchase.findUnique({ where: { id } });
+
+    const productId &#x3D; updatePurchaseDto.productId || purchase.productId;
+    const amount &#x3D; updatePurchaseDto.amount || purchase.amount;
+    const totalPrice &#x3D; await this.calculateTotalPrice({ productId, amount });
+
+    const updatedPurchase &#x3D; await this.prisma.purchase.update({
       where: { id },
-      data: { ...updatePurchaseDto },
+      data: { ...updatePurchaseDto, totalPrice },
       include: {
         user: { select: { email: true } },
         product: { select: { name: true } },
       },
     });
 
-    return purchase;
+    return updatedPurchase;
   }
 
   /** Removes purchase from database */
   async remove(id: string): Promise&lt;void&gt; {
     await this.prisma.purchase.delete({ where: { id } });
+  }
+
+  private async calculateTotalPrice(
+    createPurchaseDto: CreatePurchaseDto,
+  ): Promise&lt;number&gt; {
+    const { basePrice } &#x3D; await this.prisma.product.findUnique({
+      where: { id: createPurchaseDto.productId },
+    });
+
+    const totalPrice &#x3D; currency(basePrice.toNumber()).multiply(
+      createPurchaseDto.amount,
+    );
+
+    return totalPrice.value;
   }
 }
 </code></pre>
