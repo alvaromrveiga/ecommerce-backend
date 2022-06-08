@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Role } from '@prisma/client';
+import currency from 'currency.js';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatePurchaseDto } from './dto/create-purchase.dto';
 import { FindPurchasesDto } from './dto/find-purchases.dto';
@@ -25,8 +26,10 @@ export class PurchaseService {
     userId: string,
     createPurchaseDto: CreatePurchaseDto,
   ): Promise<Purchase> {
+    const totalPrice = await this.calculateTotalPrice(createPurchaseDto);
+
     const purchase = await this.prisma.purchase.create({
-      data: { ...createPurchaseDto, userId },
+      data: { ...createPurchaseDto, userId, totalPrice },
       include: {
         user: { select: { email: true } },
         product: { select: { name: true } },
@@ -119,20 +122,40 @@ export class PurchaseService {
     id: string,
     updatePurchaseDto: UpdatePurchaseDto,
   ): Promise<Purchase> {
-    const purchase = await this.prisma.purchase.update({
+    const purchase = await this.prisma.purchase.findUnique({ where: { id } });
+
+    const productId = updatePurchaseDto.productId || purchase.productId;
+    const amount = updatePurchaseDto.amount || purchase.amount;
+    const totalPrice = await this.calculateTotalPrice({ productId, amount });
+
+    const updatedPurchase = await this.prisma.purchase.update({
       where: { id },
-      data: { ...updatePurchaseDto },
+      data: { ...updatePurchaseDto, totalPrice },
       include: {
         user: { select: { email: true } },
         product: { select: { name: true } },
       },
     });
 
-    return purchase;
+    return updatedPurchase;
   }
 
   /** Removes purchase from database */
   async remove(id: string): Promise<void> {
     await this.prisma.purchase.delete({ where: { id } });
+  }
+
+  private async calculateTotalPrice(
+    createPurchaseDto: CreatePurchaseDto,
+  ): Promise<number> {
+    const { basePrice } = await this.prisma.product.findUnique({
+      where: { id: createPurchaseDto.productId },
+    });
+
+    const totalPrice = currency(basePrice.toNumber()).multiply(
+      createPurchaseDto.amount,
+    );
+
+    return totalPrice.value;
   }
 }
