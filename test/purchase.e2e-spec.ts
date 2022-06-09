@@ -419,6 +419,26 @@ describe('CategoryController (e2e)', () => {
         .expect(400);
     });
 
+    it('should not review purchase if note if not between 1 and 5', async () => {
+      await request(app.getHttpServer())
+        .patch(`/purchase/review/${purchasesIds[2]}`)
+        .set({ Authorization: `Bearer ${token}` })
+        .send({
+          reviewNote: 0,
+          reviewComment: 'Amazing product!',
+        })
+        .expect(400);
+
+      await request(app.getHttpServer())
+        .patch(`/purchase/review/${purchasesIds[2]}`)
+        .set({ Authorization: `Bearer ${token}` })
+        .send({
+          reviewNote: 6,
+          reviewComment: 'Amazing product!',
+        })
+        .expect(400);
+    });
+
     it('should not review purchase if id is invalid', async () => {
       await expect(
         request(app.getHttpServer())
