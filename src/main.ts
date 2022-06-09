@@ -32,6 +32,6 @@ async function bootstrap(): Promise<void> {
     customSiteTitle: 'eCommerce Swagger API',
   });
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
