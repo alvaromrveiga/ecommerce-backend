@@ -20,6 +20,7 @@ import { FindProductsDto } from './dto/find-products.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
 import { ProductService } from './product.service';
+import { File } from './types/file';
 
 /** Exposes product CRUD endpoints */
 @ApiTags('product')
@@ -80,7 +81,7 @@ export class ProductController {
   @Patch('picture/:id')
   uploadPhoto(
     @Param('id') id: string,
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFile() file: File,
   ): Promise<Product> {
     return this.productService.uploadPicture(id, file);
   }

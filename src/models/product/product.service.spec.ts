@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ProductService } from './product.service';
 import { PrismaService } from '../../prisma/prisma.service';
 import { Product } from './entities/product.entity';
+import { File } from './types/file';
 
 let productArray: Product[] = [];
 
@@ -164,7 +165,7 @@ describe('ProductService', () => {
     it('should upload picture', async () => {
       const file = {
         filename: 'testPicture.jpg',
-      } as Express.Multer.File;
+      } as File;
 
       const product = await productService.uploadPicture(
         productArray[1].id,
