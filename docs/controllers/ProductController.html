@@ -155,8 +155,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="38"
-                            class="link-to-prism">src/models/product/product.controller.ts:38</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="39"
+                            class="link-to-prism">src/models/product/product.controller.ts:39</a></div>
                 </td>
             </tr>
 
@@ -233,8 +233,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="50"
-                            class="link-to-prism">src/models/product/product.controller.ts:50</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="51"
+                            class="link-to-prism">src/models/product/product.controller.ts:51</a></div>
                 </td>
             </tr>
 
@@ -313,8 +313,8 @@ searching and ordering by name</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="58"
-                            class="link-to-prism">src/models/product/product.controller.ts:58</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="59"
+                            class="link-to-prism">src/models/product/product.controller.ts:59</a></div>
                 </td>
             </tr>
 
@@ -391,8 +391,8 @@ searching and ordering by name</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="66"
-                            class="link-to-prism">src/models/product/product.controller.ts:66</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="67"
+                            class="link-to-prism">src/models/product/product.controller.ts:67</a></div>
                 </td>
             </tr>
 
@@ -469,8 +469,8 @@ searching and ordering by name</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="104"
-                            class="link-to-prism">src/models/product/product.controller.ts:104</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="105"
+                            class="link-to-prism">src/models/product/product.controller.ts:105</a></div>
                 </td>
             </tr>
 
@@ -547,8 +547,8 @@ searching and ordering by name</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="92"
-                            class="link-to-prism">src/models/product/product.controller.ts:92</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="93"
+                            class="link-to-prism">src/models/product/product.controller.ts:93</a></div>
                 </td>
             </tr>
 
@@ -623,7 +623,7 @@ searching and ordering by name</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>uploadPhoto(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, file: Express.Multer.File)</code>
+<code>uploadPhoto(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, file: <a href="../undefineds/File.html" target="_self">File</a>)</code>
                 </td>
             </tr>
 
@@ -637,8 +637,8 @@ searching and ordering by name</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="81"
-                            class="link-to-prism">src/models/product/product.controller.ts:81</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="82"
+                            class="link-to-prism">src/models/product/product.controller.ts:82</a></div>
                 </td>
             </tr>
 
@@ -678,7 +678,7 @@ multerUploadConfig</a> file in the docs.</p>
                                 <tr>
                                     <td>file</td>
                                     <td>
-                                            <code>Express.Multer.File</code>
+                                                <code><a href="../miscellaneous/typealiases.html#File" target="_self" >File</a></code>
                                     </td>
 
                                     <td>
@@ -729,6 +729,7 @@ import { FindProductsDto } from &#x27;./dto/find-products.dto&#x27;;
 import { UpdateProductDto } from &#x27;./dto/update-product.dto&#x27;;
 import { Product } from &#x27;./entities/product.entity&#x27;;
 import { ProductService } from &#x27;./product.service&#x27;;
+import { File } from &#x27;./types/file&#x27;;
 
 /** Exposes product CRUD endpoints */
 @ApiTags(&#x27;product&#x27;)
@@ -789,7 +790,7 @@ export class ProductController {
   @Patch(&#x27;picture/:id&#x27;)
   uploadPhoto(
     @Param(&#x27;id&#x27;) id: string,
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFile() file: File,
   ): Promise&lt;Product&gt; {
     return this.productService.uploadPicture(id, file);
   }

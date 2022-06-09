@@ -53,7 +53,13 @@
 <h2 id="📌-features">📌 Features</h2>
 <ul>
 <li><input checked="" disabled="" type="checkbox"> CRUD de usuários</li>
-<li><input checked="" disabled="" type="checkbox"> Autenticação de usuário</li>
+<li><input checked="" disabled="" type="checkbox"> Autenticação de usuário<ul>
+<li><input checked="" disabled="" type="checkbox"> Rotação de Refresh Token<ul>
+<li><input checked="" disabled="" type="checkbox"> Detecção de Reuso Automático</li>
+</ul>
+</li>
+</ul>
+</li>
 <li><input checked="" disabled="" type="checkbox"> Autorização de usuário (admin)</li>
 <li><input checked="" disabled="" type="checkbox"> CRUD de produtos<ul>
 <li><input checked="" disabled="" type="checkbox"> Upload de imagens</li>
@@ -104,7 +110,9 @@
 <div><pre class="line-numbers"><code class="language-bash">  # Roda as migrations no bando de testes
   yarn migrate:test 
 
-  # Roda todos os testes
+  # Roda todos os testes unitários e de integração
+  # Pode demorar alguns poucos minutos
+  # 10 suites e 187 testes
   yarn test:all
 
   # Roda apenas os testes unitários
@@ -122,8 +130,10 @@
 <li><a href="https://www.passportjs.org/">Passport</a> e <a href="https://www.passportjs.org/packages/passport-jwt/">passport-jwt</a> - autenticação com Json Web Token</li>
 <li><a href="https://github.com/typestack/class-validator">Class-validator</a> e <a href="https://github.com/typestack/class-transformer">class-transformer</a> - validações nos dados de entrada dos endpoints</li>
 <li><a href="https://github.com/kelektiv/node.bcrypt.js">Bcrypt</a> - hashs de senhas</li>
+<li><a href="https://currency.js.org/">currency.js</a> - cálculos monetários</li>
+<li><a href="https://github.com/vercel/ms">ms</a> - cálculo da data de expiração do refresh token</li>
 <li><a href="https://github.com/vinpac/prisma-error-enum">Prisma-error-enum</a> - identificar os códigos para tratar as exceções do prisma</li>
-<li><a href="https://jestjs.io/">Jest</a>, <a href="https://github.com/visionmedia/supertest">SuperTest</a> e <a href="https://github.com/vercel/ms">ms</a> - testes</li>
+<li><a href="https://jestjs.io/">Jest</a>, <a href="https://github.com/visionmedia/supertest">SuperTest</a> - testes</li>
 <li><a href="https://github.com/scottie1984/swagger-ui-express">Swagger UI Express</a> e <a href="https://github.com/compodoc/compodoc">compodoc</a> - documentação</li>
 <li><a href="https://eslint.org/">ESLint</a> e <a href="https://prettier.io/">Prettier</a> - linting e formatação de código</li>
 </ul>
