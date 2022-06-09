@@ -143,12 +143,22 @@ describe('UserController (e2e)', () => {
         .expect(400);
     });
 
-    it('should not create user if password is too weak', () => {
+    it('should not create user if password is too short', () => {
       return request(app.getHttpServer())
         .post('/user')
         .send({
           email: 'tester@example.com',
           password: 'abc123',
+        })
+        .expect(400);
+    });
+
+    it('should not create user if password is too weak', () => {
+      return request(app.getHttpServer())
+        .post('/user')
+        .send({
+          email: 'tester@example.com',
+          password: '123456789',
         })
         .expect(400);
     });
