@@ -1,18 +1,22 @@
 <h1 align="center">E-Commerce Backend</h1>
 <p align="center">API com endpoints para criação de usuários, produtos, compras e avaliações com autenticação e autorização</p>
-<p align="center"><a href="https://alvaromrveiga.github.io/ecommerce-backend/" target="_blank"><b>🔗 Documentação com Compodoc e GitHub Pages</b></a></p>
+<p align="center"><a href="https://veiga-ecommerce-backend.herokuapp.com/api/" target="_blank"><b>🔗 Demo com Swagger</b></a></p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"/>
   <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"/>
   <img src="https://img.shields.io/badge/nestjs-E0234E?style=for-the-badge&logo=nestjs&logoColor=white"/>
   <img src="https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white"/>
 </p>
 
 ## 📑 Índice
 <!--ts-->
    * [📌 Features](#-features)
+   * [📚 Docs e Demo](#-docs-e-demo)
    * [🔧 Instalação](#-instalação)
+   * [🔩 Testes](#-testes)
+   * [🖇️ Requisições no Insomnia](#%EF%B8%8F-requisições-no-insomnia)
    * [💻 Tecnologias](#-tecnologias)
    * [📄 Licença](#-licença)
 <!--te-->
@@ -28,6 +32,14 @@
   - [x] Upload de imagens
 - [x] CRUD de categorias
 - [x] CRUD de compras
+
+## 📚 Docs e Demo
+[🔗 Demo usando Swagger](https://veiga-ecommerce-backend.herokuapp.com/api)
+
+[🔗 Docs usando Compodoc no GitHub Pages](https://alvaromrveiga.github.io/ecommerce-backend/)
+
+- #### Representação dos módulos com Compodoc:
+    ![Compodoc-App-Module](https://github.com/alvaromrveiga/ecommerce-backend/blob/main/assets/compodoc.png)
 
 ## 🔧 Instalação
 
@@ -62,11 +74,12 @@
 
     # Para visualizar o banco de dados
     yarn prisma studio
-  ```
-  
-5. Rodar os testes
-    - Crie um arquivo .env.test na raiz do projeto alterando no mínimo o banco de dados que colocou no .env
-      - Exemplo: postgresql://username:password@localhost:5432/<ins>ecommerce-test</ins>?schema=public
+  ```    
+
+## 🔩 Testes
+
+- Crie um arquivo .env.test na raiz do projeto alterando no mínimo o banco de dados que colocou no .env
+  - Exemplo: postgresql://username:password@localhost:5432/<ins>ecommerce-test</ins>?schema=public
     
   ```bash
     # Roda as migrations no bando de testes
@@ -86,6 +99,18 @@
     # Para visualizar o banco de dados de testes
     yarn studio:test
   ```
+
+- #### Cobertura dos testes:
+     ![Test-Coverage](https://github.com/alvaromrveiga/ecommerce-backend/blob/main/assets/test-coverage.png)
+
+## 🖇️ Requisições no Insomnia
+A coleção de 30 requisições para testar o projeto no [Insomnia](https://insomnia.rest/download) pode ser encontrada [aqui](https://github.com/alvaromrveiga/ecommerce-backend/blob/main/assets/insomnia-requests.json). 
+  - Para importar no Insomnia:
+    - Clique na engrenagem no canto superior direito
+    - Aba de Data 
+    - Import Data
+    - From File
+    - Selecione o arquivo insomnia-requests.json dentro da pasta assets na raiz do projeto
 
 ## 💻 Tecnologias
 
