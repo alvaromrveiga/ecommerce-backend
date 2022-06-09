@@ -21,6 +21,8 @@
 
 - [x] CRUD de usuários
 -   [x] Autenticação de usuário
+    -   [x] Rotação de Refresh Token
+        -   [x] Detecção de Reuso Automático
 -   [x] Autorização de usuário (admin)
 - [x] CRUD de produtos
   - [x] Upload de imagens
@@ -70,7 +72,9 @@
     # Roda as migrations no bando de testes
     yarn migrate:test 
 
-    # Roda todos os testes
+    # Roda todos os testes unitários e de integração
+    # Pode demorar alguns poucos minutos
+    # 10 suites e 187 testes
     yarn test:all
 
     # Roda apenas os testes unitários
@@ -91,8 +95,10 @@
 - [Passport](https://www.passportjs.org/) e [passport-jwt](https://www.passportjs.org/packages/passport-jwt/) - autenticação com Json Web Token
 - [Class-validator](https://github.com/typestack/class-validator) e [class-transformer](https://github.com/typestack/class-transformer) - validações nos dados de entrada dos endpoints
 - [Bcrypt](https://github.com/kelektiv/node.bcrypt.js) - hashs de senhas
+- [currency.js](https://currency.js.org/) - cálculos monetários
+- [ms](https://github.com/vercel/ms) - cálculo da data de expiração do refresh token
 - [Prisma-error-enum](https://github.com/vinpac/prisma-error-enum) - identificar os códigos para tratar as exceções do prisma
-- [Jest](https://jestjs.io/), [SuperTest](https://github.com/visionmedia/supertest) e [ms](https://github.com/vercel/ms) - testes
+- [Jest](https://jestjs.io/), [SuperTest](https://github.com/visionmedia/supertest) - testes
 - [Swagger UI Express](https://github.com/scottie1984/swagger-ui-express) e [compodoc](https://github.com/compodoc/compodoc) - documentação
 - [ESLint](https://eslint.org/) e [Prettier](https://prettier.io/) - linting e formatação de código
 
